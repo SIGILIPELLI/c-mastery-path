@@ -1,0 +1,100 @@
+site_name: C Mastery Path
+site_description: A structured, module-wise C training program from entry level to master level.
+site_url: https://sigilipelli.github.io/c-mastery-path/
+repo_url: https://github.com/SIGILIPELLI/c-mastery-path
+repo_name: c-mastery-path
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Privacy Policy: privacy.md
+  - "Level 1 · Entry":
+      - Overview: level-1/index.md
+      - "01 · Setup & First Program": level-1/01-setup.md
+      - "02 · Variables, Data Types & Operators": level-1/02-variables-data-types.md
+      - "03 · Control Flow": level-1/03-control-flow.md
+      - "04 · Functions": level-1/04-functions.md
+      - "05 · Arrays & Strings": level-1/05-arrays-strings.md
+      - "06 · Pointers Basics": level-1/06-pointers-basics.md
+      - "07 · Structs": level-1/07-structs.md
+      - "08 · File I/O": level-1/08-file-io.md
+      - "09 · Preprocessor & Multi-file Compilation": level-1/09-preprocessor-multifile.md
+      - "10 · Project — Contact Book": level-1/10-project-contact-book.md
+  - "Level 2 · Intermediate":
+      - Overview: level-2/index.md
+      - "01 · Pointers Deep Dive": level-2/01-pointers-deep-dive.md
+      - "02 · Dynamic Memory": level-2/02-dynamic-memory.md
+      - "03 · Multi-dimensional Arrays & Strings": level-2/03-multidim-arrays-strings.md
+      - "04 · Structs & Unions Advanced": level-2/04-structs-unions-advanced.md
+      - "05 · Binary File I/O": level-2/05-binary-file-io.md
+      - "06 · Error Handling Conventions": level-2/06-error-handling.md
+      - "07 · Modular Programming": level-2/07-modular-programming.md
+      - "08 · Makefiles & Build Systems": level-2/08-makefiles-build-systems.md
+      - "09 · Debugging Tools": level-2/09-debugging-tools.md
+      - "10 · Project — Linked-list Inventory System": level-2/10-project-inventory-system.md
+  - "Level 3 · Advanced":
+      - Overview: level-3/index.md
+      - "01 · Data Structures in C": level-3/01-data-structures.md
+      - "02 · Trees & Basic Graph Representations": level-3/02-trees-graphs.md
+      - "03 · Sorting & Searching Algorithms": level-3/03-sorting-searching.md
+      - "04 · Bit Manipulation": level-3/04-bit-manipulation.md
+      - "05 · Memory Management Deep Dive": level-3/05-memory-management-deep-dive.md
+      - "06 · Static & Dynamic Libraries": level-3/06-static-dynamic-libraries.md
+      - "07 · Concurrency Basics": level-3/07-concurrency-basics.md
+      - "08 · Networking Basics": level-3/08-networking-basics.md
+      - "09 · Working with Unix System Calls": level-3/09-unix-system-calls.md
+      - "10 · Project — Key-Value Store / HTTP Server": level-3/10-project-kv-store.md
+  - "Level 4 · Master":
+      - Overview: level-4/index.md
+      - "01 · Advanced Memory Management": level-4/01-advanced-memory-management.md
+      - "02 · Concurrency & Synchronization": level-4/02-concurrency-synchronization.md
+      - "03 · Performance Optimization & Profiling": level-4/03-performance-profiling.md
+      - "04 · Writing Portable C": level-4/04-writing-portable-c.md
+      - "05 · Security in C": level-4/05-security-in-c.md
+      - "06 · Advanced Data Structures": level-4/06-advanced-data-structures.md
+      - "07 · Interfacing with Other Languages": level-4/07-interfacing-other-languages.md
+      - "08 · Testing in C": level-4/08-testing-in-c.md
+      - "09 · Build Systems at Scale": level-4/09-build-systems-at-scale.md
+      - "10 · Capstone Project": level-4/10-capstone-project.md
