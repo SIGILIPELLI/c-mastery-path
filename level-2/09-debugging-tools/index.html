@@ -1166,6 +1166,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Debugging Tools
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1182,6 +1200,136 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-for-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building for debugging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdb-stepping-through-a-running-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdb: stepping through a running program
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="gdb: stepping through a running program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-core-gdb-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The core gdb workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-program-has-already-crashed-core-dumps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the program has already crashed: core dumps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#valgrind-catching-memory-bugs-that-dont-crash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        valgrind: catching memory bugs that don't crash
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="valgrind: catching memory bugs that don&#39;t crash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-leak-checkfull-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading --leak-check=full output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sanitizers-catching-the-same-bugs-faster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sanitizers: catching the same bugs faster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-tool-for-which-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which tool for which bug
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2139,125 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-for-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building for debugging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdb-stepping-through-a-running-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdb: stepping through a running program
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="gdb: stepping through a running program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-core-gdb-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The core gdb workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-program-has-already-crashed-core-dumps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the program has already crashed: core dumps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#valgrind-catching-memory-bugs-that-dont-crash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        valgrind: catching memory bugs that don't crash
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="valgrind: catching memory bugs that don&#39;t crash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-leak-checkfull-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading --leak-check=full output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sanitizers-catching-the-same-bugs-faster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sanitizers: catching the same bugs faster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-tool-for-which-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which tool for which bug
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,12 +2277,306 @@
 
 
 <h1 id="09-debugging-tools">09 · Debugging Tools<a class="headerlink" href="#09-debugging-tools" title="Permanent link">&para;</a></h1>
-<div class="admonition info">
-<p class="admonition-title">Coming soon</p>
-<p>This module's full lessons and code snippets are being written next.
-gdb and valgrind basics.</p>
-</div>
-<p>More lessons are on the way — check back soon.</p>
+<p>C gives you no safety net. A one-character typo — <code>&lt;=</code> instead of <code>&lt;</code>, <code>=</code>
+instead of <code>==</code>, a forgotten <code>free</code> — can compile cleanly and still crash, or
+worse, silently corrupt memory and keep running. <code>printf</code> debugging gets you
+only so far. This module covers the two tools that actually earn their keep:
+<strong>gdb</strong>, which lets you pause a running program and inspect it, and
+<strong>valgrind</strong>, which catches memory bugs that don't crash <em>today</em> but will in
+production.</p>
+<h2 id="building-for-debugging">Building for debugging<a class="headerlink" href="#building-for-debugging" title="Permanent link">&para;</a></h2>
+<p>Nothing useful shows up in gdb without debug symbols:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-g<span class="w"> </span>-O0<span class="w"> </span>-o<span class="w"> </span>app<span class="w"> </span>main.c
+</code></pre></div>
+<ul>
+<li><code>-g</code> embeds source-line and variable-name information in the binary.</li>
+<li><code>-O0</code> disables optimization — optimized code reorders and eliminates
+  variables, which makes stepping through it in a debugger confusing or
+  outright misleading. Debug locally at <code>-O0</code>; optimize for release.</li>
+</ul>
+<h2 id="gdb-stepping-through-a-running-program">gdb: stepping through a running program<a class="headerlink" href="#gdb-stepping-through-a-running-program" title="Permanent link">&para;</a></h2>
+<p>Consider a deliberately broken program:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// buggy.c</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">sum_range</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">low</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">high</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">low</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">high</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="p">;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">};</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w">   </span><span class="c1">// BUG: should be 0, 4 -- reads values[5], out of bounds</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Sum of first 5: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Values: %d %d %d %d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">           </span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">4</span><span class="p">]);</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="p">}</span>
+</code></pre></div>
+<p>This compiles and often <em>appears</em> to run fine — the out-of-bounds read is
+undefined behaviour, not a guaranteed crash. That's exactly the kind of bug
+that needs a debugger rather than guesswork.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-g<span class="w"> </span>-O0<span class="w"> </span>-o<span class="w"> </span>buggy<span class="w"> </span>buggy.c
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>gdb<span class="w"> </span>./buggy
+</code></pre></div>
+<h3 id="the-core-gdb-workflow">The core gdb workflow<a class="headerlink" href="#the-core-gdb-workflow" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>(gdb) break main
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Breakpoint 1 at 0x1169: file buggy.c, line 13.
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>(gdb) run
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Starting program: ./buggy
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Breakpoint 1, main () at buggy.c:13
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>13          int values[5] = {10, 20, 30, 40, 50};
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>(gdb) next
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>14          int result = sum_range(0, 5);
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>(gdb) step
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>sum_range (low=0, high=5) at buggy.c:5
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>5           int total = 0;
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>(gdb) print low
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>$1 = 0
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>(gdb) print high
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>$2 = 5
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>break &lt;function&gt;</code> / <code>break &lt;file&gt;:&lt;line&gt;</code></td>
+<td>Set a breakpoint</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>Start the program (stops at breakpoints)</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td>Execute the current line; <strong>step over</strong> function calls</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>Execute the current line; <strong>step into</strong> function calls</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>Resume until the next breakpoint or exit</td>
+</tr>
+<tr>
+<td><code>print &lt;expr&gt;</code></td>
+<td>Evaluate and print a variable or expression</td>
+</tr>
+<tr>
+<td><code>backtrace</code> (or <code>bt</code>)</td>
+<td>Show the call stack</td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td>Show source around the current line</td>
+</tr>
+<tr>
+<td><code>watch &lt;var&gt;</code></td>
+<td>Break whenever <code>&lt;var&gt;</code>'s value changes</td>
+</tr>
+<tr>
+<td><code>quit</code></td>
+<td>Exit gdb</td>
+</tr>
+</tbody>
+</table>
+<p>Spotting the bug: set a breakpoint inside the loop and watch <code>i</code> and <code>total</code>
+evolve.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>(gdb) break buggy.c:7
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Breakpoint 2 at 0x1145: file buggy.c, line 7.
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>(gdb) continue
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Breakpoint 2, sum_range (low=0, high=5) at buggy.c:7
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>7               total += i;
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>(gdb) print i
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>$3 = 5
+</code></pre></div>
+<p><code>i</code> reaches <code>5</code>, but <code>values</code> only has indices <code>0</code>-<code>4</code>. The call site passed
+the wrong <code>high</code>. <code>next</code> through a few more iterations and <code>backtrace</code> to see
+which frame called <code>sum_range</code> with the bad argument — that's the actual fix
+location, not the loop itself.</p>
+<h3 id="when-the-program-has-already-crashed-core-dumps">When the program has already crashed: core dumps<a class="headerlink" href="#when-the-program-has-already-crashed-core-dumps" title="Permanent link">&para;</a></h3>
+<p>For a real segfault, you don't need to reproduce it interactively — gdb can
+load the crash state directly.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">ulimit</span><span class="w"> </span>-c<span class="w"> </span>unlimited<span class="w">          </span><span class="c1"># allow core dumps in this shell</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>./crashy<span class="w">                     </span><span class="c1"># Segmentation fault (core dumped)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>gdb<span class="w"> </span>./crashy<span class="w"> </span>core
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>(gdb) backtrace
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>#0  0x0000555555555149 in append_char (s=0x0, c=65 &#39;A&#39;) at crashy.c:4
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>#1  0x0000555555555171 in main () at crashy.c:12
+</code></pre></div>
+<p>Frame <code>#0</code> is exactly where it died, and <code>s=0x0</code> tells you the whole story: a
+null pointer was passed in. <code>backtrace</code> is often the single most useful gdb
+command — it answers "where did this actually happen" immediately, without
+any manual stepping.</p>
+<h2 id="valgrind-catching-memory-bugs-that-dont-crash">valgrind: catching memory bugs that don't crash<a class="headerlink" href="#valgrind-catching-memory-bugs-that-dont-crash" title="Permanent link">&para;</a></h2>
+<p>Some bugs never segfault — they read one byte past an array, or leak memory a
+few bytes at a time, and the program runs "fine" for years until it doesn't.
+<code>valgrind</code>'s <code>memcheck</code> tool (the default) runs your program in an instrumented
+virtual machine that tracks every allocation, free, and memory access.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// leaky.c</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">make_greeting</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">greeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span><span class="w">           </span><span class="c1">// BUG: too small for long names</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="n">strcpy</span><span class="p">(</span><span class="n">greeting</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Hello, &quot;</span><span class="p">);</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="n">strcat</span><span class="p">(</span><span class="n">greeting</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w">                </span><span class="c1">// may overflow the 20 bytes</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">greeting</span><span class="p">;</span><span class="w">                       </span><span class="c1">// BUG: caller never frees this</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="p">}</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_greeting</span><span class="p">(</span><span class="s">&quot;Alexandria Constantinople&quot;</span><span class="p">);</span><span class="w">   </span><span class="c1">// long enough to overflow</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">msg</span><span class="p">;</span><span class="w">                             </span><span class="c1">// pretend we used it</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-g<span class="w"> </span>-O0<span class="w"> </span>-o<span class="w"> </span>leaky<span class="w"> </span>leaky.c
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>valgrind<span class="w"> </span>--leak-check<span class="o">=</span>full<span class="w"> </span>./leaky
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>==12345== Invalid write of size 1
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>==12345==    at 0x4849C29: strcat (vg_replace_strmem.c:...)
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>==12345==    by 0x1091A5: make_greeting (leaky.c:8)
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>==12345==    by 0x1091E2: main (leaky.c:13)
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>==12345==  Address 0x4a4d054 is 0 bytes after a block of size 20 alloc&#39;d
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>==12345==    at 0x484D9C4: malloc (vg_replace_malloc.c:...)
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>==12345==    by 0x109188: make_greeting (leaky.c:6)
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>...
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>==12345== HEAP SUMMARY:
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>==12345==     in use at exit: 21 bytes in 1 blocks
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>==12345==   total heap usage: 1 allocs, 0 frees, 21 bytes allocated
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>==12345==
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>==12345== 21 bytes in 1 blocks are definitely lost in loss record 1 of 1
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>==12345==    at 0x484D9C4: malloc (vg_replace_malloc.c:...)
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>==12345==    by 0x109188: make_greeting (leaky.c:6)
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>==12345==    by 0x1091E2: main (leaky.c:13)
+</code></pre></div>
+<p>Two separate defects, both caught precisely: the <code>Invalid write</code> pins the
+overflow to <code>leaky.c:8</code>, and <code>definitely lost</code> pins the missing <code>free</code> to
+<code>leaky.c:6</code> — the exact <code>malloc</code> call whose return value was never released.</p>
+<table>
+<thead>
+<tr>
+<th>Valgrind verdict</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Invalid read/write of size N</code></td>
+<td>Accessed memory outside an allocated block</td>
+</tr>
+<tr>
+<td><code>Use of uninitialised value</code></td>
+<td>Read a variable before writing to it</td>
+</tr>
+<tr>
+<td><code>Invalid free() / delete</code></td>
+<td>Freed a pointer twice, or one never returned by <code>malloc</code></td>
+</tr>
+<tr>
+<td><code>definitely lost</code></td>
+<td>Leaked memory with no remaining pointer to it — a real leak</td>
+</tr>
+<tr>
+<td><code>still reachable</code></td>
+<td>Never freed, but a pointer to it still exists at exit — often OS-cleaned buffers, lower priority</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reading-leak-checkfull-output">Reading <code>--leak-check=full</code> output<a class="headerlink" href="#reading-leak-checkfull-output" title="Permanent link">&para;</a></h3>
+<p>Run it with <code>-s</code> for a summary even on success:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>valgrind<span class="w"> </span>--leak-check<span class="o">=</span>full<span class="w"> </span>--show-leak-kinds<span class="o">=</span>all<span class="w"> </span>-s<span class="w"> </span>./app
+</code></pre></div>
+<p>A clean run ends with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>==12345== HEAP SUMMARY:
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>==12345==     in use at exit: 0 bytes in 0 blocks
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>==12345==   total heap usage: 4 allocs, 4 frees, 1,024 bytes allocated
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>==12345==
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>==12345== All heap blocks were freed -- no leaks are possible
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>==12345==
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>==12345== ERROR SUMMARY: 0 errors from 0 contexts
+</code></pre></div>
+<p>That <code>0 errors from 0 contexts</code> line is what you want to see before shipping
+anything that touches <code>malloc</code>.</p>
+<h2 id="sanitizers-catching-the-same-bugs-faster">Sanitizers: catching the same bugs faster<a class="headerlink" href="#sanitizers-catching-the-same-bugs-faster" title="Permanent link">&para;</a></h2>
+<p>Valgrind is thorough but slow (10-50× slowdown). For day-to-day development,
+compiling with sanitizers built into gcc/clang catches most of the same bugs
+at nearly full speed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-g<span class="w"> </span>-O0<span class="w"> </span>-fsanitize<span class="o">=</span>address,undefined<span class="w"> </span>-o<span class="w"> </span>app<span class="w"> </span>main.c
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>./app
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>==12345==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x...
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>WRITE of size 1 at 0x... thread T0
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    #0 0x... in strcat
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    #1 0x... in make_greeting leaky.c:8
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    #2 0x... in main leaky.c:13
+</code></pre></div>
+<p>Same bug, same line number, and it fires the moment the overflow happens —
+no separate tool invocation needed. A reasonable workflow: build with
+sanitizers by default during development (they're what
+<a href="../08-makefiles-build-systems/">Module 8</a>'s <code>BUILD=debug</code> branch already
+enables), and run the full <code>valgrind</code> sweep before a release or when a
+sanitizer report is confusing.</p>
+<h2 id="which-tool-for-which-bug">Which tool for which bug<a class="headerlink" href="#which-tool-for-which-bug" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Reach for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"It crashes, where?"</td>
+<td><code>gdb</code> + <code>backtrace</code> (with a core dump if it already crashed)</td>
+</tr>
+<tr>
+<td>"What value does this variable have right here?"</td>
+<td><code>gdb</code> with a breakpoint and <code>print</code></td>
+</tr>
+<tr>
+<td>"Is this leaking memory?"</td>
+<td><code>valgrind --leak-check=full</code></td>
+</tr>
+<tr>
+<td>"Am I reading/writing out of bounds?"</td>
+<td><code>-fsanitize=address</code> (fast) or <code>valgrind</code> (thorough)</td>
+</tr>
+<tr>
+<td>"Did I read a variable before initializing it?"</td>
+<td><code>valgrind</code> (<code>Use of uninitialised value</code>) or <code>-fsanitize=undefined</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Take the <code>leaky.c</code> example above.</p>
+<ol>
+<li>Compile it with <code>-g -O0</code> and run it under <code>valgrind --leak-check=full</code>.
+   Confirm you see both the invalid write and the "definitely lost" block, and
+   note the exact line numbers valgrind reports.</li>
+<li>Fix the size bug (allocate enough for <code>"Hello, "</code> + the name + the null
+   terminator — <code>strlen(name) + 8</code> is the right shape) and the leak (free the
+   result in <code>main</code>, or better, decide who owns the returned pointer and
+   document it in a comment).</li>
+<li>Re-run valgrind and confirm <code>0 errors from 0 contexts</code> and
+   <code>All heap blocks were freed</code>.</li>
+<li>Recompile with <code>-fsanitize=address,undefined</code> instead and confirm it
+   reports the same overflow (before your fix) and is silent (after).</li>
+<li>Deliberately introduce a <strong>double free</strong> (<code>free(msg); free(msg);</code>) and run
+   both valgrind and the sanitizer build against it. Compare how clearly each
+   one identifies the problem.</li>
+</ol>
 
 
 

@@ -1138,6 +1138,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Makefiles & Build Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1154,6 +1172,152 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-anatomy-of-a-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The anatomy of a rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-first-makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A first Makefile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-kill-the-repetition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables kill the repetition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pattern-rules-and-automatic-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern rules and automatic variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pattern rules and automatic variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phony-targets-that-arent-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .PHONY — targets that aren't files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatic-header-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic header dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-flags-to-have-in-cflags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful flags to have in CFLAGS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-complete-project-makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A complete project Makefile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-make-invocations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful make invocations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#beyond-make" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Beyond make
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2155,141 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-anatomy-of-a-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The anatomy of a rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-first-makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A first Makefile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-kill-the-repetition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables kill the repetition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pattern-rules-and-automatic-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern rules and automatic variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pattern rules and automatic variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phony-targets-that-arent-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .PHONY — targets that aren't files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatic-header-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic header dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-flags-to-have-in-cflags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful flags to have in CFLAGS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-complete-project-makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A complete project Makefile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-make-invocations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful make invocations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#beyond-make" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Beyond make
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,12 +2309,359 @@
 
 
 <h1 id="08-makefiles-build-systems">08 · Makefiles &amp; Build Systems<a class="headerlink" href="#08-makefiles-build-systems" title="Permanent link">&para;</a></h1>
-<div class="admonition info">
-<p class="admonition-title">Coming soon</p>
-<p>This module's full lessons and code snippets are being written next.
-Makefiles and build systems.</p>
-</div>
-<p>More lessons are on the way — check back soon.</p>
+<p>Once a project has more than three source files, typing <code>gcc a.c b.c c.c -o app</code>
+gets old — and it recompiles everything even when you changed one line.
+<code>make</code> fixes both problems. You describe <em>what depends on what</em>, and <code>make</code>
+figures out the minimum set of commands needed to bring the build up to date,
+by comparing file timestamps.</p>
+<p><code>make</code> is decades old, present on every Unix system, and still the backbone of
+the Linux kernel, SQLite, and countless C projects. Even when a project uses
+CMake or Meson, those generate Makefiles underneath.</p>
+<h2 id="the-anatomy-of-a-rule">The anatomy of a rule<a class="headerlink" href="#the-anatomy-of-a-rule" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">target</span><span class="o">:</span><span class="w"> </span><span class="n">prerequisites</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>recipe
+</code></pre></div>
+<ul>
+<li><strong>target</strong> — the file to produce (or a name like <code>clean</code>).</li>
+<li><strong>prerequisites</strong> — files it depends on. If any is <em>newer</em> than the target,
+  the target is stale.</li>
+<li><strong>recipe</strong> — shell commands to rebuild it. <strong>Must be indented with a real TAB,
+  not spaces.</strong> This is the single most common Makefile error, and the message
+  (<code>missing separator</code>) does not mention tabs.</li>
+</ul>
+<h2 id="a-first-makefile">A first Makefile<a class="headerlink" href="#a-first-makefile" title="Permanent link">&para;</a></h2>
+<p>Assume the module layout from <a href="../07-modular-programming/">Module 7</a>:
+<code>main.c</code>, <code>counter.c</code>, <code>counter.h</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c"># Makefile</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nf">app</span><span class="o">:</span><span class="w"> </span><span class="n">main</span>.<span class="n">o</span> <span class="n">counter</span>.<span class="n">o</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span>gcc<span class="w"> </span>main.o<span class="w"> </span>counter.o<span class="w"> </span>-o<span class="w"> </span>app
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nf">main.o</span><span class="o">:</span><span class="w"> </span><span class="n">main</span>.<span class="n">c</span> <span class="n">counter</span>.<span class="n">h</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-c<span class="w"> </span>main.c<span class="w"> </span>-o<span class="w"> </span>main.o
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nf">counter.o</span><span class="o">:</span><span class="w"> </span><span class="n">counter</span>.<span class="n">c</span> <span class="n">counter</span>.<span class="n">h</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-c<span class="w"> </span>counter.c<span class="w"> </span>-o<span class="w"> </span>counter.o
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nf">clean</span><span class="o">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span>rm<span class="w"> </span>-f<span class="w"> </span>app<span class="w"> </span>main.o<span class="w"> </span>counter.o
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>make
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-c<span class="w"> </span>main.c<span class="w"> </span>-o<span class="w"> </span>main.o
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-c<span class="w"> </span>counter.c<span class="w"> </span>-o<span class="w"> </span>counter.o
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>gcc<span class="w"> </span>main.o<span class="w"> </span>counter.o<span class="w"> </span>-o<span class="w"> </span>app
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>$<span class="w"> </span>make<span class="w">                    </span><span class="c1"># nothing changed</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>make:<span class="w"> </span><span class="s1">&#39;app&#39;</span><span class="w"> </span>is<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>date.
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>$<span class="w"> </span>touch<span class="w"> </span>counter.c<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span><span class="c1"># only the affected parts rebuild</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-c<span class="w"> </span>counter.c<span class="w"> </span>-o<span class="w"> </span>counter.o
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>gcc<span class="w"> </span>main.o<span class="w"> </span>counter.o<span class="w"> </span>-o<span class="w"> </span>app
+</code></pre></div>
+<p>Running <code>make</code> with no arguments builds the <strong>first</strong> target in the file, so put
+your main artifact at the top. Note that touching <code>counter.h</code> would rebuild
+<em>both</em> object files — that's the dependency graph doing its job.</p>
+<h2 id="variables-kill-the-repetition">Variables kill the repetition<a class="headerlink" href="#variables-kill-the-repetition" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">CC</span><span class="w">      </span><span class="o">:=</span><span class="w"> </span>gcc
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">CFLAGS</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-std<span class="o">=</span>c11<span class="w"> </span>-g
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">LDFLAGS</span><span class="w"> </span><span class="o">:=</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">TARGET</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span>app
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">OBJS</span><span class="w">    </span><span class="o">:=</span><span class="w"> </span>main.o<span class="w"> </span>counter.o<span class="w"> </span>stats.o
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nf">$(TARGET)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">OBJS</span><span class="k">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span><span class="k">$(</span>OBJS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>LDFLAGS<span class="k">)</span><span class="w"> </span>-o<span class="w"> </span><span class="k">$(</span>TARGET<span class="k">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="nf">clean</span><span class="o">:</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span>rm<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>TARGET<span class="k">)</span><span class="w"> </span><span class="k">$(</span>OBJS<span class="k">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Assignment</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:=</code></td>
+<td>Evaluated <strong>once</strong>, immediately. Use this by default.</td>
+</tr>
+<tr>
+<td><code>=</code></td>
+<td>Re-evaluated every time it's used (recursive; can surprise you)</td>
+</tr>
+<tr>
+<td><code>?=</code></td>
+<td>Set only if not already defined — lets <code>make CC=clang</code> override it</td>
+</tr>
+<tr>
+<td><code>+=</code></td>
+<td>Append</td>
+</tr>
+</tbody>
+</table>
+<p><code>make CFLAGS="-O2"</code> on the command line overrides the file's value entirely,
+which is how you switch to a release build without editing anything.</p>
+<h2 id="pattern-rules-and-automatic-variables">Pattern rules and automatic variables<a class="headerlink" href="#pattern-rules-and-automatic-variables" title="Permanent link">&para;</a></h2>
+<p>Writing one rule per <code>.o</code> doesn't scale. A <strong>pattern rule</strong> covers them all:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">CC</span><span class="w">      </span><span class="o">:=</span><span class="w"> </span>gcc
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">CFLAGS</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-std<span class="o">=</span>c11<span class="w"> </span>-g
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nv">TARGET</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span>app
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nv">SRCS</span><span class="w">    </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>wildcard<span class="w"> </span>*.c<span class="k">)</span><span class="w">          </span><span class="c1"># every .c in this directory</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nv">OBJS</span><span class="w">    </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>SRCS:.c<span class="o">=</span>.o<span class="k">)</span><span class="w">            </span><span class="c1"># main.c counter.c -&gt; main.o counter.o</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">clean</span> <span class="n">run</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="nf">$(TARGET)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">OBJS</span><span class="k">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span>$^<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nf">%.o</span><span class="o">:</span><span class="w"> </span>%.<span class="n">c</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span><span class="k">$(</span>CFLAGS<span class="k">)</span><span class="w"> </span>-c<span class="w"> </span>$&lt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="nf">run</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span>./<span class="k">$(</span>TARGET<span class="k">)</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="nf">clean</span><span class="o">:</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span>rm<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>TARGET<span class="k">)</span><span class="w"> </span><span class="k">$(</span>OBJS<span class="k">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Automatic variable</th>
+<th>Expands to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$@</code></td>
+<td>The target being built (<code>app</code>, or <code>main.o</code>)</td>
+</tr>
+<tr>
+<td><code>$&lt;</code></td>
+<td>The <strong>first</strong> prerequisite (<code>main.c</code>)</td>
+</tr>
+<tr>
+<td><code>$^</code></td>
+<td><strong>All</strong> prerequisites, deduplicated (<code>main.o counter.o</code>)</td>
+</tr>
+<tr>
+<td><code>$?</code></td>
+<td>Only the prerequisites newer than the target</td>
+</tr>
+<tr>
+<td><code>$*</code></td>
+<td>The stem matched by <code>%</code> (<code>main</code> for <code>main.o</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phony-targets-that-arent-files"><code>.PHONY</code> — targets that aren't files<a class="headerlink" href="#phony-targets-that-arent-files" title="Permanent link">&para;</a></h3>
+<p><code>clean</code> doesn't produce a file called <code>clean</code>. If someone ever creates a file
+with that name, <code>make clean</code> would report "up to date" and do nothing. Declaring
+<code>.PHONY: clean</code> tells <code>make</code> to always run the recipe. Every non-file target
+(<code>all</code>, <code>clean</code>, <code>run</code>, <code>test</code>, <code>install</code>) should be listed.</p>
+<h2 id="automatic-header-dependencies">Automatic header dependencies<a class="headerlink" href="#automatic-header-dependencies" title="Permanent link">&para;</a></h2>
+<p>The pattern rule above has a real bug: <code>%.o: %.c</code> never mentions headers, so
+editing <code>counter.h</code> won't trigger a rebuild — and you get a mysteriously stale
+binary. Generating the dependencies with the compiler fixes it permanently:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">CC</span><span class="w">      </span><span class="o">:=</span><span class="w"> </span>gcc
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nv">CFLAGS</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-std<span class="o">=</span>c11<span class="w"> </span>-g
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nv">DEPFLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-MMD<span class="w"> </span>-MP<span class="w">                 </span><span class="c1"># emit a .d file listing every header used</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nv">SRCS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>wildcard<span class="w"> </span>*.c<span class="k">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nv">OBJS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>SRCS:.c<span class="o">=</span>.o<span class="k">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nv">DEPS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>SRCS:.c<span class="o">=</span>.d<span class="k">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nf">app</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">OBJS</span><span class="k">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span>$^<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="nf">%.o</span><span class="o">:</span><span class="w"> </span>%.<span class="n">c</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span><span class="k">$(</span>CFLAGS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>DEPFLAGS<span class="k">)</span><span class="w"> </span>-c<span class="w"> </span>$&lt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="cp">-include $(DEPS)                     # leading &#39;-&#39; = ignore if not there yet</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">clean</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="nf">clean</span><span class="o">:</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span>rm<span class="w"> </span>-f<span class="w"> </span>app<span class="w"> </span><span class="k">$(</span>OBJS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>DEPS<span class="k">)</span>
+</code></pre></div>
+<p><code>gcc -MMD</code> writes <code>main.d</code> containing something like:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nf">main.o</span><span class="o">:</span><span class="w"> </span><span class="n">main</span>.<span class="n">c</span> <span class="n">counter</span>.<span class="n">h</span> <span class="n">stats</span>.<span class="n">h</span>
+</code></pre></div>
+<p><code>-include</code> pulls those generated rules in, so <code>make</code> now knows exactly which
+headers each object depends on. <code>-MP</code> adds harmless empty targets for each
+header, so deleting a header doesn't break the build with "no rule to make
+target". These four extra characters eliminate an entire category of
+"it works after <code>make clean</code>" bugs.</p>
+<h2 id="useful-flags-to-have-in-cflags">Useful flags to have in <code>CFLAGS</code><a class="headerlink" href="#useful-flags-to-have-in-cflags" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-Wall -Wextra</code></td>
+<td>Turn on the warnings that catch real bugs. Non-negotiable.</td>
+</tr>
+<tr>
+<td><code>-std=c11</code></td>
+<td>Pin the language standard so builds are reproducible</td>
+</tr>
+<tr>
+<td><code>-g</code></td>
+<td>Debug symbols, so <code>gdb</code> can show source (<a href="../09-debugging-tools/">Module 9</a>)</td>
+</tr>
+<tr>
+<td><code>-O0</code> / <code>-O2</code></td>
+<td>No optimization while debugging / optimized for release</td>
+</tr>
+<tr>
+<td><code>-Werror</code></td>
+<td>Treat warnings as errors — good in CI, harsh while learning</td>
+</tr>
+<tr>
+<td><code>-fsanitize=address,undefined</code></td>
+<td>Catch memory and UB bugs at run time</td>
+</tr>
+<tr>
+<td><code>-pedantic</code></td>
+<td>Warn about non-standard extensions</td>
+</tr>
+</tbody>
+</table>
+<p>A debug/release split, driven by one variable:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">CFLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-std<span class="o">=</span>c11
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="cp">ifeq ($(BUILD),release)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nv">CFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-O2<span class="w"> </span>-DNDEBUG
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="cp">else</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="nv">CFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-O0<span class="w"> </span>-g<span class="w"> </span>-fsanitize<span class="o">=</span>address,undefined
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="nv">LDFLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-fsanitize<span class="o">=</span>address,undefined
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="cp">endif</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>make<span class="w">                  </span><span class="c1"># debug build with sanitizers</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>make<span class="w"> </span><span class="nv">BUILD</span><span class="o">=</span>release<span class="w">    </span><span class="c1"># optimized, asserts compiled out</span>
+</code></pre></div>
+<p>Note <code>-DNDEBUG</code> in the release branch: that's what disables <code>assert</code> from
+<a href="../06-error-handling/">Module 6</a>.</p>
+<h2 id="a-complete-project-makefile">A complete project Makefile<a class="headerlink" href="#a-complete-project-makefile" title="Permanent link">&para;</a></h2>
+<p>With sources in <code>src/</code>, headers in <code>include/</code>, and build output in <code>build/</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">CC</span><span class="w">       </span><span class="o">:=</span><span class="w"> </span>gcc
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">CFLAGS</span><span class="w">   </span><span class="o">:=</span><span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-std<span class="o">=</span>c11<span class="w"> </span>-g<span class="w"> </span>-Iinclude
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nv">DEPFLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-MMD<span class="w"> </span>-MP
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nv">SRC_DIR</span><span class="w">   </span><span class="o">:=</span><span class="w"> </span>src
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="nv">BUILD_DIR</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>build
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nv">TARGET</span><span class="w">    </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/inventory
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="nv">SRCS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>wildcard<span class="w"> </span><span class="k">$(</span>SRC_DIR<span class="k">)</span>/*.c<span class="k">)</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="nv">OBJS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>patsubst<span class="w"> </span><span class="k">$(</span>SRC_DIR<span class="k">)</span>/%.c,<span class="k">$(</span>BUILD_DIR<span class="k">)</span>/%.o,<span class="k">$(</span>SRCS<span class="k">))</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="nv">DEPS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>OBJS:.o<span class="o">=</span>.d<span class="k">)</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">all</span> <span class="n">clean</span> <span class="n">run</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="nf">$(TARGET)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">OBJS</span><span class="k">)</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span>$^<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="nf">$(BUILD_DIR)/%.o</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">SRC_DIR</span><span class="k">)</span>/%.<span class="n">c</span> <span class="p">|</span> <span class="k">$(</span><span class="nv">BUILD_DIR</span><span class="k">)</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">    </span><span class="k">$(</span>CC<span class="k">)</span><span class="w"> </span><span class="k">$(</span>CFLAGS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>DEPFLAGS<span class="k">)</span><span class="w"> </span>-c<span class="w"> </span>$&lt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="nf">$(BUILD_DIR)</span><span class="o">:</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">    </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="nf">run</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w">    </span>./<span class="k">$(</span>TARGET<span class="k">)</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="nf">clean</span><span class="o">:</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="cp">-include $(DEPS)</span>
+</code></pre></div>
+<p>The <code>| $(BUILD_DIR)</code> is an <strong>order-only prerequisite</strong>: the directory must exist
+before compiling, but its timestamp (which changes whenever a file is added)
+must not make objects look stale. Without the <code>|</code>, every new file would trigger
+a full rebuild.</p>
+<h2 id="useful-make-invocations">Useful <code>make</code> invocations<a class="headerlink" href="#useful-make-invocations" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>make</code></td>
+<td>Build the first target</td>
+</tr>
+<tr>
+<td><code>make clean all</code></td>
+<td>Full rebuild</td>
+</tr>
+<tr>
+<td><code>make -j8</code></td>
+<td>Run up to 8 recipes in parallel — often a 4–8× speedup</td>
+</tr>
+<tr>
+<td><code>make -n</code></td>
+<td>Dry run: print the commands without executing them</td>
+</tr>
+<tr>
+<td><code>make -B</code></td>
+<td>Force rebuild, ignoring timestamps</td>
+</tr>
+<tr>
+<td><code>make --debug=b</code></td>
+<td>Explain why each target was considered out of date</td>
+</tr>
+</tbody>
+</table>
+<h2 id="beyond-make">Beyond <code>make</code><a class="headerlink" href="#beyond-make" title="Permanent link">&para;</a></h2>
+<p>Makefiles are hand-written and platform-specific. Larger projects usually add a
+generator on top:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CMake</strong></td>
+<td>Describes the build abstractly; generates Makefiles, Ninja files, or IDE projects. The de-facto standard for cross-platform C/C++.</td>
+</tr>
+<tr>
+<td><strong>Ninja</strong></td>
+<td>A very fast, deliberately dumb build executor. Almost always generated, not written by hand.</td>
+</tr>
+<tr>
+<td><strong>Meson</strong></td>
+<td>Modern, readable syntax; generates Ninja files. Popular in the GNOME/GStreamer world.</td>
+</tr>
+<tr>
+<td><strong>Autotools</strong></td>
+<td>The classic <code>./configure &amp;&amp; make &amp;&amp; make install</code>. Powerful, portable, and painful.</td>
+</tr>
+</tbody>
+</table>
+<p>Learn <code>make</code> first regardless — every one of these ultimately runs the same
+compile-and-link commands, and being able to read a Makefile tells you what any
+build is actually doing. Scaling builds across many modules and platforms is
+picked up again in <a href="../../level-4/09-build-systems-at-scale/">Level 4</a>.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Take the <code>Stack</code> module from <a href="../07-modular-programming/">Module 7</a>'s exercise
+and give it a real build. Write a Makefile with <code>CC</code>/<code>CFLAGS</code> variables, a
+pattern rule for <code>%.o: %.c</code>, <code>-MMD -MP</code> dependency generation, and <code>.PHONY</code>
+targets <code>all</code>, <code>clean</code>, <code>run</code>, and <code>test</code>. Verify three things: (1) running
+<code>make</code> twice only builds once, (2) <code>touch stack.h</code> rebuilds both objects, and
+(3) <code>make -n clean</code> prints the <code>rm</code> command without deleting anything. Then add a
+<code>BUILD=release</code> branch that swaps <code>-O0 -g</code> for <code>-O2 -DNDEBUG</code>, and confirm with
+<code>make -n BUILD=release</code> that the flags actually change.</p>
 
 
 
