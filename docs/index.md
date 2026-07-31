@@ -16,8 +16,8 @@ each level.
 |-------|-------|---------|
 | [Level 1 · Entry](level-1/index.md) | Language foundations | 9 topics + 1 project |
 | [Level 2 · Intermediate](level-2/index.md) | Memory, modules, and build tooling | 9 topics + 1 project |
-| [Level 3 · Advanced](level-3/index.md) | Data structures, algorithms, systems programming | 9 topics + 1 project |
-| [Level 4 · Master](level-4/index.md) | Production-grade systems & performance | 9 topics + 1 capstone |
+| Level 3 · Advanced (coming soon) | Data structures, algorithms, systems programming | 9 topics + 1 project |
+| Level 4 · Master (coming soon) | Production-grade systems & performance | 9 topics + 1 capstone |
 
 ## How to use this site
 

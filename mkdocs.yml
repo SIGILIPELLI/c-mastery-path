@@ -74,27 +74,7 @@ nav:
       - "08 · Makefiles & Build Systems": level-2/08-makefiles-build-systems.md
       - "09 · Debugging Tools": level-2/09-debugging-tools.md
       - "10 · Project — Linked-list Inventory System": level-2/10-project-inventory-system.md
-  - "Level 3 · Advanced":
-      - Overview: level-3/index.md
-      - "01 · Data Structures in C": level-3/01-data-structures.md
-      - "02 · Trees & Basic Graph Representations": level-3/02-trees-graphs.md
-      - "03 · Sorting & Searching Algorithms": level-3/03-sorting-searching.md
-      - "04 · Bit Manipulation": level-3/04-bit-manipulation.md
-      - "05 · Memory Management Deep Dive": level-3/05-memory-management-deep-dive.md
-      - "06 · Static & Dynamic Libraries": level-3/06-static-dynamic-libraries.md
-      - "07 · Concurrency Basics": level-3/07-concurrency-basics.md
-      - "08 · Networking Basics": level-3/08-networking-basics.md
-      - "09 · Working with Unix System Calls": level-3/09-unix-system-calls.md
-      - "10 · Project — Key-Value Store / HTTP Server": level-3/10-project-kv-store.md
-  - "Level 4 · Master":
-      - Overview: level-4/index.md
-      - "01 · Advanced Memory Management": level-4/01-advanced-memory-management.md
-      - "02 · Concurrency & Synchronization": level-4/02-concurrency-synchronization.md
-      - "03 · Performance Optimization & Profiling": level-4/03-performance-profiling.md
-      - "04 · Writing Portable C": level-4/04-writing-portable-c.md
-      - "05 · Security in C": level-4/05-security-in-c.md
-      - "06 · Advanced Data Structures": level-4/06-advanced-data-structures.md
-      - "07 · Interfacing with Other Languages": level-4/07-interfacing-other-languages.md
-      - "08 · Testing in C": level-4/08-testing-in-c.md
-      - "09 · Build Systems at Scale": level-4/09-build-systems-at-scale.md
-      - "10 · Capstone Project": level-4/10-capstone-project.md
+# --- auto-pruned stub levels (see AdSense low-value-content fix) ---
+exclude_docs: |
+  level-3/*.md
+  level-4/*.md
