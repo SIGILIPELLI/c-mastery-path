@@ -2,186 +2,190 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
+    </url>
+    <url>
+         <loc>https://sigilipelli.github.io/c-mastery-path/license/</loc>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/privacy/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/01-setup/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/02-variables-data-types/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/03-control-flow/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/04-functions/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/05-arrays-strings/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/06-pointers-basics/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/07-structs/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/08-file-io/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/09-preprocessor-multifile/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-1/10-project-contact-book/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/01-pointers-deep-dive/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/02-dynamic-memory/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/03-multidim-arrays-strings/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/04-structs-unions-advanced/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/05-binary-file-io/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/06-error-handling/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/07-modular-programming/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/08-makefiles-build-systems/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/09-debugging-tools/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-2/10-project-inventory-system/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/01-data-structures/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/02-trees-graphs/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/03-sorting-searching/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/04-bit-manipulation/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/05-memory-management-deep-dive/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/06-static-dynamic-libraries/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/07-concurrency-basics/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/08-networking-basics/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/09-unix-system-calls/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-3/10-project-kv-store/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/01-advanced-memory-management/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/02-concurrency-synchronization/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/03-performance-profiling/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/04-writing-portable-c/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/05-security-in-c/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/06-advanced-data-structures/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/07-interfacing-other-languages/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/08-testing-in-c/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/09-build-systems-at-scale/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
     <url>
          <loc>https://sigilipelli.github.io/c-mastery-path/level-4/10-capstone-project/</loc>
-         <lastmod>2026-09-02</lastmod>
+         <lastmod>2026-09-04</lastmod>
     </url>
 </urlset>
