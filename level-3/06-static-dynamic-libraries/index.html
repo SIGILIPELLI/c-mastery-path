@@ -1665,6 +1665,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2261,6 +2272,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2509,6 +2531,47 @@ that may not surface until the arguments happen to be interpreted wrong.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>A static library isn't magic bundling — <code>ar rcs</code> is a thin wrapper that
+concatenates object files together with a table of contents (an index
+mapping symbol names to which member <code>.o</code> file defines them), and linking
+against it is functionally almost identical to just listing the individual
+<code>.o</code> files on the <code>gcc</code> command line: the linker resolves each undefined
+symbol in <code>main.o</code> by scanning the archive's index, and copies in <em>only</em>
+the object-file members that actually define symbols the program calls —
+which is why <code>nm libmathutils.a</code> still shows every function even before
+linking (the archive holds everything), while <code>nm app_static</code> after
+linking would only show the ones actually referenced. This selective
+copying is also why static linking can bloat a binary less than you might
+expect for large libraries you barely use, but bloats it more than dynamic
+linking when many programs on the same system each carry their own copy of
+identical code.</p>
+<p><code>-fPIC</code>'s "position-independent code" requirement for shared libraries
+reflects a genuine difference in how addresses get resolved: normal
+(non-PIC) compiled code often bakes absolute addresses directly into
+instructions, which only works if the linker can guarantee the code always
+loads at the same fixed address — true for a static binary's own code
+segment, but not for a <code>.so</code> that might be mapped at a different base
+address in every process that loads it (especially with ASLR
+re-randomizing that base on every run). PIC code instead computes
+addresses relative to wherever it currently sits — typically via a
+register holding the code's own current base address plus a fixed offset
+looked up in a per-library table (the Global Offset Table) — one extra
+level of indirection on some accesses, which is the real (small) runtime
+cost shared libraries pay for their loading flexibility.</p>
+<p>The dynamic loader's work at process startup is a genuine, observable step
+in the OS's process-creation sequence: after the kernel maps the
+executable's own segments into a new process's address space (per
+<a href="../../level-1/01-setup/">Level 1, Module 1</a>'s loader discussion), it hands
+control to a separate program — the dynamic linker (<code>ld.so</code> on Linux,
+<code>dyld</code> on macOS) named inside the executable itself — which reads the
+list of required shared libraries, locates and <code>mmap</code>s each one into the
+process, and finally patches every call site that referenced an external
+symbol to point at wherever that library ended up. <code>dlopen</code> performs this
+exact same load-and-resolve procedure explicitly, on demand, mid-program,
+rather than automatically at startup — which is precisely why a library
+loaded via <code>dlopen</code> can be chosen conditionally at runtime, something
+startup-time dynamic linking has no mechanism for at all.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Add a third function, <code>int cube(int n)</code>, to <code>mathutils.c</code>/<code>mathutils.h</code>.
 Rebuild <strong>both</strong> the static archive and the shared library, and rebuild

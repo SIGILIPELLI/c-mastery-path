@@ -1648,6 +1648,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2283,6 +2294,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2601,6 +2623,52 @@ harmless as long as you followed that habit:</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The four memory regions correspond to concrete sections the linker builds
+into the executable file and instructions the OS loader follows when
+starting the process, not just an abstract mental model. <code>global_var</code>
+(initialized to a non-zero value) lands in the ELF/Mach-O binary's <code>.data</code>
+section, with its initial value literally stored as bytes in the
+executable file on disk — the loader just maps that section into memory
+read-write. <code>static_var</code> (implicitly zero) lands in <code>.bss</code>, which is
+special: the executable file does <em>not</em> store any bytes for it at all
+(storing a million zero bytes on disk would be wasteful), it just records
+"reserve this many bytes and zero them" — the loader allocates and zeroes
+that memory at startup, which is also why <em>every</em> uninitialized <code>static</code>
+or global variable in C is guaranteed to start at zero, unlike an
+uninitialized local. The stack and heap, by contrast, have no
+representation in the file at all — they're regions the OS sets up fresh
+for each running process, which is exactly why their addresses vary
+between runs (address space layout randomization deliberately places them
+differently each time, specifically to make memory-corruption exploits
+harder to write reliably).</p>
+<p><code>realloc</code>'s "may move the block" behavior is a direct consequence of how
+the heap allocator's internal free list is organized: growing a block in
+place is only possible if the memory immediately following it is currently
+free and large enough — information the allocator tracks via headers
+adjacent to each block, as covered in
+<a href="../../level-2/02-dynamic-memory/">Level 2, Module 2</a>. When that's not the
+case, <code>realloc</code> internally does the equivalent of <code>malloc(newsize)</code> (find a
+new large-enough free region elsewhere), <code>memcpy</code> (copy the old block's
+entire contents there, byte for byte), then <code>free(oldptr)</code> (return the
+original block to the free list) — three real operations, any of which can
+fail, which is exactly why checking the return value into a temporary
+before overwriting the original pointer is the only version of this
+pattern that can survive a failed <code>malloc</code> step without losing the still-
+valid original allocation.</p>
+<p>AddressSanitizer's ability to pinpoint a use-after-free precisely (down to
+the exact allocation, free, and re-access call stacks) works because ASan
+doesn't let <code>free</code>'d memory get reused immediately — it holds a
+configurable quarantine of recently-freed blocks aside, poisoning their
+shadow-memory bytes (the same shadow-memory mechanism used for
+buffer-overflow detection) so any subsequent access to that address is
+flagged immediately rather than silently succeeding against still-present
+old data. This is precisely why the <em>un-instrumented</em> build of the same
+<code>uaf.c</code> "often prints 42 twice" — a normal allocator has no such
+quarantine and will happily hand that exact address back out to the very
+next <code>malloc</code> call, meaning the bug's visible symptom depends entirely on
+whether anything else happened to reuse that memory before you read it
+again.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Take <code>uaf.c</code> above and fix it two ways, confirming each with
 <code>-fsanitize=address,undefined</code>: first, simply move the <code>free(p)</code> call to

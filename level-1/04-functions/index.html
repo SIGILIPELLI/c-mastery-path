@@ -885,6 +885,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2317,6 +2328,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2540,6 +2562,53 @@ rest of the file.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Calling a function is a small, well-defined protocol between caller and
+callee called a <strong>calling convention</strong>, and it's built entirely out of the
+stack and a handful of registers. When <code>main</code> calls <code>add(3, 4)</code>:</p>
+<ol>
+<li>The caller places arguments into registers (<code>%edi = 3</code>, <code>%esi = 4</code> on
+   x86-64 System V) — small integer arguments travel in registers, not on
+   the stack, for speed.</li>
+<li><code>call add</code> pushes the <strong>return address</strong> (the instruction right after
+   the call) onto the stack, then jumps to <code>add</code>'s first instruction. This
+   return address is how the CPU knows where to resume in <code>main</code> once
+   <code>add</code> finishes — there's no separate bookkeeping structure, it's just a
+   value on the stack.</li>
+<li><code>add</code> allocates its own <strong>stack frame</strong> — a chunk of stack space for its
+   local variables, sized by the compiler in advance — by moving the stack
+   pointer down.</li>
+<li><code>add</code> computes <code>a + b</code>, places the result in <code>%eax</code> (the conventional
+   return-value register), then executes <code>ret</code>, which pops the return
+   address back off the stack and jumps to it.</li>
+<li>The caller reads the result out of <code>%eax</code>.</li>
+</ol>
+<p>This concretely explains <strong>pass-by-value</strong>: the callee receives copies of
+the argument bits in its own registers/stack slots, physically separate
+memory from the caller's variables. <code>increment(x)</code> modifies the copy sitting
+in <code>increment</code>'s own stack frame; when <code>increment</code> returns, that entire
+stack frame — copy included — is simply abandoned (the stack pointer moves
+back up, and the memory is considered free for the next call to reuse). The
+caller's <code>x</code> was never touched because the callee never had its address, only
+its value.</p>
+<p><strong>Recursion</strong> is this same mechanism applied repeatedly: each call to
+<code>factorial(n)</code> gets its own fresh stack frame stacked on top of the
+previous one, each with its own independent copy of <code>n</code>. <code>factorial(5)</code>
+calls <code>factorial(4)</code> which calls <code>factorial(3)</code>... and none of these frames
+overlap — that's <em>why</em> each recursive call "remembers" its own <code>n</code> correctly
+even though the function has only one set of local variable names in the
+source code. A stack overflow happens when this chain of frames grows past
+the OS-allocated stack region's size (commonly 8MB on Linux) and the process
+faults trying to write below the bottom of that region.</p>
+<p><code>static</code> locals work completely differently: instead of living in the
+per-call stack frame, <code>calls</code> in <code>call_counter</code> is allocated once, at a
+fixed address in the binary's data segment (the same kind of memory global
+variables use), and initialized a single time before <code>main</code> even starts.
+Every call to <code>call_counter</code> reads and writes that same fixed address rather
+than a fresh stack slot — which is exactly why the value survives between
+calls while staying invisible outside the function: the <em>scope</em> is
+compile-time (name only resolves inside <code>call_counter</code>), but the <em>storage
+duration</em> is the whole program's lifetime.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a function <code>int power(int base, int exponent)</code> that computes
 <code>base^exponent</code> using recursion (base case: <code>exponent == 0</code> returns <code>1</code>).

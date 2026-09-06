@@ -1406,6 +1406,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2383,6 +2394,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2758,6 +2780,41 @@ generator on top:</p>
 compile-and-link commands, and being able to read a Makefile tells you what any
 build is actually doing. Scaling builds across many modules and platforms is
 picked up again in <a href="../../level-4/09-build-systems-at-scale/">Level 4</a>.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>make</code>'s entire decision procedure rests on one filesystem primitive: each
+file's <strong>modification timestamp</strong> (<code>mtime</code>), which the kernel maintains for
+every file and which <code>make</code> reads via the <code>stat()</code> system call before
+running any recipe. "Is <code>app</code> stale relative to <code>main.o</code>" is literally
+<code>stat("app").mtime &lt; stat("main.o").mtime</code> — a single timestamp comparison,
+repeated across the whole dependency graph. This is exactly why <code>touch
+counter.c &amp;&amp; make</code> triggers a rebuild without changing a single byte of
+content: <code>touch</code> only updates the mtime, and <code>make</code> has no way (nor any
+need) to know the content is identical — it trusts the timestamp
+completely, which is also why clock skew (a file copied with a timestamp
+in the past, or a networked filesystem with unsynchronized clocks) can
+make <code>make</code> either skip a rebuild it should do or redo one it doesn't need.</p>
+<p>The <code>-MMD -MP</code> dependency-generation trick works because the compiler
+itself already builds the complete list of every header a <code>.c</code> file
+transitively includes — it has to, in order to preprocess the file at all
+— so <code>-MMD</code> just asks it to dump that list it already computed into a
+<code>.d</code> file in Makefile syntax, rather than throwing it away after
+compilation. <code>-include $(DEPS)</code> then splices those generated rules into
+<code>make</code>'s own dependency graph, extending <code>main.o</code>'s prerequisites to
+include every header it actually uses (transitively) rather than just the
+<code>.c</code> file named in the pattern rule — closing the exact gap that made
+<code>%.o: %.c</code> alone miss header changes.</p>
+<p><code>-O0</code> versus <code>-O2</code> changes what "the code" even means at the machine level,
+which is why gdb needs <code>-O0</code> to make sense of a running program: an
+optimizing compiler is free to keep a variable in a register for its
+entire lifetime and never write it to its "normal" stack slot, eliminate a
+variable entirely if its value is never observed, or reorder instructions
+across source lines for pipeline efficiency. <code>-g</code> embeds a mapping (DWARF
+debug info) from machine addresses back to source lines and variable
+locations, but at <code>-O2</code> that mapping often has to describe "this variable's
+value only exists in this register during these three instructions,"
+which is why stepping through optimized code in a debugger frequently
+looks like it's skipping lines or reporting <code>&lt;optimized out&gt;</code> for a
+variable you expect to see.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Take the <code>Stack</code> module from <a href="../07-modular-programming/">Module 7</a>'s exercise
 and give it a real build. Write a Makefile with <code>CC</code>/<code>CFLAGS</code> variables, a

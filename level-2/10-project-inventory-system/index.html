@@ -1434,6 +1434,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2327,6 +2338,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2814,6 +2836,44 @@ missed <code>free</code> or a use-after-free hides easily. Run it under the tool
 </code></pre></div>
 <p>Add a few items, remove one, adjust stock, save and quit — a clean exit with
 no sanitizer output means every node allocated was freed exactly once.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>This inventory is a <strong>singly linked list</strong>, and every operation's cost
+traces directly back to that structure's shape in memory: each <code>Node</code> is
+an independent heap allocation, connected only by the <code>next</code> pointer stored
+inside it, with no contiguous relationship between one item and the next
+the way an array would have. <code>inventory_add</code>'s insert-at-head is O(1) for
+exactly this reason — it only ever touches two pointers (<code>node-&gt;next =
+inv-&gt;head; inv-&gt;head = node;</code>), regardless of how many items already exist,
+because nothing else in the list needs to move or even be visited.
+<code>inventory_find</code> and <code>inventory_remove</code>, by contrast, are O(n): the only
+way to reach node <em>k</em> is to have already visited nodes 0 through <em>k-1</em>
+and followed each one's <code>next</code> pointer in turn — there is no way to jump
+directly to "the fifth node" the way <code>array[4]</code> jumps directly via
+address arithmetic, because linked-list nodes have no guaranteed
+relationship between their memory addresses at all.</p>
+<p><code>inventory_remove</code>'s <code>prev</code>/<code>cur</code> pair exists to solve a structural problem
+particular to <em>singly</em> linked lists: unlinking <code>cur</code> requires rewriting
+whoever's <code>next</code> field currently points at it, but a node has no way to
+look backward — there is no <code>prev</code> pointer stored anywhere. The traversal
+carries <code>prev</code> alongside <code>cur</code> specifically so that the moment the target
+is found, <code>prev-&gt;next = cur-&gt;next</code> can splice it out in one assignment
+before <code>cur</code> itself is freed. This is also why removing the head node
+needs a special case (<code>if (prev == NULL) inv-&gt;head = cur-&gt;next;</code>): there is
+no "previous node" pointing at the head — the head is instead referenced by
+<code>inv-&gt;head</code> itself, a different kind of slot than a <code>next</code> field, so the
+unlinking logic must branch on which kind of slot is being rewritten.</p>
+<p>The save/load round-trip's "flatten to an array, then rebuild as a list"
+dance exists because a linked list's very structure — the actual pointer
+values chaining nodes together — is only meaningful within one running
+process's virtual address space, exactly like the pointer-in-a-struct
+problem from <a href="../05-binary-file-io/">Module 5</a>. <code>fwrite</code>-ing the <code>Node</code>
+structs directly would write real heap addresses to disk, addresses that
+mean nothing (or point at unrelated data) the next time the program runs
+and the allocator hands out different addresses. Copying just the <code>Item</code>
+payloads into a temporary flat array first produces something genuinely
+portable — plain data with no embedded addresses — which <code>inventory_load</code>
+then uses to rebuild a <em>fresh</em> set of linked nodes with pointer values that
+are only ever valid for this run.</p>
 <h2 id="stretch-goals">Stretch goals<a class="headerlink" href="#stretch-goals" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Add a <code>4b. Remove item</code> menu option calling <code>inventory_remove</code>, and confirm

@@ -2030,6 +2030,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2232,6 +2243,17 @@
     <span class="md-ellipsis">
       
         Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2528,6 +2550,46 @@ wanted a tree.</p>
   might degenerate. Convert to an explicit stack when the depth is not
   provably logarithmic.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>An AVL rotation is a small, fixed set of pointer reassignments, but seeing
+exactly which pointers move (and why the invariant is restored after
+exactly one or two of them) is worth doing on paper terms. A right rotation
+around node <code>y</code> with left child <code>x</code> does precisely three pointer writes: <code>y</code>'s
+left child becomes <code>x</code>'s former right child, <code>x</code>'s right child becomes <code>y</code>,
+and whichever pointer used to point at <code>y</code> (the parent's child pointer, or
+the tree root) now points at <code>x</code>. No node is copied, no key moves — only
+three pointers change and two nodes' cached heights get recomputed from
+their (now different) children. The reason a single or double rotation
+always suffices to restore the AVL invariant (never needing to rotate
+further up the tree on insert) is a property of the balance arithmetic
+itself: an insertion changes any node's height by at most 1, so a subtree
+can become at most 2 out of balance before the ancestor closest to the
+insertion notices — and the four rotation cases (LL, RR, LR, RL) are an
+exhaustive case analysis of the only ways a height-2 imbalance can arise
+from a single insertion, each with an algebraic proof that one rotation
+brings the balance factor back into {-1, 0, 1}.</p>
+<p>The Bloom filter's false-positive math comes directly from treating each
+hash as choosing a uniformly random bit, independent per hash function
+(an approximation, but a good one for well-mixed hashes like FNV-1a).
+After inserting n items, each setting k bits out of m total, the
+probability any specific bit is still 0 is <code>(1 - 1/m)^(kn)</code>, so the
+probability all k of a queried item's bits happen to be set by <em>other</em>
+items — a false positive — is <code>(1 - (1 - 1/m)^(kn))^k</code>, which the module's
+formula approximates with <code>(1 - e^(-kn/m))^k</code> using the standard
+<code>(1-1/m)^m ≈ e^-1</code> limit. This is exactly why doubling the item count
+without resizing degrades the rate "sharply" rather than linearly: the
+inner term is an exponential in <code>n/m</code>, so once the bit array is more than
+about half full of set bits, each additional item's false-positive
+contribution grows faster than the last. <code>h1 + i*h2</code> producing k
+<em>effectively</em> independent-looking indices from only two real hash
+computations (Kirsch–Mitzenmacher) works because it is a linear function
+of <code>i</code> modulo <code>BITS</code> — as long as <code>h2</code> isn't degenerate (e.g. always even
+when <code>BITS</code> is a power of two, which would make it hit only half the
+possible slots), the sequence <code>h1, h1+h2, h1+2h2, ...</code> behaves enough like
+independent draws for the false-positive analysis above to hold in
+practice, which is why real implementations mix <code>h1</code> and <code>h2</code> from
+different hash functions or algorithms rather than deriving both from one
+pass with related constants carelessly.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Add <code>avl_delete</code> — the operation this module deliberately left out, and the
 one that is genuinely harder than insert. Handle all three cases (leaf, one

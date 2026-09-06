@@ -1036,6 +1036,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2283,6 +2294,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2504,6 +2526,36 @@ strings, pointers, file I/O, and multi-file compilation.</p>
 <a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>&gt; 4
 <a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>Saved. Goodbye!
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>This project's <code>Contact contacts[MAX_CONTACTS]</code> array in <code>main</code> is 100 ×
+<code>sizeof(Contact)</code> bytes allocated as one contiguous block on <code>main</code>'s stack
+frame the moment <code>main</code> starts — with <code>NAME_LEN</code> 50 and <code>PHONE_LEN</code> 20 (plus
+likely padding), that's on the order of 7KB reserved up front regardless of
+how many contacts actually get added. This is why <code>MAX_CONTACTS</code> is a
+compile-time constant baked into both the struct array's size and the
+bounds check in <code>add_contact</code>: the stack frame's size is fixed when the
+function is compiled, so there is no way to "grow" this array later without
+switching to heap allocation (<code>malloc</code>/<code>realloc</code>, covered in Level 2) —
+the array physically cannot expand past its declared size, which is exactly
+why <code>add_contact</code> checks <code>*count &gt;= MAX_CONTACTS</code> before writing.</p>
+<p>Passing <code>Contact contacts[]</code> to functions like <code>list_contacts</code> doesn't copy
+the 7KB array — array parameters always decay to a pointer to the first
+element (as covered in <a href="../06-pointers-basics/">Module 6</a>), so <code>contacts</code> in
+<code>list_contacts</code> is really just an 8-byte address on that function's own
+stack frame, and every <code>contacts[i].name</code> access reaches back into <code>main</code>'s
+original array. <code>add_contact</code> takes <code>int *count</code> for the same underlying
+reason <code>swap</code> needed pointers: <code>count</code> needs to change in <code>main</code> after the
+function returns, and only a pointer to it lets <code>add_contact</code> write through
+to the caller's actual variable rather than a disposable local copy.</p>
+<p>The persistence format itself — <code>"%s,%s\n"</code> — is a deliberate simplification
+that exposes a real bug class: <code>fscanf(f, "%49[^,],%19[^\n]\n", ...)</code> reads
+"everything up to a comma" as the name, so a contact whose name contains a
+literal comma would corrupt the parse on the next load, silently splitting
+one field into two. This is the exact kind of fragility that motivates
+proper binary record formats (fixed-size structs written with <code>fwrite</code>,
+covered in <a href="../../level-2/05-binary-file-io/">Level 2's binary I/O module</a>)
+once text delimiters start fighting with the data they're meant to
+separate.</p>
 <h2 id="stretch-goals">Stretch goals<a class="headerlink" href="#stretch-goals" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Add a <code>delete_contact</code> function and a matching menu option.</li>

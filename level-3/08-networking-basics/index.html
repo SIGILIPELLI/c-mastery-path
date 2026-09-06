@@ -1732,6 +1732,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2283,6 +2294,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2705,6 +2727,45 @@ blank line that ends the headers.</p>
 <li><code>struct sockaddr_in</code> must be zeroed before use; <code>= {0}</code> does it. Leftover
   stack garbage in the padding has caused real bind failures.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>A "socket" being just a file descriptor is not a loose analogy — sockets,
+regular files, pipes, and terminals are all represented inside the kernel
+by the same underlying abstraction, and <code>recv</code>/<code>send</code> are thin wrappers
+around the exact same <code>read()</code>/<code>write()</code> system calls used for ordinary
+file I/O in <a href="../../level-1/08-file-io/">Level 1, Module 8</a>, just with a few
+socket-specific flags. This is why <code>close(fd)</code> works identically on a
+socket as on a file, and why the kernel enforces the same per-process file
+descriptor limit across both — a program that leaks unclosed sockets
+exhausts the same finite resource as one leaking unclosed files.</p>
+<p>TCP being "a byte stream, not a message queue" is a direct consequence of
+what the protocol actually transmits: TCP breaks your data into IP packets
+however is convenient for the network at the moment — based on the
+path's maximum transmission unit, current congestion, retransmissions of
+lost packets, and Nagle's algorithm potentially coalescing several small
+<code>send</code> calls into one packet — and the <em>receiving</em> kernel's TCP stack
+reassembles those packets back into one ordered stream of bytes before
+handing them to your <code>recv</code> call, with absolutely no memory of where your
+original <code>send</code> boundaries were. This is exactly why "ALPHABETAGAMMA"
+arrives however it arrives: the three separate <code>send</code> calls' boundaries
+were never protocol-level information to begin with, only ever
+convenient chunks <em>your</em> program handed to the kernel — the kernel was
+always free to merge or split them differently before transmission, which
+is why length-prefixing or a delimiter (information your own application
+protocol carries inside the byte stream itself) is the only reliable way
+to recover message boundaries.</p>
+<p><code>htons</code>/<code>htonl</code> performing a real byte swap on a little-endian machine is
+the exact same endianness mechanism from
+<a href="../04-bit-manipulation/">Level 3, Module 4</a>'s bit-manipulation module,
+applied to a concrete, load-bearing case: a 16-bit port number like <code>9090</code>
+sits in memory as the bytes <code>82 23</code> on a little-endian CPU (least
+significant byte first), but the TCP/IP specification fixed network byte
+order as big-endian decades ago, so every machine on the internet needs to
+agree on one convention regardless of its own native byte order. <code>htons</code>
+is literally <code>((x &lt;&lt; 8) | (x &gt;&gt; 8))</code> (for the 16-bit case) — an actual
+shift-and-OR bit operation executed on the value's bits, not a no-op or a
+labeling exercise — which is exactly why skipping it silently binds to
+the <em>wrong</em> numeric port (<code>33315</code> instead of <code>9090</code>) rather than producing
+any error: the bind call has no way to know you meant the swapped value.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Give the echo server <strong>length-prefixed framing</strong> so message boundaries
 survive the stream. The client sends a 4-byte <code>htonl</code> length followed by

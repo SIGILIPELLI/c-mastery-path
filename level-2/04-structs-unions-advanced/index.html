@@ -1255,6 +1255,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2305,6 +2316,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2638,6 +2660,43 @@ positions must match a file format or wire protocol.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>A <code>union</code>'s "share one address" behavior isn't a language-level trick — the
+compiler allocates one region of memory exactly <code>sizeof(largest member)</code>
+bytes wide, and every member's offset is computed as <code>0</code>, full stop. <code>v.i</code>
+and <code>v.f</code> are literally the same four bytes reinterpreted through different
+type lenses at compile time: writing <code>v.f = 3.14f</code> runs the IEEE-754
+encoder and stores the resulting bit pattern into those same four bytes;
+reading <code>v.i</code> immediately afterward reinterprets that identical bit pattern
+as two's-complement, producing a value with no numeric relationship to
+<code>3.14</code> — the "meaningless" 1078523331 you saw is exactly the 32-bit IEEE-754
+encoding of <code>3.14f</code> read back as a signed integer. This is the mechanical
+basis of type punning: the union simply refuses to remember which member
+you last wrote, because at the hardware level there is only one memory
+location and one set of bits — "type" is metadata the compiler drops the
+instant it finishes generating code.</p>
+<p>Self-referential structs work despite "a struct can't contain itself"
+because <code>struct Node *next</code> is a pointer — a fixed 8-byte address-sized
+field — not an embedded <code>Node</code>. The compiler can compute <code>sizeof(Node)</code>
+immediately (it just needs to know a pointer's size, not the size of
+whatever it eventually points to), which is why the forward reference
+<code>struct Node *next;</code> compiles fine inside <code>struct Node</code>'s own definition
+while an embedded <code>struct Node next;</code> would require infinite regress and is
+correctly rejected. Building the list with <code>malloc</code> for each node means
+each <code>Node</code> lives at its own independently-allocated heap address, with
+<code>next</code> fields chaining those addresses together — the list's structure
+exists entirely as pointer values, not as any contiguous memory layout the
+way an array is.</p>
+<p>Bit-fields push the padding logic one level deeper: instead of allocating
+whole bytes per member, the compiler packs several fields into the bits of
+one underlying storage unit (commonly a 32-bit <code>unsigned int</code>), tracking a
+bit-offset within that unit for each field and generating shift-and-mask
+instructions to read or write each one. <code>f.priority = 9</code> truncating to <code>1</code>
+happens because the compiler generates a mask that keeps only the low 3
+bits of whatever value you assign (<code>9</code> is <code>1001</code> in binary; masked to 3
+bits it becomes <code>001</code>, i.e. <code>1</code>) — there's no bounds check, just an AND
+operation baked in at compile time, the same silent-truncation behavior as
+integer overflow but happening at a sub-byte granularity.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Model a small shape system. Define <code>typedef enum { CIRCLE, RECTANGLE, TRIANGLE
 } ShapeKind;</code> and a tagged union <code>Shape</code> holding the tag plus a union of

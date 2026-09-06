@@ -2114,6 +2114,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2232,6 +2243,17 @@
     <span class="md-ellipsis">
       
         Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2558,6 +2580,45 @@ know your include paths and macros. Without it, your IDE is guessing.</p>
   recipe line. This is still, decades later, the most common first Makefile
   error.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Both Make and CMake exist to solve the same underlying problem: recompiling
+only what a change can possibly have affected, and the mechanism is a
+<strong>dependency graph over files</strong>, checked by filesystem timestamps. <code>make</code>
+looks at every rule's prerequisites, and for a target it rebuilds if the
+target file is missing or its modification time (<code>mtime</code>, from <code>stat()</code>) is
+older than any prerequisite's. That is why <code>-MMD -MP</code> matters mechanically:
+the compiler, while compiling <code>foo.c</code>, already knows every header it
+<code>#include</code>d to produce <code>foo.o</code>, and <code>-MMD</code> makes it emit that exact list as
+a <code>foo.d</code> Makefile fragment (<code>foo.o: foo.c foo.h util.h ...</code>); without
+including that fragment, Make's graph only has the rule you wrote by hand
+(usually just <code>foo.o: foo.c</code>), so editing a header changes no file Make's
+graph knows to check, and a stale object survives the next build with no
+error — just wrong behavior from code that silently wasn't recompiled.</p>
+<p><code>make -j8</code>'s parallelism is a topological-order traversal of that same
+graph: any two targets with no dependency edge between them (directly or
+transitively) can build in either order or simultaneously, so <code>make</code>
+dispatches up to 8 leaf-ward-ready jobs to child processes at once. A
+missing dependency edge — a recipe that writes a file another rule silently
+reads without declaring it as a prerequisite — is invisible in serial mode
+(the actual write happens to land in program order because there is only
+one execution order to have) and becomes a race the instant two rules with
+no ordering constraint run concurrently; whichever process's write or read
+happens to land first that run decides whether the build is correct, which
+is exactly why <code>-j</code> failures reproduce intermittently rather than every
+time.</p>
+<p>CMake's <code>PUBLIC</code>/<code>PRIVATE</code>/<code>INTERFACE</code> propagation is a graph-transitivity
+rule, not magic: each target carries two property lists —
+<code>INCLUDE_DIRECTORIES</code> (what this target itself needs to compile) and
+<code>INTERFACE_INCLUDE_DIRECTORIES</code> (what anything linking this target needs).
+<code>PUBLIC</code> appends to both, <code>PRIVATE</code> only the first, <code>INTERFACE</code> only the
+second. <code>target_link_libraries(app PRIVATE core)</code> makes CMake union <code>core</code>'s
+<code>INTERFACE_INCLUDE_DIRECTORIES</code> into <code>app</code>'s actual include-path flags when
+it generates the compile command for <code>main.c</code> — the include path was never
+typed twice, it was computed once from the dependency edge you declared.
+The generated <code>compile_commands.json</code> is simply a dump of the exact
+argv CMake built for each translation unit, in JSON, which is why tools
+like <code>clangd</code> that read it see identical flags to what the real compiler
+saw — no separate approximation of your build to keep in sync.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Add a CI workflow that builds this project three ways and would have caught
 every bug in Level 4. Create <code>.github/workflows/ci.yml</code> with a matrix over

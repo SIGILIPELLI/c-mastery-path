@@ -1626,6 +1626,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2295,6 +2306,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2614,6 +2636,41 @@ code, and why network protocols specify a fixed "network byte order"
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Every bitwise operator in this module maps to exactly one CPU instruction
+— <code>&amp;</code> to <code>AND</code>, <code>|</code> to <code>OR</code>, <code>^</code> to <code>XOR</code>, <code>&lt;&lt;</code>/<code>&gt;&gt;</code> to <code>SHL</code>/<code>SHR</code> (or
+<code>SAR</code> for arithmetic right shift) — which is why bit manipulation code is
+about as fast as C code gets: there's no loop, no memory access beyond
+loading the operands, just a single-cycle ALU (arithmetic logic unit)
+operation on values already sitting in registers. This is the real reason
+<code>x &amp; (x - 1)</code> clearing the lowest set bit is preferred over looping through
+every bit position — it replaces up to 32 iterations of a loop (each with
+its own comparison, branch, and shift) with two register operations,
+<code>SUB</code> then <code>AND</code>, regardless of how many bits <code>x</code> has set below the
+highest one.</p>
+<p>The signed-vs-unsigned right-shift difference isn't a software policy
+choice, it's two genuinely different hardware instructions: <code>SAR</code>
+(arithmetic shift right) copies the sign bit into vacated positions as it
+shifts, while <code>SHR</code> (logical shift right) always fills with zero. The
+compiler chooses which instruction to emit purely by looking at the
+<em>type</em> of the operand at compile time — <code>signed_val &gt;&gt; 1</code> compiles to
+<code>SAR</code> because <code>signed_val</code> is declared <code>int</code>, while the exact same bit
+pattern shifted through an <code>unsigned int</code> variable compiles to <code>SHR</code>. This
+is why casting to <code>unsigned int</code> before shifting genuinely changes which
+CPU instruction executes, not just which C rule applies — it's a real,
+observable difference in the generated machine code.</p>
+<p><code>1u &lt;&lt; 32</code> being undefined behavior traces to a hardware quirk many CPU
+architectures share: x86's shift instructions don't actually use the full
+shift-amount operand — they mask it (typically to 5 bits for a 32-bit
+operand, <code>amount &amp; 31</code>), so a hardware <code>SHL</code> by 32 is often silently
+executed as a shift by 0, returning the operand unchanged rather than 0.
+The C standard leaves this case undefined specifically because different
+architectures' shift instructions behave differently at or beyond the
+operand's bit width, and rather than forcing every compiler to insert an
+extra bounds check before every single shift instruction (which would
+undermine the entire point of bit operations being fast, unconditional
+instructions), the standard simply declines to guarantee any particular
+result.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write <code>int is_power_of_two(unsigned int x)</code> using the cheat-sheet idiom
 above (<code>x != 0 &amp;&amp; (x &amp; (x - 1)) == 0</code>), and verify it against <code>0, 1, 2, 3,

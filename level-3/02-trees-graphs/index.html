@@ -1548,6 +1548,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2251,6 +2262,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2556,6 +2578,45 @@ bookkeeping, different order of exploration.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Recursive tree functions like <code>tree_insert</code>, <code>tree_print_inorder</code>, and
+<code>tree_free</code> are silently using the <strong>call stack</strong> as their own traversal
+stack — every recursive call pushes a new stack frame holding that call's
+own <code>root</code> parameter and local variables, exactly as described for plain
+recursion in <a href="../../level-1/04-functions/">Level 1, Module 4</a>. This is why
+an unbalanced tree (built from sorted input, degrading into a straight
+chain) is dangerous beyond just slow search: <code>tree_free</code>'s recursion on a
+chain of 100,000 sorted-insert nodes would need 100,000 nested stack
+frames simultaneously alive, which can exhaust the process's stack region
+(commonly a few MB) and crash with a stack overflow — a balanced tree of
+the same size needs only about 17 levels of recursion (log₂ 100,000), so
+the practical failure mode of an unbalanced BST isn't just "slower," it's
+"can crash a program that would otherwise run fine."</p>
+<p>The reason in-order traversal visits a BST's values in sorted order is a
+direct, provable consequence of the insertion invariant, not a property
+you must separately verify: every node's entire left subtree was built
+from values compared as "less than" that node, and its entire right
+subtree from values "greater than" it, recursively, all the way down. Since
+in-order recursion always fully exhausts the left subtree (all smaller
+values) before visiting the node itself, then fully exhausts the right
+subtree (all larger values) afterward, the output is sorted by induction on
+subtree size — the same reasoning that shows pre-order (visit before
+recursing) naturally produces a valid rebuild sequence for copying a tree,
+since a node's value is emitted before either child, letting a copy
+routine insert nodes in an order that reconstructs the same shape.</p>
+<p><code>graph_bfs</code>'s frontier queue reveals the real distinction between BFS and
+DFS at the mechanism level, not just "order of visiting": BFS explicitly
+maintains a FIFO queue <em>as data</em> — an array with <code>head</code>/<code>tail</code> indices that
+persists across the whole traversal — so it can always resume from the
+oldest still-undiscovered vertex, guaranteeing it explores everything at
+distance 1 before anything at distance 2. DFS achieves its different
+exploration order specifically because recursion (or an explicit stack)
+processes the <em>most recently</em> discovered vertex next, diving one path as
+deep as possible before backtracking — the underlying adjacency-list walk
+is identical in both, only the discipline used to choose "which discovered
+vertex to visit next" (FIFO versus LIFO) differs, which is the entire
+mechanical difference between "explores level by level" and "explores as
+deep as possible first."</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Add a <code>tree_height(const TreeNode *root)</code> function to <code>bst.c</code> that returns
 <code>0</code> for an empty tree and <code>1 + max(height(left), height(right))</code> otherwise.

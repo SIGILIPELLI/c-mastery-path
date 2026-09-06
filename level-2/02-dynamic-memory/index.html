@@ -1199,6 +1199,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2305,6 +2316,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2619,6 +2641,42 @@ crash that only shows up in production.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>malloc</code> is not a direct line to the operating system — it's a user-space
+allocator (part of <code>libc</code>, commonly glibc's <code>ptmalloc</code> or macOS's
+<code>libmalloc</code>) that manages one or more large regions of memory it requests
+from the kernel in bulk (via <code>sbrk</code> or, more commonly today, <code>mmap</code> for
+larger requests) and then subdivides itself. Each small <code>malloc</code> call
+usually doesn't touch the kernel at all — it just carves a chunk out of
+memory the allocator already owns, which is why <code>malloc</code>/<code>free</code> are much
+faster than a system call but still far slower than stack allocation (which
+is just decrementing a register). The allocator keeps hidden bookkeeping
+directly adjacent to your data — typically a small header just <em>before</em> the
+pointer you're given, recording the block's size and links to neighboring
+free blocks — which is exactly why writing even one byte past the end of a
+<code>malloc</code>'d block (a heap buffer overflow) can corrupt that header and crash
+the program much later, inside some completely unrelated call to <code>malloc</code>
+or <code>free</code>, when the allocator next tries to read the corrupted bookkeeping.</p>
+<p><code>free(ptr)</code> doesn't erase or return memory to the OS in most cases — it
+marks the block as available in the allocator's internal free list so a
+future <code>malloc</code> call can reuse that exact address. This is the root
+mechanism behind <strong>use-after-free</strong>: the memory at <code>ptr</code> is very often
+still mapped and readable after <code>free</code>, so <code>*ptr</code> frequently "looks fine"
+for a while — until another <code>malloc</code> call reuses that same address for
+something else, and the old pointer now aliases live, unrelated data. This
+is also why <strong>double-free</strong> corrupts the heap: freeing the same block twice
+typically inserts it into the allocator's free list twice, so a later
+<code>malloc</code> can hand out the <em>same address</em> to two different parts of the
+program simultaneously, each believing it has exclusive ownership.</p>
+<p><code>realloc</code> growing "in place" versus "moving" depends entirely on whether
+there happens to be enough free space immediately adjacent to the existing
+block in the allocator's internal structures. When it can't extend in
+place, <code>realloc</code> internally does <code>malloc(newsize)</code> + <code>memcpy(old data)</code> +
+<code>free(oldptr)</code> — which is precisely why assigning the result back onto the
+original pointer before checking for <code>NULL</code> is catastrophic: if that
+sequence fails partway (returns <code>NULL</code>), you've already lost the only
+reference to the still-valid original block, permanently leaking it,
+because nothing else in the process holds its address anymore.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write <code>int *read_numbers(size_t *out_count)</code> that reads integers from <code>stdin</code>
 until EOF (<code>scanf("%d", &amp;x) != 1</code>) into a heap array that starts with capacity 4

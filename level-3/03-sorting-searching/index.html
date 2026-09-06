@@ -1593,6 +1593,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2285,6 +2296,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2517,6 +2539,39 @@ call on every comparison, which is measurably slower than the specialized
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Quicksort's recursion demonstrates exactly the stack-frame accounting from
+<a href="../../level-1/04-functions/">Level 1, Module 4</a>, and it's directly
+responsible for the algorithm's <em>space</em> complexity, not just its time
+complexity: each recursive call to <code>quicksort</code> gets its own stack frame
+holding its own <code>low</code>/<code>high</code>, and those frames stack up to a depth equal to
+the recursion tree's height — O(log n) for a balanced split, but O(n) for
+the worst-case already-sorted input, meaning the pathological case doesn't
+just run slowly, it also risks a stack overflow for large arrays, the same
+mechanism that made an unbalanced BST dangerous in
+<a href="../02-trees-graphs/">Module 02</a>.</p>
+<p>The <code>swap</code> calls inside <code>partition</code> are where quicksort actually earns its
+in-place, O(1)-extra-space property: unlike merge sort, which needs a
+separate output buffer to merge into, Lomuto partitioning rearranges
+elements entirely by exchanging pairs within the original array — each
+<code>swap(&amp;arr[i], &amp;arr[j])</code> is just three loads and three stores at fixed
+offsets from <code>arr</code>'s base address, the same pointer arithmetic covered in
+<a href="../../level-2/01-pointers-deep-dive/">Level 2, Module 1</a>. This is exactly
+why quicksort tends to beat merge sort in practice on typical hardware
+despite matching its average-case big-O: fewer memory allocations, and the
+in-place swaps stay within a small, cache-resident window of the array
+rather than streaming through a separate allocated buffer.</p>
+<p><code>mid = low + (high - low) / 2</code> avoiding <code>(low + high) / 2</code> is a concrete
+instance of the two's-complement overflow behavior from
+<a href="../../level-1/02-variables-data-types/">Level 1, Module 2</a>: if <code>low</code> and
+<code>high</code> are both large positive <code>int</code>s, their sum can exceed <code>INT_MAX</code> and
+wrap to a negative number via the same carry-into-the-sign-bit mechanism
+that made <code>INT_MAX + 1</code> wrap around — after which dividing a negative
+number by 2 and using it as an array index reads out of bounds. Restating
+the formula as <code>low + (high - low) / 2</code> keeps every intermediate value
+within the original range's bounds, so the same catastrophic overflow
+can't occur no matter how large <code>low</code> and <code>high</code> get (short of the array
+itself exceeding <code>INT_MAX</code> elements).</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Modify <code>partition</code> to pick the pivot as the <strong>middle</strong> element of the range
 instead of the last one (swap <code>arr[mid]</code> and <code>arr[high]</code> at the top of

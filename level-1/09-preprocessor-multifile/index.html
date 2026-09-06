@@ -1008,6 +1008,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2283,6 +2294,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2489,6 +2511,53 @@ recompilation is exactly what <strong>Makefiles</strong> are for, covered in
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The preprocessor is a genuinely separate program (<code>cpp</code>, invoked
+automatically as the first stage of <code>gcc</code>) that operates purely on <em>text</em> —
+it has no concept of C syntax, types, or scoping at all. <code>#include "helpers.h"</code>
+literally deletes that line and splices the entire contents of <code>helpers.h</code>
+in its place, byte for byte, before the real compiler ever runs. This is
+why a syntax error inside a header shows up with the <em>including</em> file's
+name and a line number that reflects the pasted-in position — the compiler
+genuinely never sees separate files, only one enormous, fully expanded
+token stream. You can watch this happen directly with <code>gcc -E main.c</code>,
+which stops after preprocessing and dumps the expanded source; for a file
+that includes <code>&lt;stdio.h&gt;</code>, this is typically hundreds of lines even though
+your own file might be five.</p>
+<p><code>#define</code> macros are expanded by simple textual substitution with no
+awareness of operator precedence or types — which is exactly the mechanism
+behind the <code>SQUARE(x)</code> parenthesization pitfall. <code>SQUARE(1 + 2)</code> without
+inner parens literally becomes the token sequence <code>1 + 2 * 1 + 2</code> because
+the preprocessor performs find-and-replace, not function application; C's
+normal precedence rules then parse that expanded text arithmetically,
+giving <code>1 + 2 + 2 = 5</code> instead of <code>9</code>. There is no macro "call" at
+runtime — by the time the compiler proper sees the code, <code>SQUARE</code> no
+longer exists anywhere; it's already gone, replaced by the literal
+substituted text.</p>
+<p><strong>Header guards</strong> work by exploiting the preprocessor's own state: <code>#ifndef</code>
+checks whether a macro name has been <code>#define</code>d yet, using the exact same
+text-substitution machinery. The first time <code>math_utils.h</code> is pasted in,
+<code>MATH_UTILS_H</code> isn't defined, so the preprocessor defines it and keeps the
+body; if the same header gets pasted a second time (transitively, through
+another header), <code>MATH_UTILS_H</code> is now already defined and the entire body
+between <code>#ifndef</code> and <code>#endif</code> is skipped — preventing the compiler from
+seeing the same <code>int add(int a, int b);</code> prototype twice, which would
+otherwise be a redefinition error.</p>
+<p><strong>Separate compilation</strong> is what actually makes multi-file projects
+practical: <code>gcc -c math_utils.c -o math_utils.o</code> runs the full
+preprocess → compile → assemble pipeline but stops before linking,
+producing an object file containing machine code for <code>add</code> and <code>multiply</code>
+plus a <strong>symbol table</strong> entry naming them (visible with <code>nm math_utils.o</code>).
+When <code>main.c</code> calls <code>add(3, 4)</code> without ever seeing its implementation, the
+compiler only checks the call against the <em>prototype</em> from the header (are
+the argument types compatible?) and emits a call instruction to an
+as-yet-unresolved symbol named <code>add</code>. The linker's job, in the final step
+(<code>gcc main.o math_utils.o -o program</code>), is purely to scan every object
+file's symbol table, find where <code>add</code> is actually defined, and patch the
+placeholder address in <code>main.o</code>'s call instruction to point at that real
+address — which is exactly why only files that actually change need
+recompiling: <code>math_utils.o</code>'s machine code and symbol table don't change
+just because <code>main.c</code> did.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Create a small two-file library: a header <code>strings_utils.h</code> with a header
 guard declaring a function <code>int countVowels(const char *text);</code>, and a source

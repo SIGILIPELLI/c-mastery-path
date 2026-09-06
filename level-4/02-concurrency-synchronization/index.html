@@ -1929,6 +1929,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2261,6 +2272,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2577,6 +2599,50 @@ all.</p>
   calling anything from a thread. <code>errno</code> is per-thread; <code>strtok</code> and <code>rand</code>
   are not (<code>strtok_r</code>, <code>rand_r</code> are).</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Cache coherence between cores runs on a protocol — commonly <strong>MESI</strong>
+(Modified, Exclusive, Shared, Invalid), or a variant of it — that tracks,
+per cache line, which core(s) may hold it and in what state. When core A
+writes to a line that core B also has cached, the coherence hardware sends
+an invalidation to B's cache (or, in a snooping/directory-based
+implementation, B's controller observes the write on the interconnect and
+invalidates its own copy), forcing B to re-fetch the line from A's cache or
+from the shared L3 the next time it touches those bytes. This is not
+software you can see — it happens entirely in silicon, transparently — but
+its cost is very real: an inter-core cache-line transfer costs tens to
+hundreds of cycles, versus one cycle for an L1 hit. <code>falseshare.c</code>'s packed
+layout puts eight <code>atomic_long</code>s in roughly one or two 128-byte lines
+(sized for the L2 cache-line width used in the example), so every single
+increment by any thread invalidates that line everywhere else, turning what
+should be eight independent L1-speed operations into a chain of cross-core
+transfers — the 48x is that transfer cost multiplied by five million
+increments times seven other cores contending.</p>
+<p>Underneath <code>atomic_compare_exchange_weak</code>, x86-64 emits a <code>lock cmpxchg</code>
+instruction: the <code>lock</code> prefix asserts ownership of the target cache line
+for the duration of the read-modify-write, which the coherence protocol
+enforces by making sure no other core's cache holds a modifiable copy of
+that line while the locked operation executes. ARM has no equivalent single
+instruction; it builds CAS from <strong>LDXR/STXR</strong> (load-exclusive /
+store-conditional): LDXR loads the value and tags the address as
+"monitored," STXR writes only if no other core touched that address since
+the LDXR, reporting success or failure. That's the hardware reason
+<code>compare_exchange_weak</code> exists as a <em>loop-driving</em> primitive with a spurious
+failure mode — on ARM, an exclusive-monitor false negative (triggered by an
+unrelated event like a context switch or another exclusive access nearby)
+is cheaper to expose to software as "just try again" than to eliminate at
+the instruction level, whereas x86's single <code>cmpxchg</code> never fails
+spuriously — which is exactly why <code>_weak</code> costs nothing extra on x86 and
+saves a real retry-avoiding branch on ARM.</p>
+<p><code>memory_order_acquire</code>/<code>release</code> map to actual fence instructions the
+compiler inserts around the atomic op — on ARM64, <code>stlr</code>/<code>ldar</code> (store-
+release / load-acquire); on x86-64, plain stores and loads already carry
+acquire/release semantics in hardware, so the compiler emits nothing extra
+for them and only <code>seq_cst</code> costs an additional fence (<code>mfence</code> or a locked
+no-op) to establish the single total order every thread must agree on. That
+is the mechanical reason relaxed and seq_cst can compile identically on x86
+but diverge sharply on ARM: x86's memory model is already close to
+sequentially consistent for ordinary loads/stores, ARM's is genuinely
+weaker and needs explicit fences to get the same guarantee.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Take the packed/padded benchmark and add a <strong>third</strong> variant: each thread
 accumulates into a plain <code>long</code> local variable and does one

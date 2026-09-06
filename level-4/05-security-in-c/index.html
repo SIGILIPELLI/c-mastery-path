@@ -2013,6 +2013,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2254,6 +2265,17 @@
     <span class="md-ellipsis">
       
         Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2553,6 +2575,50 @@ environment variables, <code>argv</code>, and other processes on the same machin
 Validate length before copying, range before indexing, and sign before
 converting to <code>size_t</code> — a negative <code>int</code> becomes an enormous unsigned value
 and turns a length check into a no-op.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>A stack buffer overflow "not crashing" (this module's opening example) makes
+sense once you draw the frame it's writing into. A typical x86-64 call
+lays out the callee's stack frame, growing toward lower addresses, roughly
+as: locals (including your buffer) at the bottom of the frame, then saved
+registers, then the <strong>stack canary</strong> (a random value written on entry and
+checked on exit), then the <strong>saved frame pointer</strong> (<code>rbp</code>), then the
+<strong>return address</strong> pushed by <code>call</code>, then the caller's arguments and frame.
+<code>strcpy</code> into an undersized local buffer walks upward through addresses:
+overrun by a few bytes and you clobber a neighboring local; overrun by
+exactly the right amount and you overwrite the return address itself. On
+function return, <code>ret</code> pops whatever 8 bytes sit at the current stack
+pointer and jumps there as if it were code — if an attacker controls those
+bytes, they control where execution resumes next. That is the entire
+mechanism behind "gets() is a vulnerability, not just sloppy": nothing
+checks length, so the write walks straight past the buffer into
+control-flow data with no error and no crash until (or unless) execution
+jumps somewhere invalid.</p>
+<p><code>-fstack-protector-strong</code> defends exactly the return-address case: the
+compiler inserts a load of a global secret (<code>__stack_chk_guard</code>, set once
+at process start from a hard-to-predict source) into the canary slot on
+function entry, and a comparison against that same global just before
+<code>ret</code>. An overflow that reaches the return address has to pass through the
+canary slot first (given the stack layout above), so it overwrites the
+canary too — the mismatch is caught and the process calls <code>__stack_chk_fail</code>
+which aborts, trading an exploitable overflow for a guaranteed crash. It
+does not protect locals that sit <em>below</em> the canary from being corrupted by
+each other, which is why ASan's redzones (poisoned shadow bytes placed
+immediately before and after every stack and heap allocation) catch a wider
+class of overflows than the canary alone.</p>
+<p>The format-string attack works because <code>printf</code>'s calling convention passes
+extra arguments through registers and then the stack — by the System V
+x86-64 ABI, the first six integer/pointer arguments go in
+<code>rdi, rsi, rdx, rcx, r8, r9</code> and any further ones spill to the stack.
+<code>printf(input)</code> with no extra arguments still executes every <code>%x</code>/<code>%s</code>/<code>%n</code>
+conversion the <em>string</em> specifies, and each one tells <code>printf</code> to consume
+"the next argument" — which is whatever garbage happens to sit in the next
+argument register or stack slot, because the caller never populated one.
+There is no bounds check possible here: <code>printf</code> has no way to know how
+many arguments were actually passed, so it trusts the format string
+completely, which is precisely why attacker control over that string is
+equivalent to attacker-directed memory reads (<code>%x</code>, <code>%s</code>) or writes (<code>%n</code>,
+which stores the number of bytes printed so far into a pointer it pops off
+the same argument list).</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Take the <code>tiny_http.c</code> server from
 <a href="../../level-3/08-networking-basics/">Level 3 module 08</a> and audit it as an

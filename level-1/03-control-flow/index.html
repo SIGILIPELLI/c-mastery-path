@@ -868,6 +868,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2339,6 +2350,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2538,6 +2560,38 @@ current iteration and jumps to the next one.</p>
 <a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="p">}</span>
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Every <code>if</code>, loop, and <code>switch</code> compiles down to comparison instructions and
+conditional jumps — there is no runtime "control flow engine" in C, just
+raw CPU instructions that change the instruction pointer. <code>if (score &gt;= 90)</code>
+becomes something like <code>cmpl $90, -4(%rbp)</code> (compare the value at that stack
+slot against 90) followed by <code>jl .L_else</code> (jump if less, to the else branch).
+The CPU evaluates the comparison, sets flag bits in a status register (a
+"less-than" flag, a "zero" flag), and the conditional jump instruction reads
+those flags to decide whether to redirect the instruction pointer or fall
+through to the next instruction.</p>
+<p><code>for</code> loops are pure syntactic sugar the compiler expands before ever
+touching machine code: <code>for (int i = 0; i &lt; 5; i++) { body }</code> generates
+exactly the same instruction sequence as
+<code>{ int i = 0; loop_top: if (!(i &lt; 5)) goto loop_end; body; i++; goto loop_top; loop_end: }</code>
+— a comparison, a conditional jump past the loop, the body, an increment,
+and an unconditional jump back. <code>while</code> and <code>do-while</code> differ only in where
+that comparison sits relative to the body — <code>do-while</code> places the check
+after the body, which is why it always runs at least once: the CPU simply
+hasn't executed the comparison yet the first time through.</p>
+<p><code>switch</code> is special: when the case values are reasonably dense integers
+(like <code>1, 2, 3</code>), the compiler often builds a <strong>jump table</strong> — an array of
+code addresses indexed directly by the switch value — instead of a chain of
+comparisons. <code>switch(day)</code> can compile to something like
+<code>jmp *jump_table(,%eax,8)</code>, which computes <code>day</code>'s offset into a table of
+addresses and jumps straight there in one instruction, regardless of how
+many cases exist. This is also the mechanical reason fallthrough exists:
+each <code>case</code> is just a label in that generated code, and without an explicit
+<code>break</code> (which compiles to an unconditional jump past the rest of the
+block), execution simply continues falling into whatever instructions sit
+at the next label — there's no separate mechanism preventing it, because at
+the assembly level cases aren't isolated blocks, just addresses in a
+straight line of instructions.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a program that loops from 1 to 30 with a <code>for</code> loop. For each number:
 print "Fizz" if divisible by 3, "Buzz" if divisible by 5, "FizzBuzz" if

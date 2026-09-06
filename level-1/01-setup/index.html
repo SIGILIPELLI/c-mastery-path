@@ -773,6 +773,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2261,6 +2272,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2391,6 +2413,43 @@ highlighting, basic IntelliSense, and integrated debugging without much setup.
 CLion (paid, free for students) is a heavier IDE some prefer once projects grow
 larger. For this course, the terminal plus any editor you're comfortable in is
 enough — the compiler is doing the real work, not the editor.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>gcc hello.c -o hello</code> is not one step, it's a pipeline of four separate
+programs chained together, each of which you can run by hand:</p>
+<ol>
+<li><strong>Preprocessing</strong> (<code>cpp</code>) — textually expands <code>#include</code>, macros, and
+   conditionals. <code>gcc -E hello.c</code> dumps the result: you'd see the entire
+   contents of <code>stdio.h</code> (hundreds of lines of function prototypes and type
+   declarations) pasted in above your <code>main</code>, with the <code>#include</code> line gone.</li>
+<li><strong>Compiling to assembly</strong> (<code>cc1</code>) — translates the preprocessed C into
+   architecture-specific assembly text. Run <code>gcc -S hello.c</code> and open the
+   resulting <code>hello.s</code>; you'll see instructions like <code>call printf</code> and a
+   <code>leaq</code> loading the address of your string literal into a register before
+   the call, plus a <code>main:</code> label and a <code>ret</code>.</li>
+<li><strong>Assembling</strong> (<code>as</code>) — turns that assembly text into machine code bytes,
+   producing an object file (<code>gcc -c hello.c</code> → <code>hello.o</code>). This file has
+   raw instruction bytes but is not yet runnable: it has unresolved
+   references to things like <code>printf</code>, which live in a separate library.</li>
+<li><strong>Linking</strong> (<code>ld</code>) — resolves <code>printf</code> by pulling in the C standard
+   library (<code>libc</code>), and merges everything into one executable with a
+   correct entry point. On macOS/Linux the OS loader expects a specific
+   binary format (Mach-O or ELF) with headers describing where code, string
+   constants, and other segments live in the final file.</li>
+</ol>
+<p>Only the last stage's output — the ELF/Mach-O binary — is what
+<code>./hello</code> actually executes. When you run it, the OS's loader reads those
+headers, maps the code segment into a fresh process's address space as
+read-only+executable memory, maps a separate writable segment for globals,
+sets up a stack, and jumps the CPU's instruction pointer to <code>main</code>'s
+address. The string <code>"Hello, world!\n"</code> isn't "in a variable" the way Java
+would box it — it's a sequence of bytes baked directly into the binary's
+read-only data segment at compile time, and <code>printf</code> is handed a raw pointer
+to the first byte of that sequence.</p>
+<p><code>return 0;</code> doesn't just end the function — it sets the CPU's return-value
+register (<code>%eax</code> on x86, <code>w0</code> on ARM64) to <code>0</code>, and the shell reads that
+register's value as the process's exit status via the <code>wait()</code>/<code>waitpid()</code>
+system call family, which is exactly what lets <code>&amp;&amp;</code> in
+<code>gcc hello.c -o hello &amp;&amp; ./hello</code> decide whether to run the second command.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a program <code>greet.c</code> that uses three separate <code>printf</code> calls to print a
 greeting, your name, and a farewell message, each on its own line. Compile it

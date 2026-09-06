@@ -2069,6 +2069,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2254,6 +2265,17 @@
     <span class="md-ellipsis">
       
         Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2608,6 +2630,51 @@ everything inside the callback and signal failure with a return value.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The pointer-truncation bug is a direct consequence of the <strong>System V
+x86-64 calling convention</strong> and <code>ctypes</code>'s default assumption. Without a
+declared <code>restype</code>, <code>ctypes</code> treats the function's return value as a C
+<code>int</code>, which on this ABI means it reads only the low 32 bits of the <code>rax</code>
+register — the CPU register a function's return value comes back in — and
+sign- or zero-extends <em>that</em> into a Python integer, discarding the upper 32
+bits entirely. The real pointer, a full 64-bit value, was sitting whole in
+<code>rax</code> the entire time; the bug is purely in how the caller (the ctypes
+runtime) chose to interpret bits that were always there. This is the same
+class of silent truncation as <code>(char)300</code> in the portability module —
+correct data, wrong-width read.</p>
+<p>The <code>scale(buf, 3, 10)</code> case is subtler and comes from the ABI's separate
+register classes for integer and floating-point arguments. System V x86-64
+passes the first several integer/pointer arguments in <code>rdi, rsi, rdx, rcx,
+r8, r9</code>, but the first several <em>floating-point</em> arguments in a completely
+different bank, <code>xmm0</code> through <code>xmm7</code>. A C function declared to take a
+<code>double</code> reads its value out of the corresponding <code>xmm</code> register — that's
+part of the function's compiled prologue, fixed at compile time from the
+declared parameter type. When <code>ctypes</code> has no <code>argtypes</code> telling it "this
+parameter is a double," it packs the Python <code>int</code> 10 as a plain machine
+integer and places it in the next general-purpose register in sequence,
+because that's ctypes's undeclared-argument default. The C function still
+reads its expected <code>double</code> out of <code>xmm2</code> (say) — a register <code>ctypes</code> never
+touched — so it gets whatever value was left there from a previous
+operation, not the 10 you passed. Declaring <code>argtypes</code> as
+<code>[POINTER(c_double), c_int, c_double]</code> tells ctypes to marshal the third
+argument as a double specifically, which routes it through the SSE
+register bank the compiled function actually reads.</p>
+<p>The ownership rule ("whoever allocates, frees") is a direct consequence of
+each side using a completely different, closed memory manager: CPython's
+allocator (<code>pymalloc</code>, layered over the system allocator for small objects)
+tracks memory via reference counts embedded in every <code>PyObject</code> header —
+when a <code>bytes</code> object's refcount hits zero, its destructor calls back into
+pymalloc to release it. Neither side's memory manager has any visibility
+into the other's bookkeeping structures, so a C-allocated block handed to
+Python without a compatible wrapper can never be released by Python's GC —
+it isn't a <code>PyObject</code> and has no header for the refcount machinery to find
+— and a <code>PyObject</code> passed the other way is equally opaque to <code>free()</code>. The
+<code>c_char_p</code> shortcut leaks specifically because ctypes, on seeing that
+declared return type, immediately copies the C string's bytes into a new
+Python <code>bytes</code> object and returns <em>that</em> — the original <code>char *</code> value
+returned by <code>describe</code> is never stored anywhere in Python, so there is no
+longer any handle in either language capable of passing it back to
+<code>free_string</code>.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Wrap the key-value store from
 <a href="../../level-3/10-project-kv-store/">Level 3's project</a> as a shared library

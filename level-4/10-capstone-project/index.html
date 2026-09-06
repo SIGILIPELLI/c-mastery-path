@@ -2195,6 +2195,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stretch-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2340,6 +2351,17 @@
     <span class="md-ellipsis">
       
         CI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2692,6 +2714,46 @@ coverage report.</p>
 <p>That <code>env: CC</code> line works only because the Makefile declares <code>CC ?= cc</code>
 rather than <code>CC = cc</code> — the <code>?=</code> from
 <a href="../09-build-systems-at-scale/">module 09</a>, doing real work.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The <code>fsync</code>/<code>fflush</code> distinction in stretch goal 1 is really two different
+buffers, and the 100x number comes from where each one lives. <code>fprintf</code>
+into a <code>FILE *</code> first fills a <strong>userspace stdio buffer</strong> — a few kilobytes
+of memory inside your process — so most calls just <code>memcpy</code> into that
+buffer and return without a syscall at all; <code>fflush</code> forces that buffer's
+contents out via a <code>write()</code> syscall, handing the bytes to the <strong>kernel's
+page cache</strong>, which is itself just RAM. At that point the data survives
+your process crashing, but not the machine losing power, because the page
+cache has not been written to the physical disk yet. <code>fsync(fd)</code> is the
+call that blocks until the kernel has issued the actual write to the
+storage device's write cache and (depending on the device and its cache-
+flush support) that device confirms the write is durable — a round trip to
+spinning media or flash, which is milliseconds versus the nanoseconds of a
+memcpy into a userspace buffer. That multi-order-of-magnitude latency gap
+between "a memory copy" and "a physical write confirmed by a drive" is the
+entire 100x, and it is why real databases make it a tunable knob
+(<code>db_set_sync</code>) rather than always calling <code>fsync</code>: every write pays for
+every prior write's durability guarantee if you always sync, so systems
+batch writes and sync periodically, or per-transaction, depending on how
+much data they can afford to lose in a crash.</p>
+<p>Crash recovery replaying the write-ahead log works because the log format
+gives every record enough self-description to detect a <strong>torn write</strong>: a
+process (or the OS) can be killed mid-<code>write()</code>, leaving a record's bytes
+partially on disk — the kernel does not guarantee an interrupted <code>write()</code>
+either fully lands or fully doesn't. A record that begins with its own
+length or a checksum lets replay distinguish "this record was fully
+written" from "this record was cut off," and a well-designed WAL treats a
+truncated final record as the end of valid history rather than as
+corruption to fail on — the last, partial write is exactly the one the
+crash interrupted, and discarding it (rather than the writes before it) is
+what makes replay converge to a consistent state no matter which instant
+the crash landed at.</p>
+<p>CI running the same source across gcc/clang and Linux/macOS deliberately
+surfaces the implementation-defined behavior <a href="../04-writing-portable-c/">module 04</a> covers in the abstract: plain <code>char</code> is signed on macOS's
+x86-64/ARM64 default ABI and unsigned on many Linux ARM configurations, so
+a <code>db.c</code> that indexes an array with a raw <code>char</code> byte can pass every test
+on one runner and read out-of-bounds on another — the matrix build is what
+turns a latent portability bug into a CI failure instead of a bug report
+from a user on a platform you never tested.</p>
 <h2 id="stretch-goals">Stretch goals<a class="headerlink" href="#stretch-goals" title="Permanent link">&para;</a></h2>
 <ol>
 <li>

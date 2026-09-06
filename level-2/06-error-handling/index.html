@@ -1289,6 +1289,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2261,6 +2272,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2610,6 +2632,44 @@ silent data corruption happens.</p>
 <li><strong><code>exit(EXIT_FAILURE)</code></strong> or <code>return EXIT_FAILURE</code> from <code>main</code> tells the shell
   something went wrong, which is what <code>&amp;&amp;</code> and CI pipelines check.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>errno</code> is not a return value or a parameter — it's a single global
+variable (technically, in any modern multi-threaded libc, a <em>thread-local</em>
+variable, so each thread gets its own copy) that library functions write to
+as a side effect of failing. This is precisely why it's fragile: any
+function call at all — including the <code>printf</code> you might use to print a
+diagnostic — can itself internally fail some minor operation and silently
+overwrite <code>errno</code>'s value before you read it, which is exactly why "save it
+to a local immediately" is the rule rather than a style preference. Because
+<code>errno</code> is just process (or thread) global state, nothing in the type
+system stops two unrelated pieces of code from stomping on each other's
+error information — it's a convention from an era before C had a better
+mechanism, not a robust API.</p>
+<p><code>assert(condition)</code> compiles to a runtime check followed by a call to
+<code>abort()</code> if the condition is false — <code>abort()</code> itself sends the process a
+<code>SIGABRT</code> signal, which by default terminates it immediately and (on most
+systems) triggers a core dump. This is a fundamentally different failure
+mode from returning an error code: the process doesn't get a chance to
+clean up, close files, or report anything through its normal exit path —
+it's meant for catching programmer logic errors during development, which
+is also why <code>#define NDEBUG</code> before including <code>&lt;assert.h&gt;</code> makes every
+<code>assert</code> expand to nothing at all (literally erased by the preprocessor,
+the same textual-substitution mechanism from
+<a href="../../level-1/09-preprocessor-multifile/">Level 1, Module 9</a>) — meaning any
+code you place inside an <code>assert()</code> call, including function calls with
+side effects, silently stops running entirely in a release build.</p>
+<p>The <code>goto cleanup</code> pattern's safety comes from a mechanical property of C's
+<code>goto</code>: it's an unconditional jump to a label, nothing more — no stack
+unwinding, no destructor calls (C doesn't have those), just an instruction
+pointer change. Because every resource variable (<code>in</code>, <code>out</code>, <code>buf</code>) is
+initialized to <code>NULL</code> <em>before</em> any code that might jump to <code>cleanup:</code> runs,
+and every cleanup step (<code>free</code>, <code>fclose</code>) is written to tolerate a <code>NULL</code>
+argument, the same three lines of cleanup code correctly handle every
+possible point of failure — whether zero, one, two, or all three resources
+were successfully acquired — without needing a different cleanup block per
+failure point. This is C's manual substitute for what languages with
+exceptions get automatically via stack unwinding and destructors/<code>finally</code>
+blocks.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a small line-counting utility with proper error handling. Define
 <code>typedef enum { FC_OK, FC_ERR_OPEN, FC_ERR_READ } FileCountError;</code> and a

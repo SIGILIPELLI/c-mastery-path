@@ -846,6 +846,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2351,6 +2362,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2574,6 +2596,42 @@ range wraps around silently instead of raising an error:</p>
 <p>This is a common source of subtle bugs — C will not warn you at runtime.
 Choosing a wider type (<code>long</code>, <code>long long</code>) or an unsigned type buys more
 headroom but doesn't eliminate the problem, it just moves the boundary.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Every variable in a C function lives at a fixed offset from the CPU's stack
+pointer for the duration of that function's call — the compiler decides these
+offsets at compile time, not runtime. Declaring <code>int age = 30;</code> inside <code>main</code>
+generates roughly one instruction to reserve 4 bytes below the current stack
+frame and another to write the bit pattern for <code>30</code> into it (<code>movl $30,
+-4(%rbp)</code> in x86-64 assembly). There's no hidden allocator call, no tag
+tracking "this is an int" at runtime — the type only exists at compile time,
+to tell the compiler how many bytes to reserve and how to interpret them.
+After compilation, a <code>float</code> and an <code>int</code> of the same byte count are
+indistinguishable bit patterns in memory; only the instructions the compiler
+chose to operate on them differ.</p>
+<p>That distinction is exactly what makes <code>float</code>/<code>double</code> different from <code>int</code>
+at the same size. Both <code>float</code> (4 bytes) and <code>int</code> (4 bytes) occupy identical
+storage, but <code>float</code> uses the IEEE-754 encoding — 1 sign bit, 8 exponent
+bits, 23 mantissa bits — while <code>int</code> uses two's-complement. Casting
+<code>(int)price</code> from <code>9.75</code> doesn't just chop off decimal digits: the CPU's
+floating-point unit runs a dedicated instruction (<code>cvttsd2si</code> on x86-64) that
+decodes the IEEE-754 bit pattern back into an integer bit pattern, truncating
+toward zero as it goes — a genuinely different bit-level operation from
+integer arithmetic, not the same bits reinterpreted.</p>
+<p><strong>Integer overflow</strong> is a direct consequence of two's-complement
+representation and fixed-width registers. <code>INT_MAX</code> is <code>0111...1</code> (31 ones)
+in binary. Adding <code>1</code> performs ordinary binary addition, which carries
+through every bit and flips the sign bit, producing <code>1000...0</code> — which
+two's-complement interprets as the most negative <code>int</code>. The CPU's adder
+doesn't know or care that this is "wrong"; it just did binary addition on
+fixed-width registers and let the carry fall off the end. Signed overflow is
+undefined behavior in the C standard specifically because different CPU
+architectures could technically handle that carry differently, even though
+in practice x86/ARM both wrap the same way.</p>
+<p><code>sizeof</code> is resolved entirely at compile time (except for variable-length
+arrays) — it's not a function call, it's an operator the compiler evaluates
+while generating code, which is why <code>sizeof(int)</code> costs zero CPU cycles at
+runtime; the compiler simply substitutes the constant <code>4</code> wherever you wrote
+it.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a program that declares an <code>int</code>, a <code>float</code>, a <code>double</code>, and a <code>char</code>,
 prints the <code>sizeof</code> each one, then performs an explicit cast dividing two

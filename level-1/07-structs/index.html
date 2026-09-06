@@ -952,6 +952,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2283,6 +2294,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2538,6 +2560,42 @@ pointer basics from <a href="../06-pointers-basics/">Module 6</a>.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>A struct's memory layout is simply its members laid out one after another
+in the order they're declared, with the compiler choosing the struct's
+total size and each member's offset at compile time. For
+<code>struct Point { int x; int y; }</code>, <code>x</code> sits at offset 0 and <code>y</code> at offset 4
+(assuming 4-byte <code>int</code>s), and <code>p1.y</code> compiles to exactly the same kind of
+address arithmetic as array indexing: <code>*(char*)&amp;p1 + 4</code>, reinterpreted as
+an <code>int</code>. There's no per-field bookkeeping or name lookup at runtime — <code>.y</code>
+is resolved to a fixed byte offset entirely at compile time, which is why
+struct field access costs nothing more than reading a variable directly.</p>
+<p>Compilers usually don't pack members edge-to-edge, though — they insert
+<strong>padding</strong> so each member starts at an address matching its own alignment
+requirement (a <code>double</code> typically needs to start at an address divisible
+by 8, for instance). A <code>struct { char c; int n; }</code> is commonly <em>not</em> 5
+bytes but 8: 1 byte for <code>c</code>, 3 padding bytes, then 4 bytes for <code>n</code>, because
+the CPU can load an aligned 4-byte value in one instruction but may need
+two (or a slower unaligned instruction) for a misaligned one. Reordering
+members from largest to smallest is a common real-world trick to shrink
+padding and total struct size, since padding is only inserted between and
+after members, never compacted retroactively by the compiler.</p>
+<p><strong>Copying a struct</strong> (<code>struct Point p3 = p2;</code>) is a flat, member-by-member
+byte copy of the whole block — for <code>Point</code> that's <code>memcpy</code>-equivalent of 8
+bytes, done in one or two instructions. This scales badly for large
+structs, which is exactly why <strong>passing a struct by value</strong> to a function
+(as <code>printPoint</code>/<code>tryToMove</code> do) copies the entire block onto the callee's
+stack frame: for a small struct like <code>Point</code> that's cheap, but for a struct
+holding kilobytes of data, every by-value call/return silently copies all
+of it — the reason Level 2's struct module introduces passing a <code>Point *</code>
+instead, so the function receives only an 8-byte address rather than the
+whole payload.</p>
+<p><code>typedef struct {...} Point;</code> doesn't change any of this layout — it's a
+purely compile-time naming convenience telling the compiler "wherever you
+see <code>Point</code>, substitute this anonymous struct type." No extra memory,
+indirection, or runtime cost is introduced; the generated machine code for
+<code>Point p1 = {3,7};</code> is identical to what <code>struct Point p1 = {3,7};</code> would
+produce for a named struct with the same members.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Define a <code>typedef struct</code> called <code>Rectangle</code> with members <code>width</code> and <code>height</code>
 (both <code>double</code>), and a nested <code>Point topLeft</code> (reusing the <code>Point</code> struct from

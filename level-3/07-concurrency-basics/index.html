@@ -1704,6 +1704,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2283,6 +2294,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2714,6 +2736,46 @@ other threads from making progress.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>counter++</code> compiling to three separate CPU instructions — a load, an add,
+a store — is the entire mechanical root of the race condition, and it's
+worth seeing exactly why interleaving them across threads produces a wrong
+answer. Thread A executes <code>load counter</code> (gets 500), then before it can
+execute <code>store 501</code>, the OS's scheduler preempts it (threads share CPU
+cores and get time-sliced, or genuinely run in parallel on separate
+cores) and thread B runs <code>load counter</code> (also gets 500, since A never
+stored yet), <code>add 1</code>, <code>store 501</code>. When A resumes, it still has <code>501</code> in
+its own register from its own earlier add, and stores <code>501</code> again — two
+increments happened, but the counter only advanced by one, because both
+threads' load-modify-store sequences overlapped instead of running fully
+one after the other. This is invisible in the source code because <code>x++</code>
+<em>looks</em> atomic; it's the compiled instruction sequence, not the C
+statement, that actually executes on real hardware.</p>
+<p>A mutex fixes this by making a <em>hardware</em> guarantee, not a software
+convention: <code>pthread_mutex_lock</code> is ultimately implemented using a special
+CPU instruction (commonly <code>CMPXCHG</code> — compare-and-swap, or <code>LOCK</code>-prefixed
+instructions on x86) that the processor guarantees executes as one
+indivisible step even with multiple cores accessing the same memory
+location simultaneously — the hardware itself refuses to let two cores'
+attempts interleave. Everything inside the critical section is not
+"protected" by any code you wrote there; it's protected because only one
+thread can be inside the region between successfully executing that atomic
+lock instruction and later calling unlock — a second thread's own attempt
+to execute the same atomic instruction simply fails to acquire the lock and
+spins or sleeps.</p>
+<p><code>pthread_join</code>'s role as a "memory-visibility barrier" points at something
+real about modern CPUs: cores each keep their own cache, and without an
+explicit synchronization point, one core's writes aren't guaranteed to be
+visible to another core's reads in any particular order — the hardware and
+compiler are both free to reorder and cache operations for performance as
+long as <em>that thread's own</em> view of its own operations stays consistent.
+<code>pthread_join</code> (and mutex lock/unlock) act as <strong>memory barriers</strong> — points
+where the implementation forces pending writes to be flushed and visible
+before the call returns — which is exactly why <code>sum_threads.c</code> can safely
+read <code>slices[i].sum</code> right after <code>pthread_join</code> with no lock: the join
+itself is the synchronization event that guarantees the worker thread's
+write actually became visible to the joining thread, not merely that the
+worker's function returned.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Turn <code>sum_threads.c</code> into a <strong>parallel word counter</strong>. Give each thread a
 slice of a large text buffer, have it count words in its slice, and combine

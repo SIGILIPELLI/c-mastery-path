@@ -1760,6 +1760,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2283,6 +2294,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2652,6 +2674,47 @@ stdio flushing) rather than <code>exit</code> on the exec-failure path.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>A system call is a genuinely different kind of function call from anything
+else in this course: the CPU has separate <strong>privilege levels</strong> (rings on
+x86 — ring 0 for the kernel, ring 3 for ordinary processes), and
+user-space code is hardware-forbidden from directly touching disk
+controllers, the process table, or another process's memory. <code>open</code>,
+<code>read</code>, and <code>fork</code> compile down to a special trap instruction (<code>syscall</code> on
+x86-64) that deliberately switches the CPU into ring 0, jumps to a
+kernel-controlled entry point (never an address user code chooses — the
+kernel enforces this), executes the privileged operation, and switches
+back before returning a result in a register. This ring transition has
+real, measurable overhead — noticeably more than an ordinary function call
+staying in ring 3 — which is exactly why library buffering exists at all:
+<code>printf</code> batches many small writes into user-space memory precisely to
+avoid paying that transition cost on every single character.</p>
+<p><code>fork()</code> "returning twice" is a direct description of what actually
+happens to the process's memory: the kernel duplicates the calling
+process's entire address space — code, stack, heap, open file descriptor
+table — creating a second, nearly identical process, and then arranges for
+<em>both</em> to resume execution at the exact instruction right after the
+<code>fork()</code> call, each getting back its own copy of the return value (0 in
+the child, the child's pid in the parent) in its own register. Modern
+kernels don't actually copy all that memory immediately — they use
+<strong>copy-on-write</strong>: both processes' page tables initially point at the same
+physical memory pages marked read-only, and only when either process
+writes to a page does the kernel intercept that write (via the same page
+fault mechanism that triggers a segfault) and copy just that one page,
+giving the writer its own private copy. This is why <code>fork</code> is fast even
+for a process with gigabytes of memory: the "duplication" is initially
+just pointer bookkeeping, not a real copy of memory contents.</p>
+<p>The buffering-across-fork trap is a direct consequence of that same
+memory-duplication mechanism: <code>printf</code>'s internal buffer is ordinary
+heap/static memory belonging to the process, so <code>fork</code> duplicates it
+along with everything else, unflushed bytes included — the child's copy of
+that buffer is byte-for-byte identical to the parent's at the moment of
+the fork, complete with whatever text was queued but not yet handed to a
+<code>write()</code> syscall. Both processes then independently decide when to flush
+that inherited copy, which is exactly why the same logical line of output
+can appear twice: it's not printed twice by your source code, it exists as
+data in two separate address spaces after the fork, and each process
+flushes its own copy on its own schedule.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write <code>runpipe.c</code>, a program that implements <code>command1 | command2</code> from
 <code>argv</code>, invoked as <code>./runpipe ls -l ~ wc -l</code> where the split point is a

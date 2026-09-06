@@ -1901,6 +1901,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2261,6 +2272,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2582,6 +2604,63 @@ boundaries.</p>
   after the lifetime of the object it pointed to is undefined behaviour by
   the standard, so the optimiser is entitled to assume it never happens.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>arena_alloc</code> and <code>pool_alloc</code> compile down to almost nothing, which is
+exactly the point — walk through what the compiler actually emits.</p>
+<p>For the bump allocator, <code>a-&gt;base + aligned</code> with <code>aligned</code> already computed
+is a single <code>lea</code> (load effective address) on x86-64: <code>used</code> lives in a
+register or a cache-hot struct field, the addition is one cycle, and there
+is no branch except the capacity check. Compare that to <code>malloc</code>'s fast
+path in glibc's ptmalloc: it computes a <em>chunk size</em> (your request rounded
+up to a multiple of 16 plus 8 bytes of header), maps that size to one of
+roughly 128 <strong>bins</strong> (small bins in steps of 16 bytes, large bins
+logarithmic), walks that bin's free list looking for a chunk that fits,
+possibly <strong>splits</strong> an oversized chunk and pushes the remainder back onto a
+bin, and writes the chunk header (<code>prev_size</code>, <code>size</code>, in-use bit) before
+handing you a pointer just past it. That header is why <code>malloc(1)</code> never
+actually costs you one byte — the real allocation is your size rounded up
+plus 8–16 bytes of bookkeeping the arena never pays.</p>
+<p>The pool's trick — storing the free list's <code>next</code> pointer inside the block
+itself — works because a freed block's <em>content</em> is garbage anyway; nothing
+is using those bytes. <code>*(void **)blk = p-&gt;free_list</code> reinterprets the first
+8 bytes of the block as a pointer slot and writes through it. This is the
+same technique glibc's <code>tcache</code> (a per-thread cache of recently freed
+chunks, added in glibc 2.26) uses internally: freed chunks below a size
+threshold get threaded onto singly-linked per-size-class lists using their
+own freed space, so a <code>tcache</code>-satisfied <code>malloc</code>/<code>free</code> pair is, under the
+hood, almost exactly your pool's pop/push — a few nanoseconds, no locks,
+because each thread owns its own tcache bins.</p>
+<p>The 8x benchmark gap has two independent causes, and it's worth separating
+them:</p>
+<ol>
+<li><strong>Instruction count.</strong> <code>free(ptr)</code> in glibc must read the chunk header
+   to find its size, check whether the chunk directly before or after it in
+   memory is also free (<strong>coalescing</strong>, so adjacent free chunks merge into
+   one bigger chunk to fight fragmentation), possibly unlink a neighbor from
+   its bin, and insert the (possibly merged) chunk into the right bin. That
+   is a data-dependent chain of loads — nothing here pipelines well.
+   <code>arena_reset</code> is one store: <code>a-&gt;used = 0</code>.</li>
+<li><strong>Locality.</strong> <code>malloc</code> calls scattered across a loop return chunks from
+   wherever the allocator's internal bins happen to have room — often not
+   adjacent in memory, especially after the allocator has served other
+   requests. The arena's objects are laid out <strong>contiguously in allocation
+   order</strong>, so the later summing loop reads through them sequentially: the
+   CPU's hardware prefetcher recognizes the stride and pulls the next cache
+   line in before you need it. Chasing <code>malloc</code>-scattered pointers defeats
+   the prefetcher — each <code>ptrs[i]</code> load can be an L2/L3 miss.</li>
+</ol>
+<p>On the sanitizer question: AddressSanitizer works by intercepting <code>malloc</code>
+and <code>free</code> and maintaining <strong>shadow memory</strong> — one byte of shadow state for
+every 8 bytes of real memory, tracking whether that region is addressable,
+and if not, why (redzone, freed, stack-use-after-scope). <code>free()</code> doesn't
+return the memory to the OS or even to glibc's normal bins right away; it
+poisons the shadow bytes and parks the chunk in a quarantine queue
+specifically so a subsequent read trips the poison check. Your arena and
+pool never call the real <code>free()</code> for individual objects — from ASan's
+point of view the backing block is one allocation that stays alive and
+addressable for its entire lifetime, so there is no shadow-memory event to
+detect when your own code decides a slot inside it is "free." The bug is
+real; the instrumentation simply has no hook into it.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Build a <strong>generation-tagged pool</strong> that catches the use-after-free ASan
 cannot see. Each block gets a <code>uint32_t generation</code> header; <code>pool_alloc</code>

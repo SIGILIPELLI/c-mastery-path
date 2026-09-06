@@ -1996,6 +1996,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2276,6 +2287,17 @@
     <span class="md-ellipsis">
       
         Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2617,6 +2639,49 @@ unknown platform is worse than a build failure that tells someone to think.</p>
 rejects extensions you did not mean to use, and
 <code>-Wconversion -Wsign-conversion</code> finds the implicit narrowing that silently
 changes behaviour when a type's width changes underneath you.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Struct layout differences trace back to two independent compiler decisions:
+<strong>alignment</strong> and <strong>byte order</strong>, and it helps to see both as mechanical
+rules rather than platform mysteries.</p>
+<p>Alignment: every type has a required alignment (<code>_Alignof</code>), and the
+compiler inserts padding so each member starts at an address that is a
+multiple of its own alignment, and so the whole struct's size is a multiple
+of its largest member's alignment (so arrays of the struct keep every
+element aligned too). Given <code>struct { char a; int b; char c; }</code> on a
+platform where <code>int</code> needs 4-byte alignment: <code>a</code> sits at offset 0, three
+padding bytes fill 1–3 so <code>b</code> can start at offset 4, <code>b</code> occupies 4–7, <code>c</code>
+sits at offset 8, and three more padding bytes bring the struct's total
+size to 12 (a multiple of 4) so a second struct in an array starts aligned
+too. Reordering the same three members as <code>{int b; char a; char c;}</code> needs
+only 8 bytes — the compiler cannot reorder them for you because C guarantees
+declaration order for members, so <em>you</em> control padding by member ordering
+(widest members first is the standard heuristic).</p>
+<p>Byte order is a property of how a multi-byte integer's bytes map to
+ascending memory addresses, decided by the CPU, not the compiler: on a
+little-endian machine (x86-64, most ARM configurations) the <em>least</em>
+significant byte of a 32-bit value sits at the lowest address; on a
+big-endian machine it's the <em>most</em> significant byte. <code>*(uint32_t *)&amp;wire[0]
+= v</code> writes <code>v</code>'s bytes in whatever order the local CPU uses internally, so
+that same buffer read back on a machine with the other byte order produces
+a different number — not a crash, a silently wrong value. The shift-and-mask
+version in this module sidesteps the CPU's internal representation entirely:
+<code>wire[0] = (v &gt;&gt; 24) &amp; 0xFF</code> is defined purely in terms of <code>v</code>'s numeric
+value (shifting is an arithmetic operation on the integer, not a
+reinterpretation of its storage bytes), so it produces the identical four
+bytes in <code>wire[]</code> regardless of which byte order the host CPU uses for its
+own registers.</p>
+<p>Plain-<code>char</code> signedness is implementation-defined for a genuinely
+historical reason: some CPU instruction sets (ARM, PowerPC, IBM Z) sign-
+extend a loaded byte for free as part of the load instruction when treating
+it as signed is cheaper, and others (older x86 conventions, though x86
+itself defaults <code>char</code> to signed under most ABIs) zero-extend more
+naturally — the C standard left it open so the ABI could pick whichever the
+underlying load instruction does cheaply rather than force everyone to pay
+for an explicit sign/zero-extension. That single unspecified bit is why
+<code>table[(char)byte]</code> compiles to <code>movsx</code> (sign-extend, giving you a negative
+index for bytes ≥ 0x80) on some ABIs and <code>movzx</code> (zero-extend, giving 0–255)
+on others — identical source, genuinely different generated instruction and
+runtime behavior.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write <code>portable_io.c</code> providing <code>write_u32(FILE *, uint32_t)</code> and
 <code>read_u32(FILE *, uint32_t *)</code> that use shift-and-mask serialisation, plus a

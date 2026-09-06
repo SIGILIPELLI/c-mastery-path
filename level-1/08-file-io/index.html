@@ -1002,6 +1002,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2327,6 +2338,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2573,6 +2595,44 @@ directly (an entire <code>struct Point</code>, for example, in one call) instead
 formatting them as text. Binary I/O is covered in depth in
 <a href="../../level-2/05-binary-file-io/">Level 2, Module 5</a>, once you've seen more of
 what structs (from <a href="../07-structs/">Module 7</a>) can hold.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>fopen</code> is a thin wrapper around your operating system's own file-opening
+mechanism — on Linux/macOS, ultimately the <code>open()</code> system call, which asks
+the kernel to locate the file on disk, check permissions, and hand back a
+small integer called a <strong>file descriptor</strong> that the kernel uses internally
+to track the open file (its current read/write position, buffering state,
+and so on). The <code>FILE *</code> you get back from <code>fopen</code> is a heap-allocated
+structure — defined by the C standard library, not the kernel — that wraps
+that file descriptor together with a user-space buffer, which is why
+<code>FILE *</code> is opaque: you're not meant to know or rely on its internal
+layout, only pass it to <code>stdio.h</code> functions.</p>
+<p>That user-space buffer is the whole reason <code>fclose</code> matters. <code>fprintf</code>
+doesn't write to disk immediately — for efficiency, it first appends bytes
+into an in-memory buffer inside the <code>FILE</code> structure (typically several
+kilobytes), and only flushes that buffer to the kernel (via a <code>write()</code>
+system call) when it fills up, when you call <code>fflush</code>, or when you call
+<code>fclose</code>. If the program crashes or exits abnormally before the buffer is
+flushed, whatever was sitting in that buffer never reaches the disk — the
+data existed only in the process's own memory, not yet handed off to the
+kernel's page cache. <code>fclose</code> both flushes this buffer and releases the
+file descriptor back to the OS, which matters because a process is only
+allowed a limited number of open file descriptors at once (commonly 1024)
+— leaking them by skipping <code>fclose</code> in a long-running program eventually
+makes every further <code>fopen</code> fail.</p>
+<p>The different <strong>modes</strong> (<code>"r"</code>, <code>"w"</code>, <code>"a"</code>) map to flags passed straight
+through to the kernel's <code>open()</code> call — <code>"w"</code> corresponds to
+<code>O_WRONLY | O_CREAT | O_TRUNC</code>, where <code>O_TRUNC</code> is what causes the kernel
+to immediately discard the file's existing contents and reset its size to
+zero the moment the file is opened, before you've written a single byte —
+which is why the truncation happens even if your program crashes right
+after <code>fopen</code> and never calls <code>fprintf</code> at all.</p>
+<p><code>fgets</code> reading in a loop until <code>NULL</code> works because internally each call
+asks the buffered layer for the next chunk up to (or including) a newline;
+when the underlying <code>read()</code> system call returns zero bytes (end of file),
+<code>fgets</code> has nothing left to return and reports that with <code>NULL</code> — there's
+no separate "are we at EOF" flag you have to poll, the return value itself
+carries that information because the kernel told the library the file is
+exhausted.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a program that asks the user (with <code>scanf</code>) for 5 integers, one at a
 time, and writes each one to a file called <code>input.txt</code>, one per line. Then,

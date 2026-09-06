@@ -2119,6 +2119,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2298,6 +2309,17 @@
     <span class="md-ellipsis">
       
         Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2637,6 +2659,44 @@ programs that read stdin or a file.</p>
   shape with optimisation, as <a href="../02-concurrency-synchronization/">module 02</a>
   showed. Run the suite at <code>-O0</code> and <code>-O2</code>.</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Coverage instrumentation and the sanitizers work by rewriting the program
+at compile time, not by watching it run from the outside. <code>-fprofile-instr-
+generate</code> makes clang insert a counter increment at the entry of every
+<strong>region</strong> — a maximal run of code with no branch in or out — so a straight
+-line function gets one counter, an <code>if</code>/<code>else</code> gets (at least) one per
+branch, and a loop body gets its own. Each counter lives in a small array
+baked into the binary; at exit (or via an <code>atexit</code> hook it installs) the
+runtime writes that array out as the <code>.profraw</code> file. <code>llvm-profdata merge</code>
+just aggregates one or more of those raw dumps into a <code>.profdata</code> index,
+and <code>llvm-cov report</code> cross-references the counts against the compiler's
+own map of which source line and branch each counter corresponds to. Branch
+coverage below line coverage — 100% vs 94.44% here — means some line was
+reached from only one of its possible incoming branches (e.g. a loop that
+always ran at least once, so the "zero iterations" edge into the loop
+condition was never exercised even though the condition-check line itself
+executed).</p>
+<p>AddressSanitizer's mechanism explains why running the <em>same</em> property test
+under ASan finds far more than plain execution would: ASan redirects every
+<code>malloc</code>/<code>free</code> through its own allocator, which surrounds each heap
+allocation with <strong>redzones</strong> — extra bytes on both sides poisoned in shadow
+memory (recall: one shadow byte per 8 real bytes, tracking addressability).
+The compiler additionally instruments every memory access with an inline
+check against the shadow map before the real load or store executes. So a
+property test that never assigns its result anywhere still gets caught
+overrunning <code>dst[]</code> by even one byte, because that byte's shadow state says
+"redzone, not part of any live allocation" and the inlined check aborts
+before the write completes — no crash needed to observe the bug, no memory
+corruption has to propagate somewhere visible first.</p>
+<p><code>assert()</code> disappearing under <code>-DNDEBUG</code> is a preprocessor fact worth
+seeing directly: <code>&lt;assert.h&gt;</code> defines <code>assert(e)</code> as literally expanding to
+nothing (or a cast to void) when <code>NDEBUG</code> is defined at the point of
+inclusion, and to <code>((e) ? (void)0 : __assert_fail(...))</code> otherwise. That is
+textual substitution before compilation ever begins — the compiler in a
+release build never sees the expression <code>e</code> at all if it has side effects
+inside an <code>assert</code>, that code simply is not part of the program anymore,
+which is why <code>assert(pop(&amp;stack) == 3)</code> silently stops calling <code>pop</code> the
+moment <code>-DNDEBUG</code> is added to a release build's flags.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Extend <code>munit.h</code> with the two features it most obviously lacks: a
 <code>ASSERT_EQ_MEM(expected, actual, n)</code> for comparing byte buffers that prints

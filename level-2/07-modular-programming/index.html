@@ -1345,6 +1345,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2317,6 +2328,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2646,6 +2668,43 @@ tracking that <a href="../08-makefiles-build-systems/">Module 8</a> automates wi
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>static</code> at file scope is a directive to the compiler about <strong>symbol
+visibility</strong> in the object file it produces, not just a style convention.
+A non-<code>static</code> function like <code>void helper(void)</code> gets an entry in the
+object file's <em>external</em> symbol table — visible to the linker, which can
+then resolve calls to <code>helper</code> from other <code>.o</code> files. Mark it <code>static</code> and
+the compiler either omits it from the symbol table entirely or marks it
+<code>local</code> (visible with <code>nm -a counter.o</code>, where non-static symbols show <code>T</code>
+and static ones show <code>t</code>) — the linker literally cannot see it, which is
+the actual mechanism behind "no name collisions": two <code>static sum_all</code>
+functions in different <code>.c</code> files never even reach the linker's symbol
+resolution step, because from the linker's point of view only one of them
+exists per file, invisible to the other.</p>
+<p>The opaque-type pattern (<code>typedef struct Counter Counter;</code> with no body in
+the header) works because C only needs to know a struct's <em>size</em> at the
+point where a variable of that type is declared or a member is accessed —
+neither of which the header does. <code>Counter *hits</code> only needs to know that
+<code>Counter</code> is <em>some</em> type worth having an 8-byte pointer to; the compiler
+doesn't need <code>Counter</code>'s size to store a pointer to it, only to allocate an
+actual <code>Counter</code> object, which only <code>counter.c</code> ever does (via
+<code>malloc(sizeof *c)</code> — computed by the compiler <em>there</em>, where the full
+<code>struct Counter</code> definition is visible). This is exactly why
+<code>hits-&gt;value = 99;</code> in <code>main.c</code> is a compile error rather than a runtime
+one: the compiler in <code>main.c</code>'s translation unit has literally never seen
+<code>struct Counter</code>'s member list, so <code>-&gt;value</code> has no offset to resolve —
+the error happens before any code is even generated, let alone run.</p>
+<p>The <code>undefined reference to 'foo'</code> error surfaces the same
+declaration/definition split from
+<a href="../../level-1/09-preprocessor-multifile/">Level 1, Module 9</a> one level up:
+the compiler is satisfied by a prototype alone and emits a call instruction
+to an unresolved symbol named <code>foo</code>; it's the <strong>linker</strong>, running after
+every file is separately compiled, that actually needs <code>foo</code>'s address to
+patch that placeholder — and only fails at that final stage if no object
+file anywhere in the link line actually defines it. This two-stage
+separation (compiler checks <em>usage</em>, linker checks <em>existence</em>) is what
+lets you compile <code>main.c</code> successfully today even though <code>counter.c</code> has
+a bug that won't be caught until link time, or vice versa.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Build a three-file <code>Stack</code> module using the opaque-type pattern. <code>stack.h</code>
 declares <code>typedef struct Stack Stack;</code> plus <code>stack_create(int capacity)</code>,

@@ -896,6 +896,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2283,6 +2294,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2475,6 +2497,45 @@ the safe replacement.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>An array declaration like <code>int scores[5]</code> reserves one contiguous run of
+memory — 5 × <code>sizeof(int)</code> = 20 bytes on a typical platform — and the array
+name is really just a compile-time constant: the address of that block's
+first byte. <code>scores[i]</code> is not a special indexing mechanism; the compiler
+translates it into pointer arithmetic: <code>*(scores + i)</code>, which computes
+<code>base_address + i * sizeof(int)</code> and dereferences that address. This is
+exactly why C performs no bounds checking — <code>scores[5]</code> computes a
+perfectly valid-looking address (5 slots past the base), and the CPU happily
+reads or writes whatever byte pattern happens to live there, whether it
+belongs to another variable, the stack's saved return address, or unmapped
+memory that triggers a segmentation fault. There is no array object at
+runtime tracking its own length; that information exists only in the source
+code and the compiler's symbol table, discarded once compilation is done.</p>
+<p>A <strong>string</strong> is this same flat-array model plus one convention: a <code>'\0'</code>
+byte (all-zero bits) marking where the meaningful data ends. <code>strlen</code>
+doesn't "ask the string its length" — it walks memory byte by byte starting
+at the given address, incrementing a counter, until it hits a zero byte.
+That's an O(n) scan every single call, which is why calling <code>strlen</code> inside
+a loop condition repeatedly rescans from the start each iteration — a real
+performance trap in larger programs. <code>sizeof(name)</code> on an array, by
+contrast, costs nothing at runtime: the compiler already knows the array's
+declared size and substitutes the constant directly, unrelated to where any
+<code>'\0'</code> happens to sit.</p>
+<p>This also explains why <code>strcpy</code>/<code>strcat</code> overflow silently: they keep
+copying/writing bytes from the source until they encounter its <code>'\0'</code>, with
+zero awareness of how large the destination buffer actually is. If the
+source is longer than the destination's declared size, the write simply
+continues past the buffer's last byte into whatever memory sits next —
+adjacent stack variables, or (in the historically famous case of <code>gets</code>) the
+saved return address itself, which is the classic mechanism behind
+stack-smashing buffer-overflow exploits.</p>
+<p>A 2-D array like <code>int grid[2][3]</code> is still one contiguous block (24 bytes),
+laid out <strong>row-major</strong>: all of row 0's elements, then all of row 1's,
+back-to-back. <code>grid[row][col]</code> compiles to
+<code>*(base + row * 3 * sizeof(int) + col * sizeof(int))</code> — the compiler bakes
+the row width (3) into the address arithmetic at compile time, which is why
+you must specify all dimensions but the first when passing multi-dimensional
+arrays to functions.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a program that declares a <code>char</code> buffer, reads a line of input into it
 with <code>fgets</code>, strips the trailing newline, and then prints: the string itself,

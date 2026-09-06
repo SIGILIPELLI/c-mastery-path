@@ -1289,6 +1289,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2317,6 +2328,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2654,6 +2676,47 @@ a version:</p>
 </code></pre></div>
 <p>Reading a file whose magic doesn't match then fails loudly instead of
 misinterpreting the bytes — and version numbers let old files stay readable.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><code>fwrite(numbers, sizeof numbers[0], n, f)</code> performs almost no interpretation
+of the data at all — internally it's close to a raw <code>memcpy</code> from your
+array's memory straight into the <code>FILE</code>'s buffer (and eventually, via
+<code>write()</code>, into the kernel's page cache and then disk), byte for byte,
+exactly as those bytes sit in RAM right now. This is the mechanical reason
+binary I/O has no conversion cost: <code>fprintf("%d", n)</code> must run a whole
+integer-to-decimal-digits algorithm (repeated division and modulo by 10,
+building character digits back to front), while <code>fwrite</code> just streams the
+4 bytes of the <code>int</code>'s two's-complement representation as-is — the "value"
+was already sitting in memory in exactly the form the file now holds.</p>
+<p>This is also precisely why struct dumps can't include pointers safely: a
+<code>char *</code> field's 8 bytes <em>are</em> a virtual memory address meaningful only
+within this one process's address space, assigned by the OS's memory
+manager when that particular allocation happened. <code>fwrite</code>-ing that struct
+faithfully copies those 8 address bytes to disk; reading them back later
+(even in the same process, after the pointed-to memory has been freed and
+possibly reused, or in an entirely different process where that address
+means something else or nothing at all) produces a pointer that no longer
+refers to valid data — dereferencing it is undefined behavior, exactly like
+use-after-free.</p>
+<p><code>fseek(f, offset, SEEK_SET)</code> maps closely to the kernel's own
+<code>lseek()</code> system call, which simply updates the file's cursor position — a
+number the kernel tracks per open file description — without touching any
+data. Because every <code>Product</code> record is a fixed <code>sizeof(Product)</code> bytes,
+computing <code>index * sizeof(Product)</code> and seeking there directly is O(1): the
+disk (or OS page cache) can jump straight to that byte offset, unlike a
+text file's variable-length lines, which force a sequential scan from the
+beginning just to find where record <code>index</code> starts (because nothing marks
+byte offsets when every line's length differs).</p>
+<p><strong>Endianness</strong> is a hardware fact about how a multi-byte CPU register gets
+laid out in memory, not a software choice: a little-endian CPU (x86, most
+ARM in default mode) stores an integer's <em>least</em> significant byte at the
+lowest memory address, so <code>fwrite</code>-ing <code>1</code> produces the bytes <code>01 00 00 00</code>
+— because that's genuinely the order those bytes sit in the CPU's register
+before the write instruction even runs. A big-endian machine's hardware
+stores the same integer value with the byte order reversed. <code>fwrite</code>
+doesn't add or remove any conversion step, so the exact in-memory
+representation — including this hardware-determined byte order — is what
+ends up on disk, which is why a binary file written on one architecture can
+misread as a completely different number on another.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Extend the <code>Product</code> example into a small binary database. Write
 <code>int append_product(const char *path, const Product *p)</code> using <code>"ab"</code>,

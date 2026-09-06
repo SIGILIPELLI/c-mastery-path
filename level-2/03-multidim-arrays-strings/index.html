@@ -1233,6 +1233,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2317,6 +2328,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2685,6 +2707,41 @@ cannot interleave two <code>strtok</code> loops or use it from threads.</p>
 <p>Note <code>strcmp(...) == 0</code> for "equal". Writing <code>if (strcmp(a, b))</code> reads like
 "if equal" but actually means "if <strong>different</strong>" — a bug that survives code
 review depressingly often.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The compiler needs the column count encoded in the type (<code>int (*grid)[COLS]</code>)
+because address computation for a 2-D array is a genuine multiplication
+baked into the generated instructions at compile time, not something
+resolved dynamically. <code>grid[r][c]</code> compiles to loading <code>grid</code>'s base
+address, computing <code>r * COLS * sizeof(int)</code> (often using a shift-and-add
+sequence rather than an actual multiply instruction, since <code>COLS</code> is a
+compile-time constant), adding <code>c * sizeof(int)</code>, and dereferencing the
+result — four or five instructions total, none of which involve a runtime
+lookup of "how wide is this array." Without <code>COLS</code> known at compile time
+inside the function, the compiler has no way to generate that multiply at
+all, which is exactly why <code>int grid[][COLS]</code> accepts a variable row count
+but never a variable column count in the classic (non-VLA) form.</p>
+<p>The row-major cache-friendliness point is a real hardware effect worth
+naming precisely: the CPU doesn't fetch memory one <code>int</code> at a time — it
+pulls in a fixed-size <strong>cache line</strong> (commonly 64 bytes, 16 <code>int</code>s) from
+RAM into the L1 cache on every miss. Iterating <code>grid[r][c]</code> with <code>c</code> as the
+inner loop touches 16 consecutive ints per cache line before the next miss;
+iterating with <code>r</code> as the inner loop jumps <code>COLS * sizeof(int)</code> bytes
+between every single access, likely missing the cache on nearly every
+iteration and forcing a slow trip to main memory each time — the same
+matrix, same total accesses, but potentially an order of magnitude slower
+purely because of access order relative to physical memory layout.</p>
+<p>The two "array of strings" layouts differ in a way that maps directly onto
+where their bytes physically live: <code>char names[3][16]</code> is 48 bytes on the
+stack (or wherever it's declared) that your code fully owns and can
+overwrite freely, while <code>const char *words[]</code> is 24 bytes of <em>pointers</em>
+whose targets are string literals baked into the binary's read-only data
+segment at compile time — the same kind of memory region discussed in
+<a href="../../level-1/01-setup/">Level 1, Module 1</a>. Writing through <code>words[0][0]</code>
+attempts to modify that read-only segment, which the OS's memory protection
+will reject with a segmentation fault — a different, harder failure than
+the silent corruption an unchecked array write produces, because the
+hardware's page tables mark that segment non-writable at the process level,
+not just by convention.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a program that stores a 5×5 <code>int</code> matrix and implements three functions:
 <code>void transpose(int m[][5], int n)</code> (swap in place), <code>int row_sum(const int
