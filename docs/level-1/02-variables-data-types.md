@@ -187,6 +187,47 @@ This is a common source of subtle bugs — C will not warn you at runtime.
 Choosing a wider type (`long`, `long long`) or an unsigned type buys more
 headroom but doesn't eliminate the problem, it just moves the boundary.
 
+## How It Actually Works
+
+Every variable in a C function lives at a fixed offset from the CPU's stack
+pointer for the duration of that function's call — the compiler decides these
+offsets at compile time, not runtime. Declaring `int age = 30;` inside `main`
+generates roughly one instruction to reserve 4 bytes below the current stack
+frame and another to write the bit pattern for `30` into it (`movl $30,
+-4(%rbp)` in x86-64 assembly). There's no hidden allocator call, no tag
+tracking "this is an int" at runtime — the type only exists at compile time,
+to tell the compiler how many bytes to reserve and how to interpret them.
+After compilation, a `float` and an `int` of the same byte count are
+indistinguishable bit patterns in memory; only the instructions the compiler
+chose to operate on them differ.
+
+That distinction is exactly what makes `float`/`double` different from `int`
+at the same size. Both `float` (4 bytes) and `int` (4 bytes) occupy identical
+storage, but `float` uses the IEEE-754 encoding — 1 sign bit, 8 exponent
+bits, 23 mantissa bits — while `int` uses two's-complement. Casting
+`(int)price` from `9.75` doesn't just chop off decimal digits: the CPU's
+floating-point unit runs a dedicated instruction (`cvttsd2si` on x86-64) that
+decodes the IEEE-754 bit pattern back into an integer bit pattern, truncating
+toward zero as it goes — a genuinely different bit-level operation from
+integer arithmetic, not the same bits reinterpreted.
+
+**Integer overflow** is a direct consequence of two's-complement
+representation and fixed-width registers. `INT_MAX` is `0111...1` (31 ones)
+in binary. Adding `1` performs ordinary binary addition, which carries
+through every bit and flips the sign bit, producing `1000...0` — which
+two's-complement interprets as the most negative `int`. The CPU's adder
+doesn't know or care that this is "wrong"; it just did binary addition on
+fixed-width registers and let the carry fall off the end. Signed overflow is
+undefined behavior in the C standard specifically because different CPU
+architectures could technically handle that carry differently, even though
+in practice x86/ARM both wrap the same way.
+
+`sizeof` is resolved entirely at compile time (except for variable-length
+arrays) — it's not a function call, it's an operator the compiler evaluates
+while generating code, which is why `sizeof(int)` costs zero CPU cycles at
+runtime; the compiler simply substitutes the constant `4` wherever you wrote
+it.
+
 ## Exercise
 
 Write a program that declares an `int`, a `float`, a `double`, and a `char`,

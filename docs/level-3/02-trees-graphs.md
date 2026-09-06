@@ -257,6 +257,49 @@ bookkeeping, different order of exploration.
 | BFS | Explores level by level; finds shortest path in an unweighted graph |
 | DFS | Explores as deep as possible before backtracking; simpler with recursion |
 
+## How It Actually Works
+
+Recursive tree functions like `tree_insert`, `tree_print_inorder`, and
+`tree_free` are silently using the **call stack** as their own traversal
+stack — every recursive call pushes a new stack frame holding that call's
+own `root` parameter and local variables, exactly as described for plain
+recursion in [Level 1, Module 4](../level-1/04-functions.md). This is why
+an unbalanced tree (built from sorted input, degrading into a straight
+chain) is dangerous beyond just slow search: `tree_free`'s recursion on a
+chain of 100,000 sorted-insert nodes would need 100,000 nested stack
+frames simultaneously alive, which can exhaust the process's stack region
+(commonly a few MB) and crash with a stack overflow — a balanced tree of
+the same size needs only about 17 levels of recursion (log₂ 100,000), so
+the practical failure mode of an unbalanced BST isn't just "slower," it's
+"can crash a program that would otherwise run fine."
+
+The reason in-order traversal visits a BST's values in sorted order is a
+direct, provable consequence of the insertion invariant, not a property
+you must separately verify: every node's entire left subtree was built
+from values compared as "less than" that node, and its entire right
+subtree from values "greater than" it, recursively, all the way down. Since
+in-order recursion always fully exhausts the left subtree (all smaller
+values) before visiting the node itself, then fully exhausts the right
+subtree (all larger values) afterward, the output is sorted by induction on
+subtree size — the same reasoning that shows pre-order (visit before
+recursing) naturally produces a valid rebuild sequence for copying a tree,
+since a node's value is emitted before either child, letting a copy
+routine insert nodes in an order that reconstructs the same shape.
+
+`graph_bfs`'s frontier queue reveals the real distinction between BFS and
+DFS at the mechanism level, not just "order of visiting": BFS explicitly
+maintains a FIFO queue *as data* — an array with `head`/`tail` indices that
+persists across the whole traversal — so it can always resume from the
+oldest still-undiscovered vertex, guaranteeing it explores everything at
+distance 1 before anything at distance 2. DFS achieves its different
+exploration order specifically because recursion (or an explicit stack)
+processes the *most recently* discovered vertex next, diving one path as
+deep as possible before backtracking — the underlying adjacency-list walk
+is identical in both, only the discipline used to choose "which discovered
+vertex to visit next" (FIFO versus LIFO) differs, which is the entire
+mechanical difference between "explores level by level" and "explores as
+deep as possible first."
+
 ## Exercise
 
 Add a `tree_height(const TreeNode *root)` function to `bst.c` that returns

@@ -260,6 +260,46 @@ crash that only shows up in production.
 | `realloc(p, n)` | `n` bytes, or `NULL` | old contents preserved | may move the block; use a temp |
 | `free(p)` | nothing | — | `free(NULL)` is safe and does nothing |
 
+## How It Actually Works
+
+`malloc` is not a direct line to the operating system — it's a user-space
+allocator (part of `libc`, commonly glibc's `ptmalloc` or macOS's
+`libmalloc`) that manages one or more large regions of memory it requests
+from the kernel in bulk (via `sbrk` or, more commonly today, `mmap` for
+larger requests) and then subdivides itself. Each small `malloc` call
+usually doesn't touch the kernel at all — it just carves a chunk out of
+memory the allocator already owns, which is why `malloc`/`free` are much
+faster than a system call but still far slower than stack allocation (which
+is just decrementing a register). The allocator keeps hidden bookkeeping
+directly adjacent to your data — typically a small header just *before* the
+pointer you're given, recording the block's size and links to neighboring
+free blocks — which is exactly why writing even one byte past the end of a
+`malloc`'d block (a heap buffer overflow) can corrupt that header and crash
+the program much later, inside some completely unrelated call to `malloc`
+or `free`, when the allocator next tries to read the corrupted bookkeeping.
+
+`free(ptr)` doesn't erase or return memory to the OS in most cases — it
+marks the block as available in the allocator's internal free list so a
+future `malloc` call can reuse that exact address. This is the root
+mechanism behind **use-after-free**: the memory at `ptr` is very often
+still mapped and readable after `free`, so `*ptr` frequently "looks fine"
+for a while — until another `malloc` call reuses that same address for
+something else, and the old pointer now aliases live, unrelated data. This
+is also why **double-free** corrupts the heap: freeing the same block twice
+typically inserts it into the allocator's free list twice, so a later
+`malloc` can hand out the *same address* to two different parts of the
+program simultaneously, each believing it has exclusive ownership.
+
+`realloc` growing "in place" versus "moving" depends entirely on whether
+there happens to be enough free space immediately adjacent to the existing
+block in the allocator's internal structures. When it can't extend in
+place, `realloc` internally does `malloc(newsize)` + `memcpy(old data)` +
+`free(oldptr)` — which is precisely why assigning the result back onto the
+original pointer before checking for `NULL` is catastrophic: if that
+sequence fails partway (returns `NULL`), you've already lost the only
+reference to the still-valid original block, permanently leaking it,
+because nothing else in the process holds its address anymore.
+
 ## Exercise
 
 Write `int *read_numbers(size_t *out_count)` that reads integers from `stdin`

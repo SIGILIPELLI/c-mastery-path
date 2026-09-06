@@ -408,6 +408,50 @@ other threads from making progress.
 | `-pthread` | Compile *and* link flag; required |
 | `-fsanitize=thread` | Detect data races at runtime |
 
+## How It Actually Works
+
+`counter++` compiling to three separate CPU instructions — a load, an add,
+a store — is the entire mechanical root of the race condition, and it's
+worth seeing exactly why interleaving them across threads produces a wrong
+answer. Thread A executes `load counter` (gets 500), then before it can
+execute `store 501`, the OS's scheduler preempts it (threads share CPU
+cores and get time-sliced, or genuinely run in parallel on separate
+cores) and thread B runs `load counter` (also gets 500, since A never
+stored yet), `add 1`, `store 501`. When A resumes, it still has `501` in
+its own register from its own earlier add, and stores `501` again — two
+increments happened, but the counter only advanced by one, because both
+threads' load-modify-store sequences overlapped instead of running fully
+one after the other. This is invisible in the source code because `x++`
+*looks* atomic; it's the compiled instruction sequence, not the C
+statement, that actually executes on real hardware.
+
+A mutex fixes this by making a *hardware* guarantee, not a software
+convention: `pthread_mutex_lock` is ultimately implemented using a special
+CPU instruction (commonly `CMPXCHG` — compare-and-swap, or `LOCK`-prefixed
+instructions on x86) that the processor guarantees executes as one
+indivisible step even with multiple cores accessing the same memory
+location simultaneously — the hardware itself refuses to let two cores'
+attempts interleave. Everything inside the critical section is not
+"protected" by any code you wrote there; it's protected because only one
+thread can be inside the region between successfully executing that atomic
+lock instruction and later calling unlock — a second thread's own attempt
+to execute the same atomic instruction simply fails to acquire the lock and
+spins or sleeps.
+
+`pthread_join`'s role as a "memory-visibility barrier" points at something
+real about modern CPUs: cores each keep their own cache, and without an
+explicit synchronization point, one core's writes aren't guaranteed to be
+visible to another core's reads in any particular order — the hardware and
+compiler are both free to reorder and cache operations for performance as
+long as *that thread's own* view of its own operations stays consistent.
+`pthread_join` (and mutex lock/unlock) act as **memory barriers** — points
+where the implementation forces pending writes to be flushed and visible
+before the call returns — which is exactly why `sum_threads.c` can safely
+read `slices[i].sum` right after `pthread_join` with no lock: the join
+itself is the synchronization event that guarantees the worker thread's
+write actually became visible to the joining thread, not merely that the
+worker's function returned.
+
 ## Exercise
 
 Turn `sum_threads.c` into a **parallel word counter**. Give each thread a

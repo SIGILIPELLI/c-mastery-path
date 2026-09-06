@@ -280,6 +280,68 @@ Three more traps specific to hand-rolled allocators:
   after the lifetime of the object it pointed to is undefined behaviour by
   the standard, so the optimiser is entitled to assume it never happens.
 
+## How It Actually Works
+
+`arena_alloc` and `pool_alloc` compile down to almost nothing, which is
+exactly the point — walk through what the compiler actually emits.
+
+For the bump allocator, `a->base + aligned` with `aligned` already computed
+is a single `lea` (load effective address) on x86-64: `used` lives in a
+register or a cache-hot struct field, the addition is one cycle, and there
+is no branch except the capacity check. Compare that to `malloc`'s fast
+path in glibc's ptmalloc: it computes a *chunk size* (your request rounded
+up to a multiple of 16 plus 8 bytes of header), maps that size to one of
+roughly 128 **bins** (small bins in steps of 16 bytes, large bins
+logarithmic), walks that bin's free list looking for a chunk that fits,
+possibly **splits** an oversized chunk and pushes the remainder back onto a
+bin, and writes the chunk header (`prev_size`, `size`, in-use bit) before
+handing you a pointer just past it. That header is why `malloc(1)` never
+actually costs you one byte — the real allocation is your size rounded up
+plus 8–16 bytes of bookkeeping the arena never pays.
+
+The pool's trick — storing the free list's `next` pointer inside the block
+itself — works because a freed block's *content* is garbage anyway; nothing
+is using those bytes. `*(void **)blk = p->free_list` reinterprets the first
+8 bytes of the block as a pointer slot and writes through it. This is the
+same technique glibc's `tcache` (a per-thread cache of recently freed
+chunks, added in glibc 2.26) uses internally: freed chunks below a size
+threshold get threaded onto singly-linked per-size-class lists using their
+own freed space, so a `tcache`-satisfied `malloc`/`free` pair is, under the
+hood, almost exactly your pool's pop/push — a few nanoseconds, no locks,
+because each thread owns its own tcache bins.
+
+The 8x benchmark gap has two independent causes, and it's worth separating
+them:
+
+1. **Instruction count.** `free(ptr)` in glibc must read the chunk header
+   to find its size, check whether the chunk directly before or after it in
+   memory is also free (**coalescing**, so adjacent free chunks merge into
+   one bigger chunk to fight fragmentation), possibly unlink a neighbor from
+   its bin, and insert the (possibly merged) chunk into the right bin. That
+   is a data-dependent chain of loads — nothing here pipelines well.
+   `arena_reset` is one store: `a->used = 0`.
+2. **Locality.** `malloc` calls scattered across a loop return chunks from
+   wherever the allocator's internal bins happen to have room — often not
+   adjacent in memory, especially after the allocator has served other
+   requests. The arena's objects are laid out **contiguously in allocation
+   order**, so the later summing loop reads through them sequentially: the
+   CPU's hardware prefetcher recognizes the stride and pulls the next cache
+   line in before you need it. Chasing `malloc`-scattered pointers defeats
+   the prefetcher — each `ptrs[i]` load can be an L2/L3 miss.
+
+On the sanitizer question: AddressSanitizer works by intercepting `malloc`
+and `free` and maintaining **shadow memory** — one byte of shadow state for
+every 8 bytes of real memory, tracking whether that region is addressable,
+and if not, why (redzone, freed, stack-use-after-scope). `free()` doesn't
+return the memory to the OS or even to glibc's normal bins right away; it
+poisons the shadow bytes and parks the chunk in a quarantine queue
+specifically so a subsequent read trips the poison check. Your arena and
+pool never call the real `free()` for individual objects — from ASan's
+point of view the backing block is one allocation that stays alive and
+addressable for its entire lifetime, so there is no shadow-memory event to
+detect when your own code decides a slot inside it is "free." The bug is
+real; the instrumentation simply has no hook into it.
+
 ## Exercise
 
 Build a **generation-tagged pool** that catches the use-after-free ASan

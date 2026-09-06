@@ -255,6 +255,45 @@ code, and why network protocols specify a fixed "network byte order"
 | Check power of two | `x != 0 && (x & (x - 1)) == 0` |
 | Count set bits | Kernighan's loop, or `__builtin_popcount(x)` on gcc/clang |
 
+## How It Actually Works
+
+Every bitwise operator in this module maps to exactly one CPU instruction
+— `&` to `AND`, `|` to `OR`, `^` to `XOR`, `<<`/`>>` to `SHL`/`SHR` (or
+`SAR` for arithmetic right shift) — which is why bit manipulation code is
+about as fast as C code gets: there's no loop, no memory access beyond
+loading the operands, just a single-cycle ALU (arithmetic logic unit)
+operation on values already sitting in registers. This is the real reason
+`x & (x - 1)` clearing the lowest set bit is preferred over looping through
+every bit position — it replaces up to 32 iterations of a loop (each with
+its own comparison, branch, and shift) with two register operations,
+`SUB` then `AND`, regardless of how many bits `x` has set below the
+highest one.
+
+The signed-vs-unsigned right-shift difference isn't a software policy
+choice, it's two genuinely different hardware instructions: `SAR`
+(arithmetic shift right) copies the sign bit into vacated positions as it
+shifts, while `SHR` (logical shift right) always fills with zero. The
+compiler chooses which instruction to emit purely by looking at the
+*type* of the operand at compile time — `signed_val >> 1` compiles to
+`SAR` because `signed_val` is declared `int`, while the exact same bit
+pattern shifted through an `unsigned int` variable compiles to `SHR`. This
+is why casting to `unsigned int` before shifting genuinely changes which
+CPU instruction executes, not just which C rule applies — it's a real,
+observable difference in the generated machine code.
+
+`1u << 32` being undefined behavior traces to a hardware quirk many CPU
+architectures share: x86's shift instructions don't actually use the full
+shift-amount operand — they mask it (typically to 5 bits for a 32-bit
+operand, `amount & 31`), so a hardware `SHL` by 32 is often silently
+executed as a shift by 0, returning the operand unchanged rather than 0.
+The C standard leaves this case undefined specifically because different
+architectures' shift instructions behave differently at or beyond the
+operand's bit width, and rather than forcing every compiler to insert an
+extra bounds check before every single shift instruction (which would
+undermine the entire point of bit operations being fast, unconditional
+instructions), the standard simply declines to guarantee any particular
+result.
+
 ## Exercise
 
 Write `int is_power_of_two(unsigned int x)` using the cheat-sheet idiom

@@ -379,6 +379,49 @@ Traps worth re-reading before you debug for an hour:
 - `struct sockaddr_in` must be zeroed before use; `= {0}` does it. Leftover
   stack garbage in the padding has caused real bind failures.
 
+## How It Actually Works
+
+A "socket" being just a file descriptor is not a loose analogy — sockets,
+regular files, pipes, and terminals are all represented inside the kernel
+by the same underlying abstraction, and `recv`/`send` are thin wrappers
+around the exact same `read()`/`write()` system calls used for ordinary
+file I/O in [Level 1, Module 8](../level-1/08-file-io.md), just with a few
+socket-specific flags. This is why `close(fd)` works identically on a
+socket as on a file, and why the kernel enforces the same per-process file
+descriptor limit across both — a program that leaks unclosed sockets
+exhausts the same finite resource as one leaking unclosed files.
+
+TCP being "a byte stream, not a message queue" is a direct consequence of
+what the protocol actually transmits: TCP breaks your data into IP packets
+however is convenient for the network at the moment — based on the
+path's maximum transmission unit, current congestion, retransmissions of
+lost packets, and Nagle's algorithm potentially coalescing several small
+`send` calls into one packet — and the *receiving* kernel's TCP stack
+reassembles those packets back into one ordered stream of bytes before
+handing them to your `recv` call, with absolutely no memory of where your
+original `send` boundaries were. This is exactly why "ALPHABETAGAMMA"
+arrives however it arrives: the three separate `send` calls' boundaries
+were never protocol-level information to begin with, only ever
+convenient chunks *your* program handed to the kernel — the kernel was
+always free to merge or split them differently before transmission, which
+is why length-prefixing or a delimiter (information your own application
+protocol carries inside the byte stream itself) is the only reliable way
+to recover message boundaries.
+
+`htons`/`htonl` performing a real byte swap on a little-endian machine is
+the exact same endianness mechanism from
+[Level 3, Module 4](04-bit-manipulation.md)'s bit-manipulation module,
+applied to a concrete, load-bearing case: a 16-bit port number like `9090`
+sits in memory as the bytes `82 23` on a little-endian CPU (least
+significant byte first), but the TCP/IP specification fixed network byte
+order as big-endian decades ago, so every machine on the internet needs to
+agree on one convention regardless of its own native byte order. `htons`
+is literally `((x << 8) | (x >> 8))` (for the 16-bit case) — an actual
+shift-and-OR bit operation executed on the value's bits, not a no-op or a
+labeling exercise — which is exactly why skipping it silently binds to
+the *wrong* numeric port (`33315` instead of `9090`) rather than producing
+any error: the bind call has no way to know you meant the swapped value.
+
 ## Exercise
 
 Give the echo server **length-prefixed framing** so message boundaries

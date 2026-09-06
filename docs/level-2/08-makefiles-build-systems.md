@@ -276,6 +276,45 @@ compile-and-link commands, and being able to read a Makefile tells you what any
 build is actually doing. Scaling builds across many modules and platforms is
 picked up again in [Level 4](../level-4/09-build-systems-at-scale.md).
 
+## How It Actually Works
+
+`make`'s entire decision procedure rests on one filesystem primitive: each
+file's **modification timestamp** (`mtime`), which the kernel maintains for
+every file and which `make` reads via the `stat()` system call before
+running any recipe. "Is `app` stale relative to `main.o`" is literally
+`stat("app").mtime < stat("main.o").mtime` — a single timestamp comparison,
+repeated across the whole dependency graph. This is exactly why `touch
+counter.c && make` triggers a rebuild without changing a single byte of
+content: `touch` only updates the mtime, and `make` has no way (nor any
+need) to know the content is identical — it trusts the timestamp
+completely, which is also why clock skew (a file copied with a timestamp
+in the past, or a networked filesystem with unsynchronized clocks) can
+make `make` either skip a rebuild it should do or redo one it doesn't need.
+
+The `-MMD -MP` dependency-generation trick works because the compiler
+itself already builds the complete list of every header a `.c` file
+transitively includes — it has to, in order to preprocess the file at all
+— so `-MMD` just asks it to dump that list it already computed into a
+`.d` file in Makefile syntax, rather than throwing it away after
+compilation. `-include $(DEPS)` then splices those generated rules into
+`make`'s own dependency graph, extending `main.o`'s prerequisites to
+include every header it actually uses (transitively) rather than just the
+`.c` file named in the pattern rule — closing the exact gap that made
+`%.o: %.c` alone miss header changes.
+
+`-O0` versus `-O2` changes what "the code" even means at the machine level,
+which is why gdb needs `-O0` to make sense of a running program: an
+optimizing compiler is free to keep a variable in a register for its
+entire lifetime and never write it to its "normal" stack slot, eliminate a
+variable entirely if its value is never observed, or reorder instructions
+across source lines for pipeline efficiency. `-g` embeds a mapping (DWARF
+debug info) from machine addresses back to source lines and variable
+locations, but at `-O2` that mapping often has to describe "this variable's
+value only exists in this register during these three instructions,"
+which is why stepping through optimized code in a debugger frequently
+looks like it's skipping lines or reporting `<optimized out>` for a
+variable you expect to see.
+
 ## Exercise
 
 Take the `Stack` module from [Module 7](07-modular-programming.md)'s exercise

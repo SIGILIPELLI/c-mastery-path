@@ -263,6 +263,45 @@ networking code.
 | Per-element overhead | One pointer per node (8 bytes on a 64-bit machine) | None beyond the data itself |
 | Typical use | Unknown/unbounded size, frequent insert/delete at ends | Known upper bound, performance-sensitive access |
 
+## How It Actually Works
+
+The array-backed `Stack` and `Queue` here are efficient in a way a linked
+list fundamentally cannot match, for a hardware-level reason: `s->data` is
+one contiguous block, so `stack_push`/`stack_pop` touch memory that's
+almost always already sitting in the CPU's L1 cache from the previous
+operation — pushing element `i` and then `i+1` accesses two addresses only
+4 bytes apart, very likely on the same 64-byte cache line fetched from RAM
+once. A linked list's nodes, by contrast, are scattered wherever the heap
+allocator happened to place each individually `malloc`'d block, so walking
+one (as `print_list`/`free_list` do) very often means a cache miss —
+a full round trip to RAM — on nearly every single node, even though both
+structures are doing "the same" O(n) traversal in big-O terms. This gap
+(often 10-100x in wall-clock time for the same element count) is the real
+substance behind "arrays have better cache locality" and is a large part
+of why production code prefers array-backed structures whenever the size
+is bounded.
+
+The circular buffer's `% QUEUE_CAP` arithmetic is doing something the CPU
+implements as a genuinely different (and pleasingly cheap) instruction when
+`QUEUE_CAP` is a power of two: the compiler can replace a general modulo
+(division-based, tens of cycles) with a bitwise AND against `QUEUE_CAP - 1`
+(one cycle), because for any power-of-two `N`, `(x % N) == (x & (N - 1))`
+— the low bits of `x` are exactly its remainder mod a power of two. This is
+why ring buffers in real audio/networking code almost always pick
+power-of-two capacities: it turns the wraparound check into one of the
+cheapest operations the CPU has, not a coincidence of style.
+
+`free(cur); cur = cur->next;` corrupting data (rather than the safer-sounding
+"reading freed memory" description) is worth being precise about: `free`
+doesn't zero or unmap the memory, it just tells the allocator "this block is
+available again." `cur->next` immediately afterward reads whatever bytes
+currently occupy that address — which is still, in practice, very often
+the old data (nothing has reused it *yet*), so this bug frequently "works"
+in testing and only manifests once something else `malloc`s that same
+address and overwrites it, which is exactly the kind of intermittent,
+environment-dependent failure that makes use-after-free bugs so much harder
+to catch than an immediate crash.
+
 ## Exercise
 
 Extend `stack.c` into a **balanced-parentheses checker**: write a function

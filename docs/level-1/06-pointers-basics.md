@@ -205,6 +205,52 @@ This is just a preview — you'll use pointer-to-pointer patterns more
 deliberately once dynamic memory allocation is introduced in
 [Level 2](../level-2/02-dynamic-memory.md).
 
+## How It Actually Works
+
+A pointer variable itself is not magic — it's an ordinary chunk of memory
+that happens to store a number: the address of another byte in the
+process's address space. `int *agePtr = &age;` allocates 8 bytes on a
+64-bit machine (a pointer's size equals the machine's address width, not
+the size of what it points to) and stores `age`'s address in them. `&age`
+is computed by the compiler at compile time if `age` is a known stack
+offset — it's literally "current frame base plus this variable's fixed
+offset," not a runtime lookup.
+
+Dereferencing (`*agePtr`) compiles into a two-step memory access at the
+hardware level: first load the address value out of `agePtr`'s own storage,
+then issue a second load/store using *that* value as the address. This is
+exactly why an uninitialized pointer is dangerous — its bytes hold whatever
+garbage was left on the stack from a previous function call, and
+dereferencing it means asking the CPU to read/write at a essentially random
+address, which either corrupts unrelated memory silently or hits a page the
+OS hasn't mapped into your process, triggering a **segmentation fault**
+(the kernel's memory-management unit rejects the access and sends
+`SIGSEGV`). `NULL` is conventionally address `0`, which the OS deliberately
+leaves unmapped specifically so dereferencing a null pointer reliably
+crashes instead of corrupting memory silently — that reliability is *why*
+`if (ptr == NULL)` checks are effective as a safety net.
+
+**Array decay** is a compile-time rule, not a runtime conversion: whenever
+an array name appears in most expressions, the compiler substitutes the
+address of element 0 in its place, because arrays and pointers use
+compatible representations at the machine level — an array's "value" in an
+expression context *is* a base address. This is also why pointer
+arithmetic is type-aware: `numbers + 1` doesn't add 1 byte, it adds
+`1 * sizeof(int)` bytes (4, typically), because the compiler scales the
+offset by the pointee type's size so that `*(numbers + i)` lands exactly on
+element `i`'s first byte — the same address arithmetic explained for
+arrays in [Module 5](05-arrays-strings.md).
+
+`swap(&x, &y)` demonstrates why passing addresses defeats pass-by-value:
+`a` and `b` inside `swap` are still copies (of the *addresses*), but
+dereferencing a copied address still reaches the original memory it points
+to — `*a = *b` is a memory write at `x`'s actual stack location in `main`'s
+frame, not a write to any copy. A pointer-to-pointer (`int **ptrToPtr`)
+simply repeats this once more: it's a variable holding the address of
+another variable (`ptr`) that itself holds an address — `**ptrToPtr`
+dereferences twice, following two address hops in sequence to finally land
+on `value`'s actual storage.
+
 ## Exercise
 
 Write a program that declares an array of 5 integers. Using only pointer

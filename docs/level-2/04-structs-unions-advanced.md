@@ -305,6 +305,47 @@ positions must match a file format or wire protocol.
 | bit-field | packed into words | all | flags, tight embedded state |
 | `enum` | an `int` in practice | — | named constants, the tag itself |
 
+## How It Actually Works
+
+A `union`'s "share one address" behavior isn't a language-level trick — the
+compiler allocates one region of memory exactly `sizeof(largest member)`
+bytes wide, and every member's offset is computed as `0`, full stop. `v.i`
+and `v.f` are literally the same four bytes reinterpreted through different
+type lenses at compile time: writing `v.f = 3.14f` runs the IEEE-754
+encoder and stores the resulting bit pattern into those same four bytes;
+reading `v.i` immediately afterward reinterprets that identical bit pattern
+as two's-complement, producing a value with no numeric relationship to
+`3.14` — the "meaningless" 1078523331 you saw is exactly the 32-bit IEEE-754
+encoding of `3.14f` read back as a signed integer. This is the mechanical
+basis of type punning: the union simply refuses to remember which member
+you last wrote, because at the hardware level there is only one memory
+location and one set of bits — "type" is metadata the compiler drops the
+instant it finishes generating code.
+
+Self-referential structs work despite "a struct can't contain itself"
+because `struct Node *next` is a pointer — a fixed 8-byte address-sized
+field — not an embedded `Node`. The compiler can compute `sizeof(Node)`
+immediately (it just needs to know a pointer's size, not the size of
+whatever it eventually points to), which is why the forward reference
+`struct Node *next;` compiles fine inside `struct Node`'s own definition
+while an embedded `struct Node next;` would require infinite regress and is
+correctly rejected. Building the list with `malloc` for each node means
+each `Node` lives at its own independently-allocated heap address, with
+`next` fields chaining those addresses together — the list's structure
+exists entirely as pointer values, not as any contiguous memory layout the
+way an array is.
+
+Bit-fields push the padding logic one level deeper: instead of allocating
+whole bytes per member, the compiler packs several fields into the bits of
+one underlying storage unit (commonly a 32-bit `unsigned int`), tracking a
+bit-offset within that unit for each field and generating shift-and-mask
+instructions to read or write each one. `f.priority = 9` truncating to `1`
+happens because the compiler generates a mask that keeps only the low 3
+bits of whatever value you assign (`9` is `1001` in binary; masked to 3
+bits it becomes `001`, i.e. `1`) — there's no bounds check, just an AND
+operation baked in at compile time, the same silent-truncation behavior as
+integer overflow but happening at a sub-byte granularity.
+
 ## Exercise
 
 Model a small shape system. Define `typedef enum { CIRCLE, RECTANGLE, TRIANGLE

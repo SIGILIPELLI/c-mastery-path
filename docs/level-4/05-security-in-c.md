@@ -238,6 +238,54 @@ Validate length before copying, range before indexing, and sign before
 converting to `size_t` — a negative `int` becomes an enormous unsigned value
 and turns a length check into a no-op.
 
+## How It Actually Works
+
+A stack buffer overflow "not crashing" (this module's opening example) makes
+sense once you draw the frame it's writing into. A typical x86-64 call
+lays out the callee's stack frame, growing toward lower addresses, roughly
+as: locals (including your buffer) at the bottom of the frame, then saved
+registers, then the **stack canary** (a random value written on entry and
+checked on exit), then the **saved frame pointer** (`rbp`), then the
+**return address** pushed by `call`, then the caller's arguments and frame.
+`strcpy` into an undersized local buffer walks upward through addresses:
+overrun by a few bytes and you clobber a neighboring local; overrun by
+exactly the right amount and you overwrite the return address itself. On
+function return, `ret` pops whatever 8 bytes sit at the current stack
+pointer and jumps there as if it were code — if an attacker controls those
+bytes, they control where execution resumes next. That is the entire
+mechanism behind "gets() is a vulnerability, not just sloppy": nothing
+checks length, so the write walks straight past the buffer into
+control-flow data with no error and no crash until (or unless) execution
+jumps somewhere invalid.
+
+`-fstack-protector-strong` defends exactly the return-address case: the
+compiler inserts a load of a global secret (`__stack_chk_guard`, set once
+at process start from a hard-to-predict source) into the canary slot on
+function entry, and a comparison against that same global just before
+`ret`. An overflow that reaches the return address has to pass through the
+canary slot first (given the stack layout above), so it overwrites the
+canary too — the mismatch is caught and the process calls `__stack_chk_fail`
+which aborts, trading an exploitable overflow for a guaranteed crash. It
+does not protect locals that sit *below* the canary from being corrupted by
+each other, which is why ASan's redzones (poisoned shadow bytes placed
+immediately before and after every stack and heap allocation) catch a wider
+class of overflows than the canary alone.
+
+The format-string attack works because `printf`'s calling convention passes
+extra arguments through registers and then the stack — by the System V
+x86-64 ABI, the first six integer/pointer arguments go in
+`rdi, rsi, rdx, rcx, r8, r9` and any further ones spill to the stack.
+`printf(input)` with no extra arguments still executes every `%x`/`%s`/`%n`
+conversion the *string* specifies, and each one tells `printf` to consume
+"the next argument" — which is whatever garbage happens to sit in the next
+argument register or stack slot, because the caller never populated one.
+There is no bounds check possible here: `printf` has no way to know how
+many arguments were actually passed, so it trusts the format string
+completely, which is precisely why attacker control over that string is
+equivalent to attacker-directed memory reads (`%x`, `%s`) or writes (`%n`,
+which stores the number of bytes printed so far into a pointer it pops off
+the same argument list).
+
 ## Exercise
 
 Take the `tiny_http.c` server from

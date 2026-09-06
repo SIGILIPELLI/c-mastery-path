@@ -341,6 +341,59 @@ Silence from ThreadSanitizer is the real result here. Delete a single
 the very first run, even though the plain build would keep returning correct
 answers for hours.
 
+## How It Actually Works
+
+A `pthread_rwlock_rdlock`/`_wrlock` pair is not "faster mutex" — it is a
+genuinely different synchronization primitive, and the difference is why
+`kv_get` can run concurrently with other `kv_get` calls but not with
+`kv_set`. Internally the rwlock keeps a reader count and a writer flag
+(the exact representation is glibc-internal, but the contract is fixed):
+`rdlock` atomically increments the reader count and proceeds as long as no
+writer holds or is waiting for the lock; `wrlock` blocks until the reader
+count reaches zero and no other writer holds it, then sets the writer flag
+exclusively. That means 20 concurrent `GET`s against the same bucket can
+all proceed with no contention at all — each just increments a shared
+counter with an atomic instruction — while a single `PUT` must wait for
+every in-flight reader to finish and then locks everyone else out. This is
+exactly why the stretch goal about LRU eviction is a real problem: the
+instant `kv_get` needs to mutate the linked list (moving an entry to the
+front), it can no longer take a read lock, because two threads doing that
+mutation concurrently would corrupt the list's pointers — you would be
+downgrading every `GET` to writer-exclusive, which is the whole point of
+lock striping in stretch goal 2: split one global lock guarding 64 buckets
+into 16 independent locks so writers to bucket 3 no longer block readers of
+bucket 40.
+
+The hash table's bucket layout matters for a reason distinct from locking:
+each bucket is (almost always) a singly-linked chain of entries that hashed
+to the same index, and `kv_get`/`kv_set` walk that chain comparing keys
+with `strcmp` until they find a match or reach `NULL`. A `pthread_rwlock_t`
+per bucket (rather than a single global one) works because two threads
+hashing to *different* buckets touch entirely disjoint memory — no false
+sharing risk either, as long as the locks themselves are spread across
+enough cache lines, which is why lock striping typically pads or spaces the
+lock array rather than packing 16 `pthread_rwlock_t`s (each around 56
+bytes on Linux glibc, larger than a cache line already, so this specific
+structure is naturally safe from that trap).
+
+On the networking side, `accept()` is a syscall that blocks the calling
+thread until the kernel has completed a TCP three-way handshake with an
+incoming client and has a connection ready to hand off; the returned file
+descriptor is a *new* socket distinct from the listening one, so the
+thread-per-connection model (`accept` in a loop, `pthread_create` on each
+returned fd) works because the kernel does all the demultiplexing —
+multiple threads simultaneously blocked in `recv()` on different fds is a
+supported, race-free kernel primitive, not something this program has to
+synchronize itself. The cost that stretch goal 5 asks you to measure is
+real: a `pthread_create` allocates a full thread stack (8 MB virtual, by
+default on Linux, though only touched pages become resident) and asks the
+kernel scheduler to manage yet another schedulable entity, so 5,000
+simultaneous connections under thread-per-connection means 5,000 stacks
+worth of virtual address space and 5,000 entries the scheduler has to
+consider — a bounded worker pool pulling fds off a mutex-and-condvar queue
+keeps the number of live OS threads constant regardless of connection
+count.
+
 ## Stretch goals
 
 1. **Bounded memory.** Add `kv_set_max_entries()` and an LRU eviction

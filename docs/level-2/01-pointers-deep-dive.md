@@ -323,6 +323,53 @@ caller's `NULL` pointer, and the caller's `row` would still be `NULL` on
 return. Dynamic allocation is covered fully in
 [Module 2](02-dynamic-memory.md).
 
+## How It Actually Works
+
+The `int (*op)(int, int)` syntax reflects something real about how functions
+exist in a compiled binary: a function is just a label marking the address
+of its first instruction inside the executable's code segment. `op = add;`
+copies that address — the same 8-byte value on a 64-bit machine that a data
+pointer would hold — into `op`'s storage. Calling `op(4, 2)` compiles to
+"load the address out of `op`, then issue an indirect call instruction to
+that address" (`call *%rax` in x86-64 assembly) instead of a direct
+`call add` whose target is baked into the instruction at compile time. This
+is the mechanical difference between calling a function normally and
+calling one "by pointer": the CPU doesn't know or care which function it's
+about to jump to until the moment the indirect call executes, which is
+exactly what lets `qsort` invoke a comparator it has never heard of at
+compile time — the comparator's address is simply data qsort was handed at
+runtime.
+
+This is also why `void *` cannot be dereferenced directly: dereferencing
+requires knowing how many bytes to read and how to interpret the bit
+pattern (an `int` needs a 4-byte two's-complement load; a `double` needs an
+8-byte IEEE-754 load into a floating-point register) — information a
+`void *` deliberately discards. `qsort`'s comparator receiving `const void
+*a` is handed a raw address with zero type information; casting to
+`const int *` before dereferencing is what tells the compiler "interpret
+the next 4 bytes at this address as an int," restoring the information
+`void *` erased.
+
+`const` qualifiers, in contrast, are a pure compile-time fiction with zero
+runtime representation: `const int *p1` and `int *p1` produce byte-for-byte
+identical machine code for reading `*p1` — the compiler simply refuses to
+*generate* code that would write through `p1`, catching the mistake before
+code exists at all. There is no protected-memory mechanism backing this (the
+OS-level read-only protection you get from `const` global data placed in a
+read-only segment is a separate, real mechanism); a `const int *` aimed at
+genuinely mutable stack memory can still be defeated by an explicit cast,
+which is exactly why `const` is described as a compiler discipline tool, not
+a security boundary.
+
+The "array decays to pointer, losing size information" behavior demonstrated
+by `by_param` is a direct consequence of the calling convention: a function
+parameter is just a register or stack slot sized for one pointer (8 bytes),
+so there is physically nowhere for the compiler to also pass "and by the
+way, this points into a block of 10 elements" — that metadata simply isn't
+part of the ABI (Application Binary Interface) that describes how arguments
+are passed. Passing the length as an explicit second parameter is the only
+way to recover information the calling convention itself throws away.
+
 ## Exercise
 
 Write a program with a function

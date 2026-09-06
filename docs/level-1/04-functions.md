@@ -200,6 +200,57 @@ rest of the file.
 | Global variable | Visible to the whole file, persists for the program's lifetime |
 | `static` local | Scoped to its function, but persists between calls |
 
+## How It Actually Works
+
+Calling a function is a small, well-defined protocol between caller and
+callee called a **calling convention**, and it's built entirely out of the
+stack and a handful of registers. When `main` calls `add(3, 4)`:
+
+1. The caller places arguments into registers (`%edi = 3`, `%esi = 4` on
+   x86-64 System V) — small integer arguments travel in registers, not on
+   the stack, for speed.
+2. `call add` pushes the **return address** (the instruction right after
+   the call) onto the stack, then jumps to `add`'s first instruction. This
+   return address is how the CPU knows where to resume in `main` once
+   `add` finishes — there's no separate bookkeeping structure, it's just a
+   value on the stack.
+3. `add` allocates its own **stack frame** — a chunk of stack space for its
+   local variables, sized by the compiler in advance — by moving the stack
+   pointer down.
+4. `add` computes `a + b`, places the result in `%eax` (the conventional
+   return-value register), then executes `ret`, which pops the return
+   address back off the stack and jumps to it.
+5. The caller reads the result out of `%eax`.
+
+This concretely explains **pass-by-value**: the callee receives copies of
+the argument bits in its own registers/stack slots, physically separate
+memory from the caller's variables. `increment(x)` modifies the copy sitting
+in `increment`'s own stack frame; when `increment` returns, that entire
+stack frame — copy included — is simply abandoned (the stack pointer moves
+back up, and the memory is considered free for the next call to reuse). The
+caller's `x` was never touched because the callee never had its address, only
+its value.
+
+**Recursion** is this same mechanism applied repeatedly: each call to
+`factorial(n)` gets its own fresh stack frame stacked on top of the
+previous one, each with its own independent copy of `n`. `factorial(5)`
+calls `factorial(4)` which calls `factorial(3)`... and none of these frames
+overlap — that's *why* each recursive call "remembers" its own `n` correctly
+even though the function has only one set of local variable names in the
+source code. A stack overflow happens when this chain of frames grows past
+the OS-allocated stack region's size (commonly 8MB on Linux) and the process
+faults trying to write below the bottom of that region.
+
+`static` locals work completely differently: instead of living in the
+per-call stack frame, `calls` in `call_counter` is allocated once, at a
+fixed address in the binary's data segment (the same kind of memory global
+variables use), and initialized a single time before `main` even starts.
+Every call to `call_counter` reads and writes that same fixed address rather
+than a fresh stack slot — which is exactly why the value survives between
+calls while staying invisible outside the function: the *scope* is
+compile-time (name only resolves inside `call_counter`), but the *storage
+duration* is the whole program's lifetime.
+
 ## Exercise
 
 Write a function `int power(int base, int exponent)` that computes

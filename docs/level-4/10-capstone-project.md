@@ -398,6 +398,51 @@ That `env: CC` line works only because the Makefile declares `CC ?= cc`
 rather than `CC = cc` — the `?=` from
 [module 09](09-build-systems-at-scale.md), doing real work.
 
+## How It Actually Works
+
+The `fsync`/`fflush` distinction in stretch goal 1 is really two different
+buffers, and the 100x number comes from where each one lives. `fprintf`
+into a `FILE *` first fills a **userspace stdio buffer** — a few kilobytes
+of memory inside your process — so most calls just `memcpy` into that
+buffer and return without a syscall at all; `fflush` forces that buffer's
+contents out via a `write()` syscall, handing the bytes to the **kernel's
+page cache**, which is itself just RAM. At that point the data survives
+your process crashing, but not the machine losing power, because the page
+cache has not been written to the physical disk yet. `fsync(fd)` is the
+call that blocks until the kernel has issued the actual write to the
+storage device's write cache and (depending on the device and its cache-
+flush support) that device confirms the write is durable — a round trip to
+spinning media or flash, which is milliseconds versus the nanoseconds of a
+memcpy into a userspace buffer. That multi-order-of-magnitude latency gap
+between "a memory copy" and "a physical write confirmed by a drive" is the
+entire 100x, and it is why real databases make it a tunable knob
+(`db_set_sync`) rather than always calling `fsync`: every write pays for
+every prior write's durability guarantee if you always sync, so systems
+batch writes and sync periodically, or per-transaction, depending on how
+much data they can afford to lose in a crash.
+
+Crash recovery replaying the write-ahead log works because the log format
+gives every record enough self-description to detect a **torn write**: a
+process (or the OS) can be killed mid-`write()`, leaving a record's bytes
+partially on disk — the kernel does not guarantee an interrupted `write()`
+either fully lands or fully doesn't. A record that begins with its own
+length or a checksum lets replay distinguish "this record was fully
+written" from "this record was cut off," and a well-designed WAL treats a
+truncated final record as the end of valid history rather than as
+corruption to fail on — the last, partial write is exactly the one the
+crash interrupted, and discarding it (rather than the writes before it) is
+what makes replay converge to a consistent state no matter which instant
+the crash landed at.
+
+CI running the same source across gcc/clang and Linux/macOS deliberately
+surfaces the implementation-defined behavior [module 04](04-writing-
+portable-c.md) covers in the abstract: plain `char` is signed on macOS's
+x86-64/ARM64 default ABI and unsigned on many Linux ARM configurations, so
+a `db.c` that indexes an array with a raw `char` byte can pass every test
+on one runner and read out-of-bounds on another — the matrix build is what
+turns a latent portability bug into a CI failure instead of a bug report
+from a user on a platform you never tested.
+
 ## Stretch goals
 
 1. **Real durability.** `fflush` hands bytes to the kernel; a power cut still

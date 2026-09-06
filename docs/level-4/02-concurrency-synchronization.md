@@ -251,6 +251,54 @@ Traps specific to this level:
   calling anything from a thread. `errno` is per-thread; `strtok` and `rand`
   are not (`strtok_r`, `rand_r` are).
 
+## How It Actually Works
+
+Cache coherence between cores runs on a protocol — commonly **MESI**
+(Modified, Exclusive, Shared, Invalid), or a variant of it — that tracks,
+per cache line, which core(s) may hold it and in what state. When core A
+writes to a line that core B also has cached, the coherence hardware sends
+an invalidation to B's cache (or, in a snooping/directory-based
+implementation, B's controller observes the write on the interconnect and
+invalidates its own copy), forcing B to re-fetch the line from A's cache or
+from the shared L3 the next time it touches those bytes. This is not
+software you can see — it happens entirely in silicon, transparently — but
+its cost is very real: an inter-core cache-line transfer costs tens to
+hundreds of cycles, versus one cycle for an L1 hit. `falseshare.c`'s packed
+layout puts eight `atomic_long`s in roughly one or two 128-byte lines
+(sized for the L2 cache-line width used in the example), so every single
+increment by any thread invalidates that line everywhere else, turning what
+should be eight independent L1-speed operations into a chain of cross-core
+transfers — the 48x is that transfer cost multiplied by five million
+increments times seven other cores contending.
+
+Underneath `atomic_compare_exchange_weak`, x86-64 emits a `lock cmpxchg`
+instruction: the `lock` prefix asserts ownership of the target cache line
+for the duration of the read-modify-write, which the coherence protocol
+enforces by making sure no other core's cache holds a modifiable copy of
+that line while the locked operation executes. ARM has no equivalent single
+instruction; it builds CAS from **LDXR/STXR** (load-exclusive /
+store-conditional): LDXR loads the value and tags the address as
+"monitored," STXR writes only if no other core touched that address since
+the LDXR, reporting success or failure. That's the hardware reason
+`compare_exchange_weak` exists as a *loop-driving* primitive with a spurious
+failure mode — on ARM, an exclusive-monitor false negative (triggered by an
+unrelated event like a context switch or another exclusive access nearby)
+is cheaper to expose to software as "just try again" than to eliminate at
+the instruction level, whereas x86's single `cmpxchg` never fails
+spuriously — which is exactly why `_weak` costs nothing extra on x86 and
+saves a real retry-avoiding branch on ARM.
+
+`memory_order_acquire`/`release` map to actual fence instructions the
+compiler inserts around the atomic op — on ARM64, `stlr`/`ldar` (store-
+release / load-acquire); on x86-64, plain stores and loads already carry
+acquire/release semantics in hardware, so the compiler emits nothing extra
+for them and only `seq_cst` costs an additional fence (`mfence` or a locked
+no-op) to establish the single total order every thread must agree on. That
+is the mechanical reason relaxed and seq_cst can compile identically on x86
+but diverge sharply on ARM: x86's memory model is already close to
+sequentially consistent for ordinary loads/stores, ARM's is genuinely
+weaker and needs explicit fences to get the same guarantee.
+
 ## Exercise
 
 Take the packed/padded benchmark and add a **third** variant: each thread

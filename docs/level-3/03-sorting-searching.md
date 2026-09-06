@@ -188,6 +188,43 @@ call on every comparison, which is measurably slower than the specialized
 | Linear search | O(1) | O(n) | O(n) | Works on unsorted data |
 | Binary search | O(1) | O(log n) | O(log n) | Requires sorted data |
 
+## How It Actually Works
+
+Quicksort's recursion demonstrates exactly the stack-frame accounting from
+[Level 1, Module 4](../level-1/04-functions.md), and it's directly
+responsible for the algorithm's *space* complexity, not just its time
+complexity: each recursive call to `quicksort` gets its own stack frame
+holding its own `low`/`high`, and those frames stack up to a depth equal to
+the recursion tree's height — O(log n) for a balanced split, but O(n) for
+the worst-case already-sorted input, meaning the pathological case doesn't
+just run slowly, it also risks a stack overflow for large arrays, the same
+mechanism that made an unbalanced BST dangerous in
+[Module 02](02-trees-graphs.md).
+
+The `swap` calls inside `partition` are where quicksort actually earns its
+in-place, O(1)-extra-space property: unlike merge sort, which needs a
+separate output buffer to merge into, Lomuto partitioning rearranges
+elements entirely by exchanging pairs within the original array — each
+`swap(&arr[i], &arr[j])` is just three loads and three stores at fixed
+offsets from `arr`'s base address, the same pointer arithmetic covered in
+[Level 2, Module 1](../level-2/01-pointers-deep-dive.md). This is exactly
+why quicksort tends to beat merge sort in practice on typical hardware
+despite matching its average-case big-O: fewer memory allocations, and the
+in-place swaps stay within a small, cache-resident window of the array
+rather than streaming through a separate allocated buffer.
+
+`mid = low + (high - low) / 2` avoiding `(low + high) / 2` is a concrete
+instance of the two's-complement overflow behavior from
+[Level 1, Module 2](../level-1/02-variables-data-types.md): if `low` and
+`high` are both large positive `int`s, their sum can exceed `INT_MAX` and
+wrap to a negative number via the same carry-into-the-sign-bit mechanism
+that made `INT_MAX + 1` wrap around — after which dividing a negative
+number by 2 and using it as an array index reads out of bounds. Restating
+the formula as `low + (high - low) / 2` keeps every intermediate value
+within the original range's bounds, so the same catastrophic overflow
+can't occur no matter how large `low` and `high` get (short of the array
+itself exceeding `INT_MAX` elements).
+
 ## Exercise
 
 Modify `partition` to pick the pivot as the **middle** element of the range

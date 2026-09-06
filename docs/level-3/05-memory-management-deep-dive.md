@@ -249,6 +249,56 @@ free(p);   // free(NULL) -- safe no-op, not a crash
 | `realloc(p, n)` | Resizes block `p` to `n` bytes, may move it | `NULL` (original block untouched) |
 | `free(p)` | Releases the block; `free(NULL)` is a defined no-op | — |
 
+## How It Actually Works
+
+The four memory regions correspond to concrete sections the linker builds
+into the executable file and instructions the OS loader follows when
+starting the process, not just an abstract mental model. `global_var`
+(initialized to a non-zero value) lands in the ELF/Mach-O binary's `.data`
+section, with its initial value literally stored as bytes in the
+executable file on disk — the loader just maps that section into memory
+read-write. `static_var` (implicitly zero) lands in `.bss`, which is
+special: the executable file does *not* store any bytes for it at all
+(storing a million zero bytes on disk would be wasteful), it just records
+"reserve this many bytes and zero them" — the loader allocates and zeroes
+that memory at startup, which is also why *every* uninitialized `static`
+or global variable in C is guaranteed to start at zero, unlike an
+uninitialized local. The stack and heap, by contrast, have no
+representation in the file at all — they're regions the OS sets up fresh
+for each running process, which is exactly why their addresses vary
+between runs (address space layout randomization deliberately places them
+differently each time, specifically to make memory-corruption exploits
+harder to write reliably).
+
+`realloc`'s "may move the block" behavior is a direct consequence of how
+the heap allocator's internal free list is organized: growing a block in
+place is only possible if the memory immediately following it is currently
+free and large enough — information the allocator tracks via headers
+adjacent to each block, as covered in
+[Level 2, Module 2](../level-2/02-dynamic-memory.md). When that's not the
+case, `realloc` internally does the equivalent of `malloc(newsize)` (find a
+new large-enough free region elsewhere), `memcpy` (copy the old block's
+entire contents there, byte for byte), then `free(oldptr)` (return the
+original block to the free list) — three real operations, any of which can
+fail, which is exactly why checking the return value into a temporary
+before overwriting the original pointer is the only version of this
+pattern that can survive a failed `malloc` step without losing the still-
+valid original allocation.
+
+AddressSanitizer's ability to pinpoint a use-after-free precisely (down to
+the exact allocation, free, and re-access call stacks) works because ASan
+doesn't let `free`'d memory get reused immediately — it holds a
+configurable quarantine of recently-freed blocks aside, poisoning their
+shadow-memory bytes (the same shadow-memory mechanism used for
+buffer-overflow detection) so any subsequent access to that address is
+flagged immediately rather than silently succeeding against still-present
+old data. This is precisely why the *un-instrumented* build of the same
+`uaf.c` "often prints 42 twice" — a normal allocator has no such
+quarantine and will happily hand that exact address back out to the very
+next `malloc` call, meaning the bug's visible symptom depends entirely on
+whether anything else happened to reuse that memory before you read it
+again.
+
 ## Exercise
 
 Take `uaf.c` above and fix it two ways, confirming each with

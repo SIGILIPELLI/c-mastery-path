@@ -205,6 +205,42 @@ int main(void) {
 }
 ```
 
+## How It Actually Works
+
+Every `if`, loop, and `switch` compiles down to comparison instructions and
+conditional jumps — there is no runtime "control flow engine" in C, just
+raw CPU instructions that change the instruction pointer. `if (score >= 90)`
+becomes something like `cmpl $90, -4(%rbp)` (compare the value at that stack
+slot against 90) followed by `jl .L_else` (jump if less, to the else branch).
+The CPU evaluates the comparison, sets flag bits in a status register (a
+"less-than" flag, a "zero" flag), and the conditional jump instruction reads
+those flags to decide whether to redirect the instruction pointer or fall
+through to the next instruction.
+
+`for` loops are pure syntactic sugar the compiler expands before ever
+touching machine code: `for (int i = 0; i < 5; i++) { body }` generates
+exactly the same instruction sequence as
+`{ int i = 0; loop_top: if (!(i < 5)) goto loop_end; body; i++; goto loop_top; loop_end: }`
+— a comparison, a conditional jump past the loop, the body, an increment,
+and an unconditional jump back. `while` and `do-while` differ only in where
+that comparison sits relative to the body — `do-while` places the check
+after the body, which is why it always runs at least once: the CPU simply
+hasn't executed the comparison yet the first time through.
+
+`switch` is special: when the case values are reasonably dense integers
+(like `1, 2, 3`), the compiler often builds a **jump table** — an array of
+code addresses indexed directly by the switch value — instead of a chain of
+comparisons. `switch(day)` can compile to something like
+`jmp *jump_table(,%eax,8)`, which computes `day`'s offset into a table of
+addresses and jumps straight there in one instruction, regardless of how
+many cases exist. This is also the mechanical reason fallthrough exists:
+each `case` is just a label in that generated code, and without an explicit
+`break` (which compiles to an unconditional jump past the rest of the
+block), execution simply continues falling into whatever instructions sit
+at the next label — there's no separate mechanism preventing it, because at
+the assembly level cases aren't isolated blocks, just addresses in a
+straight line of instructions.
+
 ## Exercise
 
 Write a program that loops from 1 to 30 with a `for` loop. For each number:

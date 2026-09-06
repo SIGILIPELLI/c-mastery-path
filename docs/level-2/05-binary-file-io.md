@@ -272,6 +272,52 @@ typedef struct {
 Reading a file whose magic doesn't match then fails loudly instead of
 misinterpreting the bytes — and version numbers let old files stay readable.
 
+## How It Actually Works
+
+`fwrite(numbers, sizeof numbers[0], n, f)` performs almost no interpretation
+of the data at all — internally it's close to a raw `memcpy` from your
+array's memory straight into the `FILE`'s buffer (and eventually, via
+`write()`, into the kernel's page cache and then disk), byte for byte,
+exactly as those bytes sit in RAM right now. This is the mechanical reason
+binary I/O has no conversion cost: `fprintf("%d", n)` must run a whole
+integer-to-decimal-digits algorithm (repeated division and modulo by 10,
+building character digits back to front), while `fwrite` just streams the
+4 bytes of the `int`'s two's-complement representation as-is — the "value"
+was already sitting in memory in exactly the form the file now holds.
+
+This is also precisely why struct dumps can't include pointers safely: a
+`char *` field's 8 bytes *are* a virtual memory address meaningful only
+within this one process's address space, assigned by the OS's memory
+manager when that particular allocation happened. `fwrite`-ing that struct
+faithfully copies those 8 address bytes to disk; reading them back later
+(even in the same process, after the pointed-to memory has been freed and
+possibly reused, or in an entirely different process where that address
+means something else or nothing at all) produces a pointer that no longer
+refers to valid data — dereferencing it is undefined behavior, exactly like
+use-after-free.
+
+`fseek(f, offset, SEEK_SET)` maps closely to the kernel's own
+`lseek()` system call, which simply updates the file's cursor position — a
+number the kernel tracks per open file description — without touching any
+data. Because every `Product` record is a fixed `sizeof(Product)` bytes,
+computing `index * sizeof(Product)` and seeking there directly is O(1): the
+disk (or OS page cache) can jump straight to that byte offset, unlike a
+text file's variable-length lines, which force a sequential scan from the
+beginning just to find where record `index` starts (because nothing marks
+byte offsets when every line's length differs).
+
+**Endianness** is a hardware fact about how a multi-byte CPU register gets
+laid out in memory, not a software choice: a little-endian CPU (x86, most
+ARM in default mode) stores an integer's *least* significant byte at the
+lowest memory address, so `fwrite`-ing `1` produces the bytes `01 00 00 00`
+— because that's genuinely the order those bytes sit in the CPU's register
+before the write instruction even runs. A big-endian machine's hardware
+stores the same integer value with the byte order reversed. `fwrite`
+doesn't add or remove any conversion step, so the exact in-memory
+representation — including this hardware-determined byte order — is what
+ends up on disk, which is why a binary file written on one architecture can
+misread as a completely different number on another.
+
 ## Exercise
 
 Extend the `Product` example into a small binary database. Write

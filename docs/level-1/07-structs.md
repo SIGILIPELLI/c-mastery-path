@@ -221,6 +221,47 @@ pointer basics from [Module 6](06-pointers-basics.md).
 | Nesting | `struct Student { struct Point office; };` | A struct field can itself be a struct |
 | Pass by value | `void f(Point p)` | Function gets a full copy |
 
+## How It Actually Works
+
+A struct's memory layout is simply its members laid out one after another
+in the order they're declared, with the compiler choosing the struct's
+total size and each member's offset at compile time. For
+`struct Point { int x; int y; }`, `x` sits at offset 0 and `y` at offset 4
+(assuming 4-byte `int`s), and `p1.y` compiles to exactly the same kind of
+address arithmetic as array indexing: `*(char*)&p1 + 4`, reinterpreted as
+an `int`. There's no per-field bookkeeping or name lookup at runtime — `.y`
+is resolved to a fixed byte offset entirely at compile time, which is why
+struct field access costs nothing more than reading a variable directly.
+
+Compilers usually don't pack members edge-to-edge, though — they insert
+**padding** so each member starts at an address matching its own alignment
+requirement (a `double` typically needs to start at an address divisible
+by 8, for instance). A `struct { char c; int n; }` is commonly *not* 5
+bytes but 8: 1 byte for `c`, 3 padding bytes, then 4 bytes for `n`, because
+the CPU can load an aligned 4-byte value in one instruction but may need
+two (or a slower unaligned instruction) for a misaligned one. Reordering
+members from largest to smallest is a common real-world trick to shrink
+padding and total struct size, since padding is only inserted between and
+after members, never compacted retroactively by the compiler.
+
+**Copying a struct** (`struct Point p3 = p2;`) is a flat, member-by-member
+byte copy of the whole block — for `Point` that's `memcpy`-equivalent of 8
+bytes, done in one or two instructions. This scales badly for large
+structs, which is exactly why **passing a struct by value** to a function
+(as `printPoint`/`tryToMove` do) copies the entire block onto the callee's
+stack frame: for a small struct like `Point` that's cheap, but for a struct
+holding kilobytes of data, every by-value call/return silently copies all
+of it — the reason Level 2's struct module introduces passing a `Point *`
+instead, so the function receives only an 8-byte address rather than the
+whole payload.
+
+`typedef struct {...} Point;` doesn't change any of this layout — it's a
+purely compile-time naming convenience telling the compiler "wherever you
+see `Point`, substitute this anonymous struct type." No extra memory,
+indirection, or runtime cost is introduced; the generated machine code for
+`Point p1 = {3,7};` is identical to what `struct Point p1 = {3,7};` would
+produce for a named struct with the same members.
+
 ## Exercise
 
 Define a `typedef struct` called `Rectangle` with members `width` and `height`

@@ -98,6 +98,46 @@ CLion (paid, free for students) is a heavier IDE some prefer once projects grow
 larger. For this course, the terminal plus any editor you're comfortable in is
 enough — the compiler is doing the real work, not the editor.
 
+## How It Actually Works
+
+`gcc hello.c -o hello` is not one step, it's a pipeline of four separate
+programs chained together, each of which you can run by hand:
+
+1. **Preprocessing** (`cpp`) — textually expands `#include`, macros, and
+   conditionals. `gcc -E hello.c` dumps the result: you'd see the entire
+   contents of `stdio.h` (hundreds of lines of function prototypes and type
+   declarations) pasted in above your `main`, with the `#include` line gone.
+2. **Compiling to assembly** (`cc1`) — translates the preprocessed C into
+   architecture-specific assembly text. Run `gcc -S hello.c` and open the
+   resulting `hello.s`; you'll see instructions like `call printf` and a
+   `leaq` loading the address of your string literal into a register before
+   the call, plus a `main:` label and a `ret`.
+3. **Assembling** (`as`) — turns that assembly text into machine code bytes,
+   producing an object file (`gcc -c hello.c` → `hello.o`). This file has
+   raw instruction bytes but is not yet runnable: it has unresolved
+   references to things like `printf`, which live in a separate library.
+4. **Linking** (`ld`) — resolves `printf` by pulling in the C standard
+   library (`libc`), and merges everything into one executable with a
+   correct entry point. On macOS/Linux the OS loader expects a specific
+   binary format (Mach-O or ELF) with headers describing where code, string
+   constants, and other segments live in the final file.
+
+Only the last stage's output — the ELF/Mach-O binary — is what
+`./hello` actually executes. When you run it, the OS's loader reads those
+headers, maps the code segment into a fresh process's address space as
+read-only+executable memory, maps a separate writable segment for globals,
+sets up a stack, and jumps the CPU's instruction pointer to `main`'s
+address. The string `"Hello, world!\n"` isn't "in a variable" the way Java
+would box it — it's a sequence of bytes baked directly into the binary's
+read-only data segment at compile time, and `printf` is handed a raw pointer
+to the first byte of that sequence.
+
+`return 0;` doesn't just end the function — it sets the CPU's return-value
+register (`%eax` on x86, `w0` on ARM64) to `0`, and the shell reads that
+register's value as the process's exit status via the `wait()`/`waitpid()`
+system call family, which is exactly what lets `&&` in
+`gcc hello.c -o hello && ./hello` decide whether to run the second command.
+
 ## Exercise
 
 Write a program `greet.c` that uses three separate `printf` calls to print a

@@ -290,6 +290,48 @@ Testing traps specific to C:
   shape with optimisation, as [module 02](02-concurrency-synchronization.md)
   showed. Run the suite at `-O0` and `-O2`.
 
+## How It Actually Works
+
+Coverage instrumentation and the sanitizers work by rewriting the program
+at compile time, not by watching it run from the outside. `-fprofile-instr-
+generate` makes clang insert a counter increment at the entry of every
+**region** — a maximal run of code with no branch in or out — so a straight
+-line function gets one counter, an `if`/`else` gets (at least) one per
+branch, and a loop body gets its own. Each counter lives in a small array
+baked into the binary; at exit (or via an `atexit` hook it installs) the
+runtime writes that array out as the `.profraw` file. `llvm-profdata merge`
+just aggregates one or more of those raw dumps into a `.profdata` index,
+and `llvm-cov report` cross-references the counts against the compiler's
+own map of which source line and branch each counter corresponds to. Branch
+coverage below line coverage — 100% vs 94.44% here — means some line was
+reached from only one of its possible incoming branches (e.g. a loop that
+always ran at least once, so the "zero iterations" edge into the loop
+condition was never exercised even though the condition-check line itself
+executed).
+
+AddressSanitizer's mechanism explains why running the *same* property test
+under ASan finds far more than plain execution would: ASan redirects every
+`malloc`/`free` through its own allocator, which surrounds each heap
+allocation with **redzones** — extra bytes on both sides poisoned in shadow
+memory (recall: one shadow byte per 8 real bytes, tracking addressability).
+The compiler additionally instruments every memory access with an inline
+check against the shadow map before the real load or store executes. So a
+property test that never assigns its result anywhere still gets caught
+overrunning `dst[]` by even one byte, because that byte's shadow state says
+"redzone, not part of any live allocation" and the inlined check aborts
+before the write completes — no crash needed to observe the bug, no memory
+corruption has to propagate somewhere visible first.
+
+`assert()` disappearing under `-DNDEBUG` is a preprocessor fact worth
+seeing directly: `<assert.h>` defines `assert(e)` as literally expanding to
+nothing (or a cast to void) when `NDEBUG` is defined at the point of
+inclusion, and to `((e) ? (void)0 : __assert_fail(...))` otherwise. That is
+textual substitution before compilation ever begins — the compiler in a
+release build never sees the expression `e` at all if it has side effects
+inside an `assert`, that code simply is not part of the program anymore,
+which is why `assert(pop(&stack) == 3)` silently stops calling `pop` the
+moment `-DNDEBUG` is added to a release build's flags.
+
 ## Exercise
 
 Extend `munit.h` with the two features it most obviously lacks: a

@@ -230,6 +230,49 @@ Two C-specific implementation notes that apply across all of them:
   might degenerate. Convert to an explicit stack when the depth is not
   provably logarithmic.
 
+## How It Actually Works
+
+An AVL rotation is a small, fixed set of pointer reassignments, but seeing
+exactly which pointers move (and why the invariant is restored after
+exactly one or two of them) is worth doing on paper terms. A right rotation
+around node `y` with left child `x` does precisely three pointer writes: `y`'s
+left child becomes `x`'s former right child, `x`'s right child becomes `y`,
+and whichever pointer used to point at `y` (the parent's child pointer, or
+the tree root) now points at `x`. No node is copied, no key moves — only
+three pointers change and two nodes' cached heights get recomputed from
+their (now different) children. The reason a single or double rotation
+always suffices to restore the AVL invariant (never needing to rotate
+further up the tree on insert) is a property of the balance arithmetic
+itself: an insertion changes any node's height by at most 1, so a subtree
+can become at most 2 out of balance before the ancestor closest to the
+insertion notices — and the four rotation cases (LL, RR, LR, RL) are an
+exhaustive case analysis of the only ways a height-2 imbalance can arise
+from a single insertion, each with an algebraic proof that one rotation
+brings the balance factor back into {-1, 0, 1}.
+
+The Bloom filter's false-positive math comes directly from treating each
+hash as choosing a uniformly random bit, independent per hash function
+(an approximation, but a good one for well-mixed hashes like FNV-1a).
+After inserting n items, each setting k bits out of m total, the
+probability any specific bit is still 0 is `(1 - 1/m)^(kn)`, so the
+probability all k of a queried item's bits happen to be set by *other*
+items — a false positive — is `(1 - (1 - 1/m)^(kn))^k`, which the module's
+formula approximates with `(1 - e^(-kn/m))^k` using the standard
+`(1-1/m)^m ≈ e^-1` limit. This is exactly why doubling the item count
+without resizing degrades the rate "sharply" rather than linearly: the
+inner term is an exponential in `n/m`, so once the bit array is more than
+about half full of set bits, each additional item's false-positive
+contribution grows faster than the last. `h1 + i*h2` producing k
+*effectively* independent-looking indices from only two real hash
+computations (Kirsch–Mitzenmacher) works because it is a linear function
+of `i` modulo `BITS` — as long as `h2` isn't degenerate (e.g. always even
+when `BITS` is a power of two, which would make it hit only half the
+possible slots), the sequence `h1, h1+h2, h1+2h2, ...` behaves enough like
+independent draws for the false-positive analysis above to hold in
+practice, which is why real implementations mix `h1` and `h2` from
+different hash functions or algorithms rather than deriving both from one
+pass with related constants carelessly.
+
 ## Exercise
 
 Add `avl_delete` — the operation this module deliberately left out, and the

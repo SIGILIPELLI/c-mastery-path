@@ -293,6 +293,48 @@ The division of labour matters:
 - **`exit(EXIT_FAILURE)`** or `return EXIT_FAILURE` from `main` tells the shell
   something went wrong, which is what `&&` and CI pipelines check.
 
+## How It Actually Works
+
+`errno` is not a return value or a parameter — it's a single global
+variable (technically, in any modern multi-threaded libc, a *thread-local*
+variable, so each thread gets its own copy) that library functions write to
+as a side effect of failing. This is precisely why it's fragile: any
+function call at all — including the `printf` you might use to print a
+diagnostic — can itself internally fail some minor operation and silently
+overwrite `errno`'s value before you read it, which is exactly why "save it
+to a local immediately" is the rule rather than a style preference. Because
+`errno` is just process (or thread) global state, nothing in the type
+system stops two unrelated pieces of code from stomping on each other's
+error information — it's a convention from an era before C had a better
+mechanism, not a robust API.
+
+`assert(condition)` compiles to a runtime check followed by a call to
+`abort()` if the condition is false — `abort()` itself sends the process a
+`SIGABRT` signal, which by default terminates it immediately and (on most
+systems) triggers a core dump. This is a fundamentally different failure
+mode from returning an error code: the process doesn't get a chance to
+clean up, close files, or report anything through its normal exit path —
+it's meant for catching programmer logic errors during development, which
+is also why `#define NDEBUG` before including `<assert.h>` makes every
+`assert` expand to nothing at all (literally erased by the preprocessor,
+the same textual-substitution mechanism from
+[Level 1, Module 9](../level-1/09-preprocessor-multifile.md)) — meaning any
+code you place inside an `assert()` call, including function calls with
+side effects, silently stops running entirely in a release build.
+
+The `goto cleanup` pattern's safety comes from a mechanical property of C's
+`goto`: it's an unconditional jump to a label, nothing more — no stack
+unwinding, no destructor calls (C doesn't have those), just an instruction
+pointer change. Because every resource variable (`in`, `out`, `buf`) is
+initialized to `NULL` *before* any code that might jump to `cleanup:` runs,
+and every cleanup step (`free`, `fclose`) is written to tolerate a `NULL`
+argument, the same three lines of cleanup code correctly handle every
+possible point of failure — whether zero, one, two, or all three resources
+were successfully acquired — without needing a different cleanup block per
+failure point. This is C's manual substitute for what languages with
+exceptions get automatically via stack unwinding and destructors/`finally`
+blocks.
+
 ## Exercise
 
 Write a small line-counting utility with proper error handling. Define

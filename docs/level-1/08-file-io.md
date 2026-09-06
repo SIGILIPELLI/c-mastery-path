@@ -205,6 +205,49 @@ formatting them as text. Binary I/O is covered in depth in
 [Level 2, Module 5](../level-2/05-binary-file-io.md), once you've seen more of
 what structs (from [Module 7](07-structs.md)) can hold.
 
+## How It Actually Works
+
+`fopen` is a thin wrapper around your operating system's own file-opening
+mechanism — on Linux/macOS, ultimately the `open()` system call, which asks
+the kernel to locate the file on disk, check permissions, and hand back a
+small integer called a **file descriptor** that the kernel uses internally
+to track the open file (its current read/write position, buffering state,
+and so on). The `FILE *` you get back from `fopen` is a heap-allocated
+structure — defined by the C standard library, not the kernel — that wraps
+that file descriptor together with a user-space buffer, which is why
+`FILE *` is opaque: you're not meant to know or rely on its internal
+layout, only pass it to `stdio.h` functions.
+
+That user-space buffer is the whole reason `fclose` matters. `fprintf`
+doesn't write to disk immediately — for efficiency, it first appends bytes
+into an in-memory buffer inside the `FILE` structure (typically several
+kilobytes), and only flushes that buffer to the kernel (via a `write()`
+system call) when it fills up, when you call `fflush`, or when you call
+`fclose`. If the program crashes or exits abnormally before the buffer is
+flushed, whatever was sitting in that buffer never reaches the disk — the
+data existed only in the process's own memory, not yet handed off to the
+kernel's page cache. `fclose` both flushes this buffer and releases the
+file descriptor back to the OS, which matters because a process is only
+allowed a limited number of open file descriptors at once (commonly 1024)
+— leaking them by skipping `fclose` in a long-running program eventually
+makes every further `fopen` fail.
+
+The different **modes** (`"r"`, `"w"`, `"a"`) map to flags passed straight
+through to the kernel's `open()` call — `"w"` corresponds to
+`O_WRONLY | O_CREAT | O_TRUNC`, where `O_TRUNC` is what causes the kernel
+to immediately discard the file's existing contents and reset its size to
+zero the moment the file is opened, before you've written a single byte —
+which is why the truncation happens even if your program crashes right
+after `fopen` and never calls `fprintf` at all.
+
+`fgets` reading in a loop until `NULL` works because internally each call
+asks the buffered layer for the next chunk up to (or including) a newline;
+when the underlying `read()` system call returns zero bytes (end of file),
+`fgets` has nothing left to return and reports that with `NULL` — there's
+no separate "are we at EOF" flag you have to poll, the return value itself
+carries that information because the kernel told the library the file is
+exhausted.
+
 ## Exercise
 
 Write a program that asks the user (with `scanf`) for 5 integers, one at a

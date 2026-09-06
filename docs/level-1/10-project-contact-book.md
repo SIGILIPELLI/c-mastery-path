@@ -209,6 +209,40 @@ Added.
 Saved. Goodbye!
 ```
 
+## How It Actually Works
+
+This project's `Contact contacts[MAX_CONTACTS]` array in `main` is 100 ×
+`sizeof(Contact)` bytes allocated as one contiguous block on `main`'s stack
+frame the moment `main` starts — with `NAME_LEN` 50 and `PHONE_LEN` 20 (plus
+likely padding), that's on the order of 7KB reserved up front regardless of
+how many contacts actually get added. This is why `MAX_CONTACTS` is a
+compile-time constant baked into both the struct array's size and the
+bounds check in `add_contact`: the stack frame's size is fixed when the
+function is compiled, so there is no way to "grow" this array later without
+switching to heap allocation (`malloc`/`realloc`, covered in Level 2) —
+the array physically cannot expand past its declared size, which is exactly
+why `add_contact` checks `*count >= MAX_CONTACTS` before writing.
+
+Passing `Contact contacts[]` to functions like `list_contacts` doesn't copy
+the 7KB array — array parameters always decay to a pointer to the first
+element (as covered in [Module 6](06-pointers-basics.md)), so `contacts` in
+`list_contacts` is really just an 8-byte address on that function's own
+stack frame, and every `contacts[i].name` access reaches back into `main`'s
+original array. `add_contact` takes `int *count` for the same underlying
+reason `swap` needed pointers: `count` needs to change in `main` after the
+function returns, and only a pointer to it lets `add_contact` write through
+to the caller's actual variable rather than a disposable local copy.
+
+The persistence format itself — `"%s,%s\n"` — is a deliberate simplification
+that exposes a real bug class: `fscanf(f, "%49[^,],%19[^\n]\n", ...)` reads
+"everything up to a comma" as the name, so a contact whose name contains a
+literal comma would corrupt the parse on the next load, silently splitting
+one field into two. This is the exact kind of fragility that motivates
+proper binary record formats (fixed-size structs written with `fwrite`,
+covered in [Level 2's binary I/O module](../level-2/05-binary-file-io.md))
+once text delimiters start fighting with the data they're meant to
+separate.
+
 ## Stretch goals
 
 - Add a `delete_contact` function and a matching menu option.

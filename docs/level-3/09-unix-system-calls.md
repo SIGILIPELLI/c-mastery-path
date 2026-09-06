@@ -319,6 +319,51 @@ stdio flushing) rather than `exit` on the exec-failure path.
 | `perror(msg)` / `strerror(errno)` | Turn `errno` into text | — |
 | `_exit(n)` | Exit without flushing stdio — for failed `exec` children | — |
 
+## How It Actually Works
+
+A system call is a genuinely different kind of function call from anything
+else in this course: the CPU has separate **privilege levels** (rings on
+x86 — ring 0 for the kernel, ring 3 for ordinary processes), and
+user-space code is hardware-forbidden from directly touching disk
+controllers, the process table, or another process's memory. `open`,
+`read`, and `fork` compile down to a special trap instruction (`syscall` on
+x86-64) that deliberately switches the CPU into ring 0, jumps to a
+kernel-controlled entry point (never an address user code chooses — the
+kernel enforces this), executes the privileged operation, and switches
+back before returning a result in a register. This ring transition has
+real, measurable overhead — noticeably more than an ordinary function call
+staying in ring 3 — which is exactly why library buffering exists at all:
+`printf` batches many small writes into user-space memory precisely to
+avoid paying that transition cost on every single character.
+
+`fork()` "returning twice" is a direct description of what actually
+happens to the process's memory: the kernel duplicates the calling
+process's entire address space — code, stack, heap, open file descriptor
+table — creating a second, nearly identical process, and then arranges for
+*both* to resume execution at the exact instruction right after the
+`fork()` call, each getting back its own copy of the return value (0 in
+the child, the child's pid in the parent) in its own register. Modern
+kernels don't actually copy all that memory immediately — they use
+**copy-on-write**: both processes' page tables initially point at the same
+physical memory pages marked read-only, and only when either process
+writes to a page does the kernel intercept that write (via the same page
+fault mechanism that triggers a segfault) and copy just that one page,
+giving the writer its own private copy. This is why `fork` is fast even
+for a process with gigabytes of memory: the "duplication" is initially
+just pointer bookkeeping, not a real copy of memory contents.
+
+The buffering-across-fork trap is a direct consequence of that same
+memory-duplication mechanism: `printf`'s internal buffer is ordinary
+heap/static memory belonging to the process, so `fork` duplicates it
+along with everything else, unflushed bytes included — the child's copy of
+that buffer is byte-for-byte identical to the parent's at the moment of
+the fork, complete with whatever text was queued but not yet handed to a
+`write()` syscall. Both processes then independently decide when to flush
+that inherited copy, which is exactly why the same logical line of output
+can appear twice: it's not printed twice by your source code, it exists as
+data in two separate address spaces after the fork, and each process
+flushes its own copy on its own schedule.
+
 ## Exercise
 
 Write `runpipe.c`, a program that implements `command1 | command2` from

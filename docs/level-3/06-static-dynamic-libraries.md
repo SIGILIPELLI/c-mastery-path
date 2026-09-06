@@ -232,6 +232,51 @@ that may not surface until the arguments happen to be interpreted wrong.
 | Build flags | `ar rcs`, then link with `-L -l` | `-fPIC` to compile, `-shared` to link the library |
 | Inspect dependencies | `nm libname.a` | `ldd` (Linux) / `otool -L` (macOS) |
 
+## How It Actually Works
+
+A static library isn't magic bundling — `ar rcs` is a thin wrapper that
+concatenates object files together with a table of contents (an index
+mapping symbol names to which member `.o` file defines them), and linking
+against it is functionally almost identical to just listing the individual
+`.o` files on the `gcc` command line: the linker resolves each undefined
+symbol in `main.o` by scanning the archive's index, and copies in *only*
+the object-file members that actually define symbols the program calls —
+which is why `nm libmathutils.a` still shows every function even before
+linking (the archive holds everything), while `nm app_static` after
+linking would only show the ones actually referenced. This selective
+copying is also why static linking can bloat a binary less than you might
+expect for large libraries you barely use, but bloats it more than dynamic
+linking when many programs on the same system each carry their own copy of
+identical code.
+
+`-fPIC`'s "position-independent code" requirement for shared libraries
+reflects a genuine difference in how addresses get resolved: normal
+(non-PIC) compiled code often bakes absolute addresses directly into
+instructions, which only works if the linker can guarantee the code always
+loads at the same fixed address — true for a static binary's own code
+segment, but not for a `.so` that might be mapped at a different base
+address in every process that loads it (especially with ASLR
+re-randomizing that base on every run). PIC code instead computes
+addresses relative to wherever it currently sits — typically via a
+register holding the code's own current base address plus a fixed offset
+looked up in a per-library table (the Global Offset Table) — one extra
+level of indirection on some accesses, which is the real (small) runtime
+cost shared libraries pay for their loading flexibility.
+
+The dynamic loader's work at process startup is a genuine, observable step
+in the OS's process-creation sequence: after the kernel maps the
+executable's own segments into a new process's address space (per
+[Level 1, Module 1](../level-1/01-setup.md)'s loader discussion), it hands
+control to a separate program — the dynamic linker (`ld.so` on Linux,
+`dyld` on macOS) named inside the executable itself — which reads the
+list of required shared libraries, locates and `mmap`s each one into the
+process, and finally patches every call site that referenced an external
+symbol to point at wherever that library ended up. `dlopen` performs this
+exact same load-and-resolve procedure explicitly, on demand, mid-program,
+rather than automatically at startup — which is precisely why a library
+loaded via `dlopen` can be chosen conditionally at runtime, something
+startup-time dynamic linking has no mechanism for at all.
+
 ## Exercise
 
 Add a third function, `int cube(int n)`, to `mathutils.c`/`mathutils.h`.

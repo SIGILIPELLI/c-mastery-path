@@ -302,6 +302,45 @@ Note `strcmp(...) == 0` for "equal". Writing `if (strcmp(a, b))` reads like
 "if equal" but actually means "if **different**" — a bug that survives code
 review depressingly often.
 
+## How It Actually Works
+
+The compiler needs the column count encoded in the type (`int (*grid)[COLS]`)
+because address computation for a 2-D array is a genuine multiplication
+baked into the generated instructions at compile time, not something
+resolved dynamically. `grid[r][c]` compiles to loading `grid`'s base
+address, computing `r * COLS * sizeof(int)` (often using a shift-and-add
+sequence rather than an actual multiply instruction, since `COLS` is a
+compile-time constant), adding `c * sizeof(int)`, and dereferencing the
+result — four or five instructions total, none of which involve a runtime
+lookup of "how wide is this array." Without `COLS` known at compile time
+inside the function, the compiler has no way to generate that multiply at
+all, which is exactly why `int grid[][COLS]` accepts a variable row count
+but never a variable column count in the classic (non-VLA) form.
+
+The row-major cache-friendliness point is a real hardware effect worth
+naming precisely: the CPU doesn't fetch memory one `int` at a time — it
+pulls in a fixed-size **cache line** (commonly 64 bytes, 16 `int`s) from
+RAM into the L1 cache on every miss. Iterating `grid[r][c]` with `c` as the
+inner loop touches 16 consecutive ints per cache line before the next miss;
+iterating with `r` as the inner loop jumps `COLS * sizeof(int)` bytes
+between every single access, likely missing the cache on nearly every
+iteration and forcing a slow trip to main memory each time — the same
+matrix, same total accesses, but potentially an order of magnitude slower
+purely because of access order relative to physical memory layout.
+
+The two "array of strings" layouts differ in a way that maps directly onto
+where their bytes physically live: `char names[3][16]` is 48 bytes on the
+stack (or wherever it's declared) that your code fully owns and can
+overwrite freely, while `const char *words[]` is 24 bytes of *pointers*
+whose targets are string literals baked into the binary's read-only data
+segment at compile time — the same kind of memory region discussed in
+[Level 1, Module 1](../level-1/01-setup.md). Writing through `words[0][0]`
+attempts to modify that read-only segment, which the OS's memory protection
+will reject with a segmentation fault — a different, harder failure than
+the silent corruption an unchecked array write produces, because the
+hardware's page tables mark that segment non-writable at the process level,
+not just by convention.
+
 ## Exercise
 
 Write a program that stores a 5×5 `int` matrix and implements three functions:

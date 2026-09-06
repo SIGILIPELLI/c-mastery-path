@@ -286,6 +286,49 @@ Build-system traps, in the order they cost people time:
   recipe line. This is still, decades later, the most common first Makefile
   error.
 
+## How It Actually Works
+
+Both Make and CMake exist to solve the same underlying problem: recompiling
+only what a change can possibly have affected, and the mechanism is a
+**dependency graph over files**, checked by filesystem timestamps. `make`
+looks at every rule's prerequisites, and for a target it rebuilds if the
+target file is missing or its modification time (`mtime`, from `stat()`) is
+older than any prerequisite's. That is why `-MMD -MP` matters mechanically:
+the compiler, while compiling `foo.c`, already knows every header it
+`#include`d to produce `foo.o`, and `-MMD` makes it emit that exact list as
+a `foo.d` Makefile fragment (`foo.o: foo.c foo.h util.h ...`); without
+including that fragment, Make's graph only has the rule you wrote by hand
+(usually just `foo.o: foo.c`), so editing a header changes no file Make's
+graph knows to check, and a stale object survives the next build with no
+error — just wrong behavior from code that silently wasn't recompiled.
+
+`make -j8`'s parallelism is a topological-order traversal of that same
+graph: any two targets with no dependency edge between them (directly or
+transitively) can build in either order or simultaneously, so `make`
+dispatches up to 8 leaf-ward-ready jobs to child processes at once. A
+missing dependency edge — a recipe that writes a file another rule silently
+reads without declaring it as a prerequisite — is invisible in serial mode
+(the actual write happens to land in program order because there is only
+one execution order to have) and becomes a race the instant two rules with
+no ordering constraint run concurrently; whichever process's write or read
+happens to land first that run decides whether the build is correct, which
+is exactly why `-j` failures reproduce intermittently rather than every
+time.
+
+CMake's `PUBLIC`/`PRIVATE`/`INTERFACE` propagation is a graph-transitivity
+rule, not magic: each target carries two property lists —
+`INCLUDE_DIRECTORIES` (what this target itself needs to compile) and
+`INTERFACE_INCLUDE_DIRECTORIES` (what anything linking this target needs).
+`PUBLIC` appends to both, `PRIVATE` only the first, `INTERFACE` only the
+second. `target_link_libraries(app PRIVATE core)` makes CMake union `core`'s
+`INTERFACE_INCLUDE_DIRECTORIES` into `app`'s actual include-path flags when
+it generates the compile command for `main.c` — the include path was never
+typed twice, it was computed once from the dependency edge you declared.
+The generated `compile_commands.json` is simply a dump of the exact
+argv CMake built for each translation unit, in JSON, which is why tools
+like `clangd` that read it see identical flags to what the real compiler
+saw — no separate approximation of your build to keep in sync.
+
 ## Exercise
 
 Add a CI workflow that builds this project three ways and would have caught

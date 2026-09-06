@@ -261,6 +261,54 @@ rejects extensions you did not mean to use, and
 `-Wconversion -Wsign-conversion` finds the implicit narrowing that silently
 changes behaviour when a type's width changes underneath you.
 
+## How It Actually Works
+
+Struct layout differences trace back to two independent compiler decisions:
+**alignment** and **byte order**, and it helps to see both as mechanical
+rules rather than platform mysteries.
+
+Alignment: every type has a required alignment (`_Alignof`), and the
+compiler inserts padding so each member starts at an address that is a
+multiple of its own alignment, and so the whole struct's size is a multiple
+of its largest member's alignment (so arrays of the struct keep every
+element aligned too). Given `struct { char a; int b; char c; }` on a
+platform where `int` needs 4-byte alignment: `a` sits at offset 0, three
+padding bytes fill 1–3 so `b` can start at offset 4, `b` occupies 4–7, `c`
+sits at offset 8, and three more padding bytes bring the struct's total
+size to 12 (a multiple of 4) so a second struct in an array starts aligned
+too. Reordering the same three members as `{int b; char a; char c;}` needs
+only 8 bytes — the compiler cannot reorder them for you because C guarantees
+declaration order for members, so *you* control padding by member ordering
+(widest members first is the standard heuristic).
+
+Byte order is a property of how a multi-byte integer's bytes map to
+ascending memory addresses, decided by the CPU, not the compiler: on a
+little-endian machine (x86-64, most ARM configurations) the *least*
+significant byte of a 32-bit value sits at the lowest address; on a
+big-endian machine it's the *most* significant byte. `*(uint32_t *)&wire[0]
+= v` writes `v`'s bytes in whatever order the local CPU uses internally, so
+that same buffer read back on a machine with the other byte order produces
+a different number — not a crash, a silently wrong value. The shift-and-mask
+version in this module sidesteps the CPU's internal representation entirely:
+`wire[0] = (v >> 24) & 0xFF` is defined purely in terms of `v`'s numeric
+value (shifting is an arithmetic operation on the integer, not a
+reinterpretation of its storage bytes), so it produces the identical four
+bytes in `wire[]` regardless of which byte order the host CPU uses for its
+own registers.
+
+Plain-`char` signedness is implementation-defined for a genuinely
+historical reason: some CPU instruction sets (ARM, PowerPC, IBM Z) sign-
+extend a loaded byte for free as part of the load instruction when treating
+it as signed is cheaper, and others (older x86 conventions, though x86
+itself defaults `char` to signed under most ABIs) zero-extend more
+naturally — the C standard left it open so the ABI could pick whichever the
+underlying load instruction does cheaply rather than force everyone to pay
+for an explicit sign/zero-extension. That single unspecified bit is why
+`table[(char)byte]` compiles to `movsx` (sign-extend, giving you a negative
+index for bytes ≥ 0x80) on some ABIs and `movzx` (zero-extend, giving 0–255)
+on others — identical source, genuinely different generated instruction and
+runtime behavior.
+
 ## Exercise
 
 Write `portable_io.c` providing `write_u32(FILE *, uint32_t)` and

@@ -270,6 +270,52 @@ Traps that specifically bite C programmers here:
   problem. Replacing it with a faster comparison would have won a few
   percent of a fundamentally wrong design.
 
+## How It Actually Works
+
+The row/column benchmark is really about the **memory hierarchy**, and the
+numbers only make sense once you put sizes on it. A typical L1 data cache is
+32 KB with 64-byte lines; L2 is a few hundred KB to a few MB; L3 is tens of
+MB, shared across cores; DRAM is orders of magnitude larger and orders of
+magnitude slower — roughly 1 ns to hit L1, 3–4 ns for L2, ~15 ns for L3, and
+80–120 ns for a DRAM round trip. A 64-byte cache line holds sixteen `int`s.
+Row-major traversal touches all sixteen before the line is evicted — one
+DRAM fetch amortized over sixteen loads. Column-major touches one `int` per
+line, immediately moves `N * 4` bytes away, and comes back to that line only
+after the whole row below it has evicted it from cache — so almost every
+load is a fresh trip out to DRAM. The **hardware prefetcher** watches the
+stream of addresses a core issues and, on detecting a constant stride,
+starts pulling future cache lines in before the CPU asks for them; stride-1
+access is exactly what it is built to predict, stride-N (for large N) looks
+like noise and gets no help.
+
+`-O0` versus `-O2` is a different mechanism entirely — no memory-hierarchy
+effects, just how much work the compiler does turning your C into machine
+code before scheduling it. At `-O0` clang/gcc translate each statement
+close to literally: every local variable gets a stack slot (no register
+allocation to speak of), and each read/write of it is a real load or store
+through the stack frame. `-O2` turns on **register allocation** (hot
+variables live in registers across many instructions, not memory),
+**instruction scheduling** (reordering independent instructions to hide
+latency and keep both integer and floating-point execution ports busy), and
+**inlining** (a called function's body is spliced into the caller,
+eliminating call/return overhead and opening the inlined code up to further
+optimization in context). None of that touches an algorithm's asymptotic
+behavior — an O(n²) `find_slot` doing linear probing over a huge table is
+still O(n²) at `-O3`, which is exactly why the compiler flags bought 1.2x
+and the hash-table fix bought 83x: one changes constants, the other changes
+the shape of the curve.
+
+`perf stat`'s cache-miss and IPC (instructions-per-cycle) counters read
+directly from the CPU's **performance monitoring unit** (PMU) — dedicated
+hardware counters that increment on events like "L1 data cache miss" or
+"retired instruction" with no software overhead, which is why sampling
+profilers built on `perf record` can profile an optimized release binary
+without materially slowing it down: the kernel periodically interrupts the
+running thread (driven by a PMU overflow event, e.g. every N cycles),
+records the instruction pointer and call stack at that instant, and lets the
+statistics accumulate over thousands of samples — noisy for any one sample,
+accurate in aggregate, and cheap enough to run in production.
+
 ## Exercise
 
 Profile and fix a second hotspot in `wordfreq2.c`. After the hash change,

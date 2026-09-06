@@ -487,6 +487,48 @@ gcc -Wall -Wextra -g -O0 -Iinclude -fsanitize=address,undefined \
 Add a few items, remove one, adjust stock, save and quit — a clean exit with
 no sanitizer output means every node allocated was freed exactly once.
 
+## How It Actually Works
+
+This inventory is a **singly linked list**, and every operation's cost
+traces directly back to that structure's shape in memory: each `Node` is
+an independent heap allocation, connected only by the `next` pointer stored
+inside it, with no contiguous relationship between one item and the next
+the way an array would have. `inventory_add`'s insert-at-head is O(1) for
+exactly this reason — it only ever touches two pointers (`node->next =
+inv->head; inv->head = node;`), regardless of how many items already exist,
+because nothing else in the list needs to move or even be visited.
+`inventory_find` and `inventory_remove`, by contrast, are O(n): the only
+way to reach node *k* is to have already visited nodes 0 through *k-1*
+and followed each one's `next` pointer in turn — there is no way to jump
+directly to "the fifth node" the way `array[4]` jumps directly via
+address arithmetic, because linked-list nodes have no guaranteed
+relationship between their memory addresses at all.
+
+`inventory_remove`'s `prev`/`cur` pair exists to solve a structural problem
+particular to *singly* linked lists: unlinking `cur` requires rewriting
+whoever's `next` field currently points at it, but a node has no way to
+look backward — there is no `prev` pointer stored anywhere. The traversal
+carries `prev` alongside `cur` specifically so that the moment the target
+is found, `prev->next = cur->next` can splice it out in one assignment
+before `cur` itself is freed. This is also why removing the head node
+needs a special case (`if (prev == NULL) inv->head = cur->next;`): there is
+no "previous node" pointing at the head — the head is instead referenced by
+`inv->head` itself, a different kind of slot than a `next` field, so the
+unlinking logic must branch on which kind of slot is being rewritten.
+
+The save/load round-trip's "flatten to an array, then rebuild as a list"
+dance exists because a linked list's very structure — the actual pointer
+values chaining nodes together — is only meaningful within one running
+process's virtual address space, exactly like the pointer-in-a-struct
+problem from [Module 5](05-binary-file-io.md). `fwrite`-ing the `Node`
+structs directly would write real heap addresses to disk, addresses that
+mean nothing (or point at unrelated data) the next time the program runs
+and the allocator hands out different addresses. Copying just the `Item`
+payloads into a temporary flat array first produces something genuinely
+portable — plain data with no embedded addresses — which `inventory_load`
+then uses to rebuild a *fresh* set of linked nodes with pointer values that
+are only ever valid for this run.
+
 ## Stretch goals
 
 - Add a `4b. Remove item` menu option calling `inventory_remove`, and confirm

@@ -251,6 +251,46 @@ sanitizer report is confusing.
 | "Am I reading/writing out of bounds?" | `-fsanitize=address` (fast) or `valgrind` (thorough) |
 | "Did I read a variable before initializing it?" | `valgrind` (`Use of uninitialised value`) or `-fsanitize=undefined` |
 
+## How It Actually Works
+
+gdb's breakpoints and single-stepping work by taking over the operating
+system's own process-control interface — on Linux, the `ptrace()` system
+call, which lets one process (the debugger) attach to another (the
+debuggee), read and write its memory and registers directly, and be
+notified whenever it stops. Setting `break main` doesn't add any code to
+your program; gdb overwrites the very first byte of `main`'s compiled
+instructions with a special trap instruction (`int3` / `0xCC` on x86),
+runs the program, and when the CPU executes that byte it raises a signal
+(`SIGTRAP`) that the kernel routes to gdb instead of your program — at
+which point gdb restores the original byte, so your code is completely
+unmodified from your program's own point of view. `print <expr>` works
+because the `-g` debug info gives gdb a table mapping variable names to
+exact stack offsets or registers, so gdb can read those bytes directly out
+of the *stopped* process's memory via `ptrace(PEEKDATA, ...)` and format
+them according to their compile-time type — the same offset arithmetic the
+compiler itself uses, just performed by gdb after the fact instead of
+baked into instructions.
+
+Valgrind's `memcheck` takes a completely different approach: rather than
+running your compiled binary directly on the CPU, it runs your program
+inside a software CPU emulator, translating each of your program's machine
+instructions into instrumented equivalents that additionally update a
+parallel shadow memory tracking, byte for byte, whether each memory
+location is allocated, and whether each individual bit has actually been
+written to yet. This is precisely why it's 10-50x slower (every real
+instruction becomes several emulated ones) and precisely why it can catch
+`Use of uninitialised value` — a bug class a normal CPU has no way to
+detect at all, since uninitialized memory contains perfectly ordinary bits
+that any real hardware will happily use. AddressSanitizer takes a faster
+middle path: instead of full emulation, the compiler inserts extra
+"redzone" bytes around every allocation at compile time and generates
+inline checks before each memory access that consult a lightweight shadow
+memory table — cheaper than Valgrind's full instruction-level emulation
+because the checks are compiled directly into your program's own machine
+code rather than interpreted, which is why it runs close to full speed
+while still catching the same heap-buffer-overflow the moment the
+out-of-bounds write actually executes.
+
 ## Exercise
 
 Take the `leaky.c` example above.

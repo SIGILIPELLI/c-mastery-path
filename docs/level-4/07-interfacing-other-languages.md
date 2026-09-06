@@ -269,6 +269,55 @@ everything inside the callback and signal failure with a return value.
 | Java | JNI (verbose) or the newer FFM API (`java.lang.foreign`) |
 | Node.js | N-API |
 
+## How It Actually Works
+
+The pointer-truncation bug is a direct consequence of the **System V
+x86-64 calling convention** and `ctypes`'s default assumption. Without a
+declared `restype`, `ctypes` treats the function's return value as a C
+`int`, which on this ABI means it reads only the low 32 bits of the `rax`
+register — the CPU register a function's return value comes back in — and
+sign- or zero-extends *that* into a Python integer, discarding the upper 32
+bits entirely. The real pointer, a full 64-bit value, was sitting whole in
+`rax` the entire time; the bug is purely in how the caller (the ctypes
+runtime) chose to interpret bits that were always there. This is the same
+class of silent truncation as `(char)300` in the portability module —
+correct data, wrong-width read.
+
+The `scale(buf, 3, 10)` case is subtler and comes from the ABI's separate
+register classes for integer and floating-point arguments. System V x86-64
+passes the first several integer/pointer arguments in `rdi, rsi, rdx, rcx,
+r8, r9`, but the first several *floating-point* arguments in a completely
+different bank, `xmm0` through `xmm7`. A C function declared to take a
+`double` reads its value out of the corresponding `xmm` register — that's
+part of the function's compiled prologue, fixed at compile time from the
+declared parameter type. When `ctypes` has no `argtypes` telling it "this
+parameter is a double," it packs the Python `int` 10 as a plain machine
+integer and places it in the next general-purpose register in sequence,
+because that's ctypes's undeclared-argument default. The C function still
+reads its expected `double` out of `xmm2` (say) — a register `ctypes` never
+touched — so it gets whatever value was left there from a previous
+operation, not the 10 you passed. Declaring `argtypes` as
+`[POINTER(c_double), c_int, c_double]` tells ctypes to marshal the third
+argument as a double specifically, which routes it through the SSE
+register bank the compiled function actually reads.
+
+The ownership rule ("whoever allocates, frees") is a direct consequence of
+each side using a completely different, closed memory manager: CPython's
+allocator (`pymalloc`, layered over the system allocator for small objects)
+tracks memory via reference counts embedded in every `PyObject` header —
+when a `bytes` object's refcount hits zero, its destructor calls back into
+pymalloc to release it. Neither side's memory manager has any visibility
+into the other's bookkeeping structures, so a C-allocated block handed to
+Python without a compatible wrapper can never be released by Python's GC —
+it isn't a `PyObject` and has no header for the refcount machinery to find
+— and a `PyObject` passed the other way is equally opaque to `free()`. The
+`c_char_p` shortcut leaks specifically because ctypes, on seeing that
+declared return type, immediately copies the C string's bytes into a new
+Python `bytes` object and returns *that* — the original `char *` value
+returned by `describe` is never stored anywhere in Python, so there is no
+longer any handle in either language capable of passing it back to
+`free_string`.
+
 ## Exercise
 
 Wrap the key-value store from

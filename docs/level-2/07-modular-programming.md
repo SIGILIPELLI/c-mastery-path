@@ -268,6 +268,47 @@ Three linker and compiler errors you will meet, and what they mean:
 | `duplicate symbol '_foo'` | `foo` is defined in two `.c` files (or defined in a header) |
 | `implicit declaration of function 'foo'` | You called `foo` without including its header |
 
+## How It Actually Works
+
+`static` at file scope is a directive to the compiler about **symbol
+visibility** in the object file it produces, not just a style convention.
+A non-`static` function like `void helper(void)` gets an entry in the
+object file's *external* symbol table — visible to the linker, which can
+then resolve calls to `helper` from other `.o` files. Mark it `static` and
+the compiler either omits it from the symbol table entirely or marks it
+`local` (visible with `nm -a counter.o`, where non-static symbols show `T`
+and static ones show `t`) — the linker literally cannot see it, which is
+the actual mechanism behind "no name collisions": two `static sum_all`
+functions in different `.c` files never even reach the linker's symbol
+resolution step, because from the linker's point of view only one of them
+exists per file, invisible to the other.
+
+The opaque-type pattern (`typedef struct Counter Counter;` with no body in
+the header) works because C only needs to know a struct's *size* at the
+point where a variable of that type is declared or a member is accessed —
+neither of which the header does. `Counter *hits` only needs to know that
+`Counter` is *some* type worth having an 8-byte pointer to; the compiler
+doesn't need `Counter`'s size to store a pointer to it, only to allocate an
+actual `Counter` object, which only `counter.c` ever does (via
+`malloc(sizeof *c)` — computed by the compiler *there*, where the full
+`struct Counter` definition is visible). This is exactly why
+`hits->value = 99;` in `main.c` is a compile error rather than a runtime
+one: the compiler in `main.c`'s translation unit has literally never seen
+`struct Counter`'s member list, so `->value` has no offset to resolve —
+the error happens before any code is even generated, let alone run.
+
+The `undefined reference to 'foo'` error surfaces the same
+declaration/definition split from
+[Level 1, Module 9](../level-1/09-preprocessor-multifile.md) one level up:
+the compiler is satisfied by a prototype alone and emits a call instruction
+to an unresolved symbol named `foo`; it's the **linker**, running after
+every file is separately compiled, that actually needs `foo`'s address to
+patch that placeholder — and only fails at that final stage if no object
+file anywhere in the link line actually defines it. This two-stage
+separation (compiler checks *usage*, linker checks *existence*) is what
+lets you compile `main.c` successfully today even though `counter.c` has
+a bug that won't be caught until link time, or vice versa.
+
 ## Exercise
 
 Build a three-file `Stack` module using the opaque-type pattern. `stack.h`

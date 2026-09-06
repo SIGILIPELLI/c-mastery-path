@@ -183,6 +183,58 @@ recompilation is exactly what **Makefiles** are for, covered in
 | `gcc a.c b.c -o prog` | Compile and link multiple source files at once |
 | `gcc -c a.c -o a.o` | Compile one file to an object file, without linking |
 
+## How It Actually Works
+
+The preprocessor is a genuinely separate program (`cpp`, invoked
+automatically as the first stage of `gcc`) that operates purely on *text* —
+it has no concept of C syntax, types, or scoping at all. `#include "helpers.h"`
+literally deletes that line and splices the entire contents of `helpers.h`
+in its place, byte for byte, before the real compiler ever runs. This is
+why a syntax error inside a header shows up with the *including* file's
+name and a line number that reflects the pasted-in position — the compiler
+genuinely never sees separate files, only one enormous, fully expanded
+token stream. You can watch this happen directly with `gcc -E main.c`,
+which stops after preprocessing and dumps the expanded source; for a file
+that includes `<stdio.h>`, this is typically hundreds of lines even though
+your own file might be five.
+
+`#define` macros are expanded by simple textual substitution with no
+awareness of operator precedence or types — which is exactly the mechanism
+behind the `SQUARE(x)` parenthesization pitfall. `SQUARE(1 + 2)` without
+inner parens literally becomes the token sequence `1 + 2 * 1 + 2` because
+the preprocessor performs find-and-replace, not function application; C's
+normal precedence rules then parse that expanded text arithmetically,
+giving `1 + 2 + 2 = 5` instead of `9`. There is no macro "call" at
+runtime — by the time the compiler proper sees the code, `SQUARE` no
+longer exists anywhere; it's already gone, replaced by the literal
+substituted text.
+
+**Header guards** work by exploiting the preprocessor's own state: `#ifndef`
+checks whether a macro name has been `#define`d yet, using the exact same
+text-substitution machinery. The first time `math_utils.h` is pasted in,
+`MATH_UTILS_H` isn't defined, so the preprocessor defines it and keeps the
+body; if the same header gets pasted a second time (transitively, through
+another header), `MATH_UTILS_H` is now already defined and the entire body
+between `#ifndef` and `#endif` is skipped — preventing the compiler from
+seeing the same `int add(int a, int b);` prototype twice, which would
+otherwise be a redefinition error.
+
+**Separate compilation** is what actually makes multi-file projects
+practical: `gcc -c math_utils.c -o math_utils.o` runs the full
+preprocess → compile → assemble pipeline but stops before linking,
+producing an object file containing machine code for `add` and `multiply`
+plus a **symbol table** entry naming them (visible with `nm math_utils.o`).
+When `main.c` calls `add(3, 4)` without ever seeing its implementation, the
+compiler only checks the call against the *prototype* from the header (are
+the argument types compatible?) and emits a call instruction to an
+as-yet-unresolved symbol named `add`. The linker's job, in the final step
+(`gcc main.o math_utils.o -o program`), is purely to scan every object
+file's symbol table, find where `add` is actually defined, and patch the
+placeholder address in `main.o`'s call instruction to point at that real
+address — which is exactly why only files that actually change need
+recompiling: `math_utils.o`'s machine code and symbol table don't change
+just because `main.c` did.
+
 ## Exercise
 
 Create a small two-file library: a header `strings_utils.h` with a header
