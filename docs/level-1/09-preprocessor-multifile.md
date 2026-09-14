@@ -1,5 +1,9 @@
 # 09 · Preprocessor & Multi-file Compilation
 
+## 🎥 Video walkthrough
+
+<iframe width="100%" height="400" style="max-width:720px;aspect-ratio:16/9;height:auto;" src="https://www.youtube.com/embed/gSlvLDHM08g" title="Video walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 Before a single line of C is actually compiled, a separate pass called the
 **preprocessor** runs over your source, handling every line that starts with
 `#`. It textually includes files, substitutes constants, and expands macros —

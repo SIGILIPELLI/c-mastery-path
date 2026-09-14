@@ -1,5 +1,9 @@
 # 06 · Pointers Basics
 
+## 🎥 Video walkthrough
+
+<iframe width="100%" height="400" style="max-width:720px;aspect-ratio:16/9;height:auto;" src="https://www.youtube.com/embed/gNlQXuHazmU" title="Video walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 Every variable lives somewhere in memory. A pointer is just a variable whose
 value *is* a memory address — instead of holding a number or a character, it
 holds the location where a number or character lives. Pointers are the

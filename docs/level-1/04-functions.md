@@ -1,5 +1,9 @@
 # 04 · Functions
 
+## 🎥 Video walkthrough
+
+<iframe width="100%" height="400" style="max-width:720px;aspect-ratio:16/9;height:auto;" src="https://www.youtube.com/embed/Wz_mVI3zlMU" title="Video walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 Functions let you break a program into named, reusable pieces. C's model is
 simpler than object-oriented languages — there are no methods attached to
 objects, just plain functions that take arguments and return a value.

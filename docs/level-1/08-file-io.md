@@ -1,5 +1,9 @@
 # 08 · File I/O
 
+## 🎥 Video walkthrough
+
+<iframe width="100%" height="400" style="max-width:720px;aspect-ratio:16/9;height:auto;" src="https://www.youtube.com/embed/gvKt6a7f_wA" title="Video walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 Programs that forget everything the moment they exit aren't very useful.
 C's standard library gives you a small, consistent set of functions —
 `fopen`, `fprintf`, `fscanf`, `fgets`, `fclose` — for reading and writing

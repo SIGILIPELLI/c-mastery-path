@@ -1,5 +1,9 @@
 # 07 · Structs
 
+## 🎥 Video walkthrough
+
+<iframe width="100%" height="400" style="max-width:720px;aspect-ratio:16/9;height:auto;" src="https://www.youtube.com/embed/X9ktPn_tPK8" title="Video walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 C's built-in types (`int`, `double`, `char`, arrays) only get you so far when
 modeling real-world data. A `struct` lets you bundle several related values
 of different types together under one name, so a "point" or a "student" can
