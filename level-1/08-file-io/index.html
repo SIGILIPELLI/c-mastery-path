@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A structured, module-wise C training program from entry level to master level.">
+        <meta name="description" content="File I/O — 'w' and 'w+' silently erase any existing content the moment fopen succeeds — reach for 'a' instead if you want to keep what's already there.">
       
       
       
@@ -67,14 +67,14 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="C Mastery Path">
   <meta property="og:title" content="08 · File I/O">
-  <meta property="og:description" content="A structured, module-wise C training program from entry level to master level — free, with runnable code in every module.">
+  <meta property="og:description" content="File I/O — 'w' and 'w+' silently erase any existing content the moment fopen succeeds — reach for 'a' instead if you want to keep what's already there.">
   <meta property="og:url" content="https://sigilipelli.github.io/c-mastery-path/level-1/08-file-io/">
   <meta property="og:image" content="https://sigilipelli.github.io/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="08 · File I/O">
-  <meta name="twitter:description" content="A structured, module-wise C training program from entry level to master level — free, with runnable code in every module.">
+  <meta name="twitter:description" content="File I/O — 'w' and 'w+' silently erase any existing content the moment fopen succeeds — reach for 'a' instead if you want to keep what's already there.">
   <meta name="twitter:image" content="https://sigilipelli.github.io/og-image.png">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
      crossorigin="anonymous"></script>
@@ -1023,6 +1023,17 @@
     <span class="md-ellipsis">
       
         How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-this-in-another-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔀 See this in another language
       
     </span>
   </a>
@@ -2377,6 +2388,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#see-this-in-another-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔀 See this in another language
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2664,6 +2686,12 @@ when the underlying <code>read()</code> system call returns zero bytes (end of f
 no separate "are we at EOF" flag you have to poll, the return value itself
 carries that information because the kernel told the library the file is
 exhausted.</p>
+<h2 id="see-this-in-another-language">🔀 See this in another language<a class="headerlink" href="#see-this-in-another-language" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://sigilipelli.github.io/cpp-mastery-path/level-1/08-references-pointers/">C++ — References &amp; Pointers</a></li>
+<li><a href="https://sigilipelli.github.io/swift-mastery-path/level-1/08-enums/">Swift — Enums</a></li>
+<li><a href="https://sigilipelli.github.io/sql-mastery-path/level-1/08-creating-tables/">SQL — Creating Tables</a></li>
+</ul>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Write a program that asks the user (with <code>scanf</code>) for 5 integers, one at a
 time, and writes each one to a file called <code>input.txt</code>, one per line. Then,
@@ -2676,6 +2704,9 @@ print both. Make sure to check every <code>fopen</code> call for <code>NULL</cod
 
 
 
+
+  
+  
 
 
 

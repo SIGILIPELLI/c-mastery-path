@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A structured, module-wise C training program from entry level to master level.">
+        <meta name="description" content="Preprocessor & Multi-file Compilation — Notice the extra parentheses in ((x) (x)) — the preprocessor does pure text substitution, so SQUARE(x) without…">
       
       
       
@@ -67,14 +67,14 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="C Mastery Path">
   <meta property="og:title" content="09 · Preprocessor & Multi-file Compilation">
-  <meta property="og:description" content="A structured, module-wise C training program from entry level to master level — free, with runnable code in every module.">
+  <meta property="og:description" content="Preprocessor & Multi-file Compilation — Notice the extra parentheses in ((x) (x)) — the preprocessor does pure text substitution, so SQUARE(x) without…">
   <meta property="og:url" content="https://sigilipelli.github.io/c-mastery-path/level-1/09-preprocessor-multifile/">
   <meta property="og:image" content="https://sigilipelli.github.io/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="09 · Preprocessor & Multi-file Compilation">
-  <meta name="twitter:description" content="A structured, module-wise C training program from entry level to master level — free, with runnable code in every module.">
+  <meta name="twitter:description" content="Preprocessor & Multi-file Compilation — Notice the extra parentheses in ((x) (x)) — the preprocessor does pure text substitution, so SQUARE(x) without…">
   <meta name="twitter:image" content="https://sigilipelli.github.io/og-image.png">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
      crossorigin="anonymous"></script>
@@ -1029,6 +1029,17 @@
     <span class="md-ellipsis">
       
         How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-this-in-another-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔀 See this in another language
       
     </span>
   </a>
@@ -2333,6 +2344,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#see-this-in-another-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔀 See this in another language
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2589,6 +2611,12 @@ placeholder address in <code>main.o</code>'s call instruction to point at that r
 address — which is exactly why only files that actually change need
 recompiling: <code>math_utils.o</code>'s machine code and symbol table don't change
 just because <code>main.c</code> did.</p>
+<h2 id="see-this-in-another-language">🔀 See this in another language<a class="headerlink" href="#see-this-in-another-language" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://sigilipelli.github.io/cpp-mastery-path/level-1/09-exception-handling/">C++ — Exception Handling Basics</a></li>
+<li><a href="https://sigilipelli.github.io/swift-mastery-path/level-1/09-closures-intro/">Swift — Closures Intro</a></li>
+<li><a href="https://sigilipelli.github.io/sql-mastery-path/level-1/09-insert-update-delete/">SQL — Inserting, Updating, Deleting Data</a></li>
+</ul>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>Create a small two-file library: a header <code>strings_utils.h</code> with a header
 guard declaring a function <code>int countVowels(const char *text);</code>, and a source
@@ -2603,6 +2631,9 @@ lists both <code>.c</code> files.</p>
 
 
 
+
+  
+  
 
 
 
