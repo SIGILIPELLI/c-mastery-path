@@ -339,6 +339,12 @@ failure point. This is C's manual substitute for what languages with
 exceptions get automatically via stack unwinding and destructors/`finally`
 blocks.
 
+## 🔀 See this in another language
+
+- [JavaScript — 07 · Error Handling Advanced](https://sigilipelli.github.io/javascript-mastery-path/level-2/07-error-handling-advanced/)
+- [C++ — 08 · Error Handling with Exceptions](https://sigilipelli.github.io/cpp-mastery-path/level-2/08-error-handling-exceptions/)
+- [Rust — 05 · Error Handling Advanced](https://sigilipelli.github.io/rust-mastery-path/level-2/05-error-handling-advanced/)
+
 ## Exercise
 
 Write a small line-counting utility with proper error handling. Define

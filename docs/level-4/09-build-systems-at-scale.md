@@ -333,6 +333,10 @@ argv CMake built for each translation unit, in JSON, which is why tools
 like `clangd` that read it see identical flags to what the real compiler
 saw — no separate approximation of your build to keep in sync.
 
+## 🔀 See this in another language
+
+- [C++ — 06 · Large-Scale Build Systems](https://sigilipelli.github.io/cpp-mastery-path/level-4/06-large-scale-build-systems/)
+
 ## Exercise
 
 Add a CI workflow that builds this project three ways and would have caught

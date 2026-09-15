@@ -345,6 +345,10 @@ the silent corruption an unchecked array write produces, because the
 hardware's page tables mark that segment non-writable at the process level,
 not just by convention.
 
+## 🔀 See this in another language
+
+- [Shell/Bash — 02 · String Manipulation](https://sigilipelli.github.io/shell-mastery-path/level-2/02-string-manipulation/)
+
 ## Exercise
 
 Write a program that stores a 5×5 `int` matrix and implements three functions:

@@ -438,3 +438,7 @@ count.
    Verify with `-fsanitize=address` that nothing leaks — and note why the
    handler may only touch a `volatile sig_atomic_t` and never call `printf`
    or `free`.
+
+## 🔀 See this in another language
+
+- [C++ — 10 · Project — Multi-threaded Task Processor](https://sigilipelli.github.io/cpp-mastery-path/level-3/10-project-task-processor/)

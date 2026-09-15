@@ -322,6 +322,10 @@ returned by `describe` is never stored anywhere in Python, so there is no
 longer any handle in either language capable of passing it back to
 `free_string`.
 
+## 🔀 See this in another language
+
+- [MATLAB — 06 · Integration with Other Languages](https://sigilipelli.github.io/matlab-mastery-path/level-4/06-integration-other-languages/)
+
 ## Exercise
 
 Wrap the key-value store from

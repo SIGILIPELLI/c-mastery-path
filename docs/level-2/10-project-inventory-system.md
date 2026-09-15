@@ -546,3 +546,7 @@ are only ever valid for this run.
   `All heap blocks were freed -- no leaks are possible`.
 
 Completing this project means you're ready for **Level 3 · Advanced**.
+
+## 🔀 See this in another language
+
+- [Java — 10 · Project — Inventory Management System](https://sigilipelli.github.io/java-mastery-path/level-2/10-project-inventory-system/)

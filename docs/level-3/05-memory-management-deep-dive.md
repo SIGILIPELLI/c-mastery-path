@@ -303,6 +303,10 @@ next `malloc` call, meaning the bug's visible symptom depends entirely on
 whether anything else happened to reuse that memory before you read it
 again.
 
+## 🔀 See this in another language
+
+- [Swift — 07 · Memory Management](https://sigilipelli.github.io/swift-mastery-path/level-3/07-memory-management/)
+
 ## Exercise
 
 Take `uaf.c` above and fix it two ways, confirming each with
