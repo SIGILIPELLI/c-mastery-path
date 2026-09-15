@@ -1,3 +1,7 @@
+---
+description: "Concurrency & Synchronization — Level 3's concurrency module covered threads, mutexes and condition variables — enough to write correct concurrent code.…"
+---
+
 # 02 · Concurrency & Synchronization
 
 [Level 3's concurrency module](../level-3/07-concurrency-basics.md) covered

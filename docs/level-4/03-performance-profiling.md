@@ -1,3 +1,7 @@
+---
+description: "Performance Optimization & Profiling — The rule that governs this entire module: measure, fix the biggest thing, measure again. Programmers are famously…"
+---
+
 # 03 · Performance Optimization & Profiling
 
 The rule that governs this entire module: **measure, fix the biggest thing,

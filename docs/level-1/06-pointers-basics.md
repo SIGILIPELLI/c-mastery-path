@@ -1,3 +1,7 @@
+---
+description: "Pointers Basics — %p is the format specifier for printing addresses; casting to (void *) is the conventional, portable way to pass a pointer to printf."
+---
+
 # 06 · Pointers Basics
 
 ## 🎥 Video walkthrough
@@ -254,6 +258,12 @@ simply repeats this once more: it's a variable holding the address of
 another variable (`ptr`) that itself holds an address — `**ptrToPtr`
 dereferences twice, following two address hops in sequence to finally land
 on `value`'s actual storage.
+
+## 🔀 See this in another language
+
+- [C++ — Strings (std::string)](https://sigilipelli.github.io/cpp-mastery-path/level-1/06-strings/)
+- [Swift — Collections](https://sigilipelli.github.io/swift-mastery-path/level-1/06-collections/)
+- [SQL — Joins Basics](https://sigilipelli.github.io/sql-mastery-path/level-1/06-joins-basics/)
 
 ## Exercise
 

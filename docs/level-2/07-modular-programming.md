@@ -1,3 +1,7 @@
+---
+description: "Modular Programming — Level 1, Module 9 showed the mechanics: put declarations in a .h, definitions in a .c, compile both. This module is about the design…"
+---
+
 # 07 · Modular Programming
 
 [Level 1, Module 9](../level-1/09-preprocessor-multifile.md) showed the

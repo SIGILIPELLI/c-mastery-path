@@ -1,3 +1,7 @@
+---
+description: "Bit Manipulation — Every value in C is, underneath the type system, just a run of bits in memory. Most code never needs to think below the level of int or…"
+---
+
 # 04 · Bit Manipulation
 
 Every value in C is, underneath the type system, just a run of bits in

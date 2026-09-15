@@ -1,3 +1,7 @@
+---
+description: "Multi-dimensional Arrays & String Manipulation — Grids, matrices, game boards, tables of records — the moment your data has two axes you need a…"
+---
+
 # 03 · Multi-dimensional Arrays & String Manipulation
 
 Grids, matrices, game boards, tables of records — the moment your data has two

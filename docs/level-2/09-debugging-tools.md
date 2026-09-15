@@ -1,3 +1,7 @@
+---
+description: "Debugging Tools — C gives you no safety net. A one-character typo — <= instead of <, = instead of ==, a forgotten free — can compile cleanly and still…"
+---
+
 # 09 · Debugging Tools
 
 C gives you no safety net. A one-character typo — `<=` instead of `<`, `=`

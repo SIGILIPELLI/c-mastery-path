@@ -1,3 +1,7 @@
+---
+description: "Structs & Unions Advanced — Level 1, Module 7 covered structs as record types: group some fields, give them a name, pass them around. This module goes…"
+---
+
 # 04 · Structs & Unions Advanced
 
 [Level 1, Module 7](../level-1/07-structs.md) covered structs as record types:

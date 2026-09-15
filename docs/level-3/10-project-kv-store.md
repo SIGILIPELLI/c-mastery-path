@@ -1,3 +1,7 @@
+---
+description: "Project — Multi-threaded Key-Value Store / Tiny HTTP Server — Everything in Level 3 converges here: a hash table with chaining (module 01), heap…"
+---
+
 # 10 · Project — Multi-threaded Key-Value Store / Tiny HTTP Server
 
 Everything in Level 3 converges here: a hash table with chaining

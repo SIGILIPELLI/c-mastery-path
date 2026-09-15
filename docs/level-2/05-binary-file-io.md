@@ -1,3 +1,7 @@
+---
+description: "Binary File I/O — Level 1, Module 8 wrote files with fprintf — the number 1000000 became the seven characters 1000000. That's text I/O: human-readable…"
+---
+
 # 05 · Binary File I/O
 
 [Level 1, Module 8](../level-1/08-file-io.md) wrote files with `fprintf` — the

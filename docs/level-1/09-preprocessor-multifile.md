@@ -1,3 +1,7 @@
+---
+description: "Preprocessor & Multi-file Compilation — Notice the extra parentheses in ((x) (x)) — the preprocessor does pure text substitution, so SQUARE(x) without…"
+---
+
 # 09 · Preprocessor & Multi-file Compilation
 
 ## 🎥 Video walkthrough
@@ -238,6 +242,12 @@ placeholder address in `main.o`'s call instruction to point at that real
 address — which is exactly why only files that actually change need
 recompiling: `math_utils.o`'s machine code and symbol table don't change
 just because `main.c` did.
+
+## 🔀 See this in another language
+
+- [C++ — Exception Handling Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/09-exception-handling/)
+- [Swift — Closures Intro](https://sigilipelli.github.io/swift-mastery-path/level-1/09-closures-intro/)
+- [SQL — Inserting, Updating, Deleting Data](https://sigilipelli.github.io/sql-mastery-path/level-1/09-insert-update-delete/)
 
 ## Exercise
 

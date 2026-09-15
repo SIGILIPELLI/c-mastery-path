@@ -1,3 +1,7 @@
+---
+description: "Writing Portable C — C runs on more platforms than any other language, and that is exactly why portable C is hard. The standard deliberately leaves things…"
+---
+
 # 04 · Writing Portable C
 
 C runs on more platforms than any other language, and that is exactly why

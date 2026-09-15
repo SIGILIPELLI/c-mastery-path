@@ -1,3 +1,7 @@
+---
+description: "Advanced Memory Management — malloc is a general-purpose allocator, and general-purpose means it makes no assumptions: any size, any lifetime, any order…"
+---
+
 # 01 · Advanced Memory Management
 
 `malloc` is a general-purpose allocator, and general-purpose means it makes

@@ -1,3 +1,7 @@
+---
+description: "Working with Unix System Calls — printf, fopen and malloc are library functions: ordinary C code that lives in libc. Underneath them sit system calls …"
+---
+
 # 09 · Working with Unix System Calls
 
 `printf`, `fopen` and `malloc` are library functions: ordinary C code that

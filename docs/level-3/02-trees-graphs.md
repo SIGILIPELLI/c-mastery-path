@@ -1,3 +1,7 @@
+---
+description: "Trees & Basic Graph Representations — Module 01's linked list chains nodes one after another. A tree relaxes that to let each node point at multiple…"
+---
+
 # 02 · Trees & Basic Graph Representations
 
 [Module 01](01-data-structures.md)'s linked list chains nodes one after

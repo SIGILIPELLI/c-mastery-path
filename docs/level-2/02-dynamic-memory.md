@@ -1,3 +1,7 @@
+---
+description: "Dynamic Memory — Everything you've allocated so far has had a size fixed at compile time: int scores[100]; reserves room for exactly 100 integers, whether…"
+---
+
 # 02 · Dynamic Memory
 
 Everything you've allocated so far has had a size fixed at compile time:

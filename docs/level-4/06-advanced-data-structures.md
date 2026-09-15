@@ -1,3 +1,7 @@
+---
+description: "Advanced Data Structures — Level 3 built a binary search tree that works beautifully on random input and degenerates into a linked list on sorted input …"
+---
+
 # 06 · Advanced Data Structures
 
 [Level 3](../level-3/02-trees-graphs.md) built a binary search tree that

@@ -1,3 +1,7 @@
+---
+description: "Capstone Project — Every module in this path shows up somewhere: hash tables and intrusive lists, opaque handles and ownership rules, bounded string…"
+---
+
 # 10 · Capstone Project
 
 **tinydb** — an in-memory database engine with a command language, a

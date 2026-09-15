@@ -1,3 +1,7 @@
+---
+description: "Testing in C — C has no built-in test framework, no assertion library, and no test runner. What it has instead is enough preprocessor machinery to build…"
+---
+
 # 08 · Testing in C
 
 C has no built-in test framework, no assertion library, and no test runner.

@@ -1,3 +1,7 @@
+---
+description: "File I/O — 'w' and 'w+' silently erase any existing content the moment fopen succeeds — reach for 'a' instead if you want to keep what's already there."
+---
+
 # 08 · File I/O
 
 ## 🎥 Video walkthrough
@@ -251,6 +255,12 @@ when the underlying `read()` system call returns zero bytes (end of file),
 no separate "are we at EOF" flag you have to poll, the return value itself
 carries that information because the kernel told the library the file is
 exhausted.
+
+## 🔀 See this in another language
+
+- [C++ — References & Pointers](https://sigilipelli.github.io/cpp-mastery-path/level-1/08-references-pointers/)
+- [Swift — Enums](https://sigilipelli.github.io/swift-mastery-path/level-1/08-enums/)
+- [SQL — Creating Tables](https://sigilipelli.github.io/sql-mastery-path/level-1/08-creating-tables/)
 
 ## Exercise
 

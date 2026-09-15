@@ -1,3 +1,7 @@
+---
+description: "Networking Basics — A socket is a file descriptor that happens to have another machine on the other end. Once you have one, read/write (or their…"
+---
+
 # 08 · Networking Basics
 
 A socket is a file descriptor that happens to have another machine on the

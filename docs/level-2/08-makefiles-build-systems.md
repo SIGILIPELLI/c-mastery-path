@@ -1,3 +1,7 @@
+---
+description: "Makefiles & Build Systems — Once a project has more than three source files, typing gcc a.c b.c c.c -o app gets old — and it recompiles everything even…"
+---
+
 # 08 · Makefiles & Build Systems
 
 Once a project has more than three source files, typing `gcc a.c b.c c.c -o app`

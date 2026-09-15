@@ -1,3 +1,7 @@
+---
+description: "Sorting & Searching Algorithms — The standard library gives you qsort and bsearch for free, and in real code you should almost always reach for those…"
+---
+
 # 03 · Sorting & Searching Algorithms
 
 The standard library gives you `qsort` and `bsearch` for free, and in real

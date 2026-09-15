@@ -1,3 +1,7 @@
+---
+description: "Project — Linked-list Inventory System — This project pulls together everything from Level 2: pointers, dynamic memory, structs, binary file I/O, error…"
+---
+
 # 10 · Project — Linked-list Inventory System
 
 This project pulls together everything from Level 2: pointers, dynamic memory,

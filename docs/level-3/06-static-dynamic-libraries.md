@@ -1,3 +1,7 @@
+---
+description: "Static & Dynamic Libraries — Module 07 of Level 2 split code across .c/.h files compiled together into one binary. A library takes that one step further…"
+---
+
 # 06 · Static & Dynamic Libraries
 
 [Module 07 of Level 2](../level-2/07-modular-programming.md) split code

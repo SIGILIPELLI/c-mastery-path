@@ -1,3 +1,7 @@
+---
+description: "Functions — A declaration (also called a prototype) tells the compiler a function's name, return type, and parameter types, without providing a body. A…"
+---
+
 # 04 · Functions
 
 ## 🎥 Video walkthrough
@@ -254,6 +258,12 @@ than a fresh stack slot — which is exactly why the value survives between
 calls while staying invisible outside the function: the *scope* is
 compile-time (name only resolves inside `call_counter`), but the *storage
 duration* is the whole program's lifetime.
+
+## 🔀 See this in another language
+
+- [C++ — Functions & Overloading](https://sigilipelli.github.io/cpp-mastery-path/level-1/04-functions-overloading/)
+- [Swift — Functions](https://sigilipelli.github.io/swift-mastery-path/level-1/04-functions/)
+- [SQL — Sorting & Limiting Results](https://sigilipelli.github.io/sql-mastery-path/level-1/04-sorting-limiting/)
 
 ## Exercise
 

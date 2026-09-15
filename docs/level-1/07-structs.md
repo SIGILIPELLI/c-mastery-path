@@ -1,3 +1,7 @@
+---
+description: "Structs — The struct Point declaration itself doesn't allocate any memory or create a variable — it just describes the shape of the data. struct Point p1…"
+---
+
 # 07 · Structs
 
 ## 🎥 Video walkthrough
@@ -265,6 +269,12 @@ see `Point`, substitute this anonymous struct type." No extra memory,
 indirection, or runtime cost is introduced; the generated machine code for
 `Point p1 = {3,7};` is identical to what `struct Point p1 = {3,7};` would
 produce for a named struct with the same members.
+
+## 🔀 See this in another language
+
+- [C++ — Classes & Objects Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/07-classes-objects/)
+- [Swift — Structs & Classes Basics](https://sigilipelli.github.io/swift-mastery-path/level-1/07-structs-classes/)
+- [SQL — Working with NULL](https://sigilipelli.github.io/sql-mastery-path/level-1/07-working-with-null/)
 
 ## Exercise
 

@@ -1,3 +1,7 @@
+---
+description: "Arrays & Strings — Arrays hold a fixed-size, contiguous block of same-typed values. C strings are just arrays of char with a special end-of-string marker…"
+---
+
 # 05 · Arrays & Strings
 
 Arrays hold a fixed-size, contiguous block of same-typed values. C strings are
@@ -195,6 +199,12 @@ back-to-back. `grid[row][col]` compiles to
 the row width (3) into the address arithmetic at compile time, which is why
 you must specify all dimensions but the first when passing multi-dimensional
 arrays to functions.
+
+## 🔀 See this in another language
+
+- [C++ — Arrays & std::vector Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/05-arrays-vector-basics/)
+- [Swift — Optionals Basics](https://sigilipelli.github.io/swift-mastery-path/level-1/05-optionals-basics/)
+- [SQL — Aggregate Functions & GROUP BY](https://sigilipelli.github.io/sql-mastery-path/level-1/05-aggregates-group-by/)
 
 ## Exercise
 

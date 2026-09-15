@@ -1,3 +1,7 @@
+---
+description: "Error Handling Conventions — C has no exceptions. There is no try, no catch, no stack unwinding — when something fails, the function must tell you, and…"
+---
+
 # 06 · Error Handling Conventions
 
 C has no exceptions. There is no `try`, no `catch`, no stack unwinding — when

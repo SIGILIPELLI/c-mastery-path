@@ -1,3 +1,7 @@
+---
+description: "Concurrency Basics — Every program so far in this path has done one thing at a time. A thread is a second (third, fourth…) flow of execution inside the…"
+---
+
 # 07 · Concurrency Basics
 
 Every program so far in this path has done one thing at a time. A

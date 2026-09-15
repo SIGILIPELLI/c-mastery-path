@@ -1,3 +1,7 @@
+---
+description: "Data Structures in C — Every data structure you've used in a higher-level language — Python's list, Java's ArrayDeque, JavaScript's array — is built out…"
+---
+
 # 01 · Data Structures in C
 
 Every data structure you've used in a higher-level language — Python's

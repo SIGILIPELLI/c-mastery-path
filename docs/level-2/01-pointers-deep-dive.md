@@ -1,3 +1,7 @@
+---
+description: "Pointers Deep Dive — Level 1, Module 6 introduced pointers as variables that hold addresses. That's the what. This module is the how far — pointer…"
+---
+
 # 01 · Pointers Deep Dive
 
 [Level 1, Module 6](../level-1/06-pointers-basics.md) introduced pointers as

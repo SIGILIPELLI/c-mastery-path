@@ -1,3 +1,7 @@
+---
+description: "Interfacing with Other Languages — C is the lingua franca of the software world. Python, Ruby, Rust, Go, Java, C#, Lua and JavaScript can all call C, and…"
+---
+
 # 07 · Interfacing with Other Languages
 
 C is the lingua franca of the software world. Python, Ruby, Rust, Go, Java,

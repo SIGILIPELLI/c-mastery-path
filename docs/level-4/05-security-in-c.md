@@ -1,3 +1,7 @@
+---
+description: "Security in C — Most C security bugs are not exotic. They are ordinary mistakes — a copy without a bound, a size computed by multiplication, a user string…"
+---
+
 # 05 · Security in C
 
 Most C security bugs are not exotic. They are ordinary mistakes — a copy

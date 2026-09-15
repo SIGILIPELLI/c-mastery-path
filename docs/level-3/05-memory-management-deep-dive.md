@@ -1,3 +1,7 @@
+---
+description: "Memory Management Deep Dive — Level 2 introduced malloc and free. This module goes one level deeper: where in memory your variables actually live, what…"
+---
+
 # 05 · Memory Management Deep Dive
 
 [Level 2](../level-2/02-dynamic-memory.md) introduced `malloc` and `free`.

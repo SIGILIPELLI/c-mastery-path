@@ -1,3 +1,7 @@
+---
+description: "Control Flow — Conditions are evaluated top to bottom; the first branch whose condition is true runs, and the rest are skipped. In C, any non-zero value…"
+---
+
 # 03 · Control Flow
 
 ## 🎥 Video walkthrough
@@ -244,6 +248,12 @@ block), execution simply continues falling into whatever instructions sit
 at the next label — there's no separate mechanism preventing it, because at
 the assembly level cases aren't isolated blocks, just addresses in a
 straight line of instructions.
+
+## 🔀 See this in another language
+
+- [C++ — Control Flow](https://sigilipelli.github.io/cpp-mastery-path/level-1/03-control-flow/)
+- [Swift — Control Flow](https://sigilipelli.github.io/swift-mastery-path/level-1/03-control-flow/)
+- [SQL — Filtering with WHERE](https://sigilipelli.github.io/sql-mastery-path/level-1/03-filtering-where/)
 
 ## Exercise
 

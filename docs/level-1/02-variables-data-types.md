@@ -1,3 +1,7 @@
+---
+description: "Variables, Data Types & Operators — Unlike dynamically typed languages, C requires you to state a variable's type up front — the compiler uses that type…"
+---
+
 # 02 · Variables, Data Types & Operators
 
 ## 🎥 Video walkthrough
@@ -231,6 +235,12 @@ arrays) — it's not a function call, it's an operator the compiler evaluates
 while generating code, which is why `sizeof(int)` costs zero CPU cycles at
 runtime; the compiler simply substitutes the constant `4` wherever you wrote
 it.
+
+## 🔀 See this in another language
+
+- [C++ — Variables, Types & Operators](https://sigilipelli.github.io/cpp-mastery-path/level-1/02-variables-types-operators/)
+- [Swift — Variables & Types](https://sigilipelli.github.io/swift-mastery-path/level-1/02-variables-types/)
+- [SQL — SELECT Basics & Data Types](https://sigilipelli.github.io/sql-mastery-path/level-1/02-select-basics-data-types/)
 
 ## Exercise
 

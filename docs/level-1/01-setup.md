@@ -1,3 +1,7 @@
+---
+description: "Setup & First Program — C source code is just text — a compiler turns it into a binary your machine can run. Unlike Java, there's no single official…"
+---
+
 # 01 · Setup & First Program
 
 ## 🎥 Video walkthrough
@@ -141,6 +145,12 @@ register (`%eax` on x86, `w0` on ARM64) to `0`, and the shell reads that
 register's value as the process's exit status via the `wait()`/`waitpid()`
 system call family, which is exactly what lets `&&` in
 `gcc hello.c -o hello && ./hello` decide whether to run the second command.
+
+## 🔀 See this in another language
+
+- [C++ — Setup & First Program](https://sigilipelli.github.io/cpp-mastery-path/level-1/01-setup/)
+- [Swift — Setup & First Program](https://sigilipelli.github.io/swift-mastery-path/level-1/01-setup/)
+- [SQL — Setup & First Queries](https://sigilipelli.github.io/sql-mastery-path/level-1/01-setup-first-queries/)
 
 ## Exercise
 
