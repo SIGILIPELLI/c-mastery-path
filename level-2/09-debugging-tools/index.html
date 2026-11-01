@@ -1,0 +1,2857 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Debugging Tools — C gives you no safety net. A one-character typo — <= instead of <, = instead of ==, a forgotten free — can compile cleanly and still…">
+      
+      
+      
+        <link rel="canonical" href="https://sigilipelli.github.io/c-mastery-path/level-2/09-debugging-tools/">
+      
+      
+        <link rel="prev" href="../08-makefiles-build-systems/">
+      
+      
+        <link rel="next" href="../10-project-inventory-system/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>09 · Debugging Tools - C Mastery Path</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/progress-tracker.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-05VBGCXN12"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-05VBGCXN12');
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="C Mastery Path">
+  <meta property="og:title" content="09 · Debugging Tools">
+  <meta property="og:description" content="Debugging Tools — C gives you no safety net. A one-character typo — <= instead of <, = instead of ==, a forgotten free — can compile cleanly and still…">
+  <meta property="og:url" content="https://sigilipelli.github.io/c-mastery-path/level-2/09-debugging-tools/">
+  <meta property="og:image" content="https://sigilipelli.github.io/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="09 · Debugging Tools">
+  <meta name="twitter:description" content="Debugging Tools — C gives you no safety net. A one-character typo — <= instead of <, = instead of ==, a forgotten free — can compile cleanly and still…">
+  <meta name="twitter:image" content="https://sigilipelli.github.io/og-image.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-9440969811959397",
+      enable_page_level_ads: true
+    });
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "C Mastery Path",
+    "description": "A structured, module-wise C training program from entry level to master level — free, with runnable code in every module.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Mastery Path",
+      "sameAs": "https://sigilipelli.github.io/"
+    },
+    "isAccessibleForFree": true,
+    "url": "https://sigilipelli.github.io/c-mastery-path/level-2/09-debugging-tools/"
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "09 \u00b7 Debugging Tools",
+    "description": "Debugging Tools \u2014 C gives you no safety net. A one-character typo \u2014 \u003c= instead of \u003c, = instead of ==, a forgotten free \u2014 can compile cleanly and still\u2026",
+    "url": "https://sigilipelli.github.io/c-mastery-path/level-2/09-debugging-tools/",
+    "isPartOf": {
+      "@type": "Course",
+      "name": "C Mastery Path",
+      "url": "https://sigilipelli.github.io/c-mastery-path/"
+    },
+    "isAccessibleForFree": true,
+    "learningResourceType": "Lesson",
+    "inLanguage": "en"
+  }
+  </script>
+  
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#09-debugging-tools" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="C Mastery Path" class="md-header__button md-logo" aria-label="C Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            C Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              09 · Debugging Tools
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SIGILIPELLI/c-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    c-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../privacy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Privacy Policy
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../license/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  License
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-1/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · Entry
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Intermediate
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Master
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="C Mastery Path" class="md-nav__button md-logo" aria-label="C Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    C Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SIGILIPELLI/c-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    c-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Privacy Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · Entry
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · Entry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/01-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Setup & First Program
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/02-variables-data-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Variables, Data Types & Operators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/03-control-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Control Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/04-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/05-arrays-strings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Arrays & Strings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/06-pointers-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Pointers Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/07-structs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Structs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/08-file-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · File I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/09-preprocessor-multifile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Preprocessor & Multi-file Compilation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-1/10-project-contact-book/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Contact Book
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Intermediate
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Intermediate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-pointers-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Pointers Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-dynamic-memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Dynamic Memory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-multidim-arrays-strings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Multi-dimensional Arrays & Strings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-structs-unions-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Structs & Unions Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-binary-file-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Binary File I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-error-handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Error Handling Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-modular-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Modular Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-makefiles-build-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Makefiles & Build Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Debugging Tools
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Debugging Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-for-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building for debugging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdb-stepping-through-a-running-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdb: stepping through a running program
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="gdb: stepping through a running program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-core-gdb-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The core gdb workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-program-has-already-crashed-core-dumps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the program has already crashed: core dumps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#valgrind-catching-memory-bugs-that-dont-crash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        valgrind: catching memory bugs that don't crash
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="valgrind: catching memory bugs that don&#39;t crash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-leak-checkfull-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading --leak-check=full output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sanitizers-catching-the-same-bugs-faster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sanitizers: catching the same bugs faster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-tool-for-which-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which tool for which bug
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-project-inventory-system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Linked-list Inventory System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Advanced
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/01-data-structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Data Structures in C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/02-trees-graphs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Trees & Basic Graph Representations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/03-sorting-searching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Sorting & Searching Algorithms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/04-bit-manipulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Bit Manipulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/05-memory-management-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Memory Management Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/06-static-dynamic-libraries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Static & Dynamic Libraries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/07-concurrency-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Concurrency Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/08-networking-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Networking Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/09-unix-system-calls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Working with Unix System Calls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-3/10-project-kv-store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Multi-threaded Key-Value Store / Tiny HTTP Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Master
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Master
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/01-advanced-memory-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Advanced Memory Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/02-concurrency-synchronization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Concurrency & Synchronization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/03-performance-profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Performance Optimization & Profiling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/04-writing-portable-c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Writing Portable C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/05-security-in-c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Security in C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/06-advanced-data-structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Advanced Data Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/07-interfacing-other-languages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Interfacing with Other Languages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/08-testing-in-c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Testing in C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/09-build-systems-at-scale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Build Systems at Scale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../level-4/10-capstone-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-for-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building for debugging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdb-stepping-through-a-running-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdb: stepping through a running program
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="gdb: stepping through a running program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-core-gdb-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The core gdb workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-the-program-has-already-crashed-core-dumps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the program has already crashed: core dumps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#valgrind-catching-memory-bugs-that-dont-crash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        valgrind: catching memory bugs that don't crash
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="valgrind: catching memory bugs that don&#39;t crash">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-leak-checkfull-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading --leak-check=full output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sanitizers-catching-the-same-bugs-faster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sanitizers: catching the same bugs faster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-tool-for-which-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which tool for which bug
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="09-debugging-tools">09 · Debugging Tools<a class="headerlink" href="#09-debugging-tools" title="Permanent link">&para;</a></h1>
+<p>C gives you no safety net. A one-character typo — <code>&lt;=</code> instead of <code>&lt;</code>, <code>=</code>
+instead of <code>==</code>, a forgotten <code>free</code> — can compile cleanly and still crash, or
+worse, silently corrupt memory and keep running. <code>printf</code> debugging gets you
+only so far. This module covers the two tools that actually earn their keep:
+<strong>gdb</strong>, which lets you pause a running program and inspect it, and
+<strong>valgrind</strong>, which catches memory bugs that don't crash <em>today</em> but will in
+production.</p>
+<h2 id="building-for-debugging">Building for debugging<a class="headerlink" href="#building-for-debugging" title="Permanent link">&para;</a></h2>
+<p>Nothing useful shows up in gdb without debug symbols:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-g<span class="w"> </span>-O0<span class="w"> </span>-o<span class="w"> </span>app<span class="w"> </span>main.c
+</code></pre></div>
+<ul>
+<li><code>-g</code> embeds source-line and variable-name information in the binary.</li>
+<li><code>-O0</code> disables optimization — optimized code reorders and eliminates
+  variables, which makes stepping through it in a debugger confusing or
+  outright misleading. Debug locally at <code>-O0</code>; optimize for release.</li>
+</ul>
+<h2 id="gdb-stepping-through-a-running-program">gdb: stepping through a running program<a class="headerlink" href="#gdb-stepping-through-a-running-program" title="Permanent link">&para;</a></h2>
+<p>Consider a deliberately broken program:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// buggy.c</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">sum_range</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">low</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">high</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">low</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">high</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="p">;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">};</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w">   </span><span class="c1">// BUG: should be 0, 4 -- reads values[5], out of bounds</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Sum of first 5: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Values: %d %d %d %d %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">           </span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">4</span><span class="p">]);</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="p">}</span>
+</code></pre></div>
+<p>This compiles and often <em>appears</em> to run fine — the out-of-bounds read is
+undefined behaviour, not a guaranteed crash. That's exactly the kind of bug
+that needs a debugger rather than guesswork.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-g<span class="w"> </span>-O0<span class="w"> </span>-o<span class="w"> </span>buggy<span class="w"> </span>buggy.c
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>gdb<span class="w"> </span>./buggy
+</code></pre></div>
+<h3 id="the-core-gdb-workflow">The core gdb workflow<a class="headerlink" href="#the-core-gdb-workflow" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>(gdb) break main
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Breakpoint 1 at 0x1169: file buggy.c, line 13.
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>(gdb) run
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Starting program: ./buggy
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Breakpoint 1, main () at buggy.c:13
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>13          int values[5] = {10, 20, 30, 40, 50};
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>(gdb) next
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>14          int result = sum_range(0, 5);
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>(gdb) step
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>sum_range (low=0, high=5) at buggy.c:5
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>5           int total = 0;
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>(gdb) print low
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>$1 = 0
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>(gdb) print high
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>$2 = 5
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>break &lt;function&gt;</code> / <code>break &lt;file&gt;:&lt;line&gt;</code></td>
+<td>Set a breakpoint</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>Start the program (stops at breakpoints)</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td>Execute the current line; <strong>step over</strong> function calls</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>Execute the current line; <strong>step into</strong> function calls</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>Resume until the next breakpoint or exit</td>
+</tr>
+<tr>
+<td><code>print &lt;expr&gt;</code></td>
+<td>Evaluate and print a variable or expression</td>
+</tr>
+<tr>
+<td><code>backtrace</code> (or <code>bt</code>)</td>
+<td>Show the call stack</td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td>Show source around the current line</td>
+</tr>
+<tr>
+<td><code>watch &lt;var&gt;</code></td>
+<td>Break whenever <code>&lt;var&gt;</code>'s value changes</td>
+</tr>
+<tr>
+<td><code>quit</code></td>
+<td>Exit gdb</td>
+</tr>
+</tbody>
+</table>
+<p>Spotting the bug: set a breakpoint inside the loop and watch <code>i</code> and <code>total</code>
+evolve.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>(gdb) break buggy.c:7
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Breakpoint 2 at 0x1145: file buggy.c, line 7.
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>(gdb) continue
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Breakpoint 2, sum_range (low=0, high=5) at buggy.c:7
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>7               total += i;
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>(gdb) print i
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>$3 = 5
+</code></pre></div>
+<p><code>i</code> reaches <code>5</code>, but <code>values</code> only has indices <code>0</code>-<code>4</code>. The call site passed
+the wrong <code>high</code>. <code>next</code> through a few more iterations and <code>backtrace</code> to see
+which frame called <code>sum_range</code> with the bad argument — that's the actual fix
+location, not the loop itself.</p>
+<h3 id="when-the-program-has-already-crashed-core-dumps">When the program has already crashed: core dumps<a class="headerlink" href="#when-the-program-has-already-crashed-core-dumps" title="Permanent link">&para;</a></h3>
+<p>For a real segfault, you don't need to reproduce it interactively — gdb can
+load the crash state directly.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">ulimit</span><span class="w"> </span>-c<span class="w"> </span>unlimited<span class="w">          </span><span class="c1"># allow core dumps in this shell</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>./crashy<span class="w">                     </span><span class="c1"># Segmentation fault (core dumped)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>gdb<span class="w"> </span>./crashy<span class="w"> </span>core
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>(gdb) backtrace
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>#0  0x0000555555555149 in append_char (s=0x0, c=65 'A') at crashy.c:4
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>#1  0x0000555555555171 in main () at crashy.c:12
+</code></pre></div>
+<p>Frame <code>#0</code> is exactly where it died, and <code>s=0x0</code> tells you the whole story: a
+null pointer was passed in. <code>backtrace</code> is often the single most useful gdb
+command — it answers "where did this actually happen" immediately, without
+any manual stepping.</p>
+<h2 id="valgrind-catching-memory-bugs-that-dont-crash">valgrind: catching memory bugs that don't crash<a class="headerlink" href="#valgrind-catching-memory-bugs-that-dont-crash" title="Permanent link">&para;</a></h2>
+<p>Some bugs never segfault — they read one byte past an array, or leak memory a
+few bytes at a time, and the program runs "fine" for years until it doesn't.
+<code>valgrind</code>'s <code>memcheck</code> tool (the default) runs your program in an instrumented
+virtual machine that tracks every allocation, free, and memory access.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// leaky.c</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">make_greeting</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">greeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span><span class="w">           </span><span class="c1">// BUG: too small for long names</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="n">strcpy</span><span class="p">(</span><span class="n">greeting</span><span class="p">,</span><span class="w"> </span><span class="s">"Hello, "</span><span class="p">);</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="n">strcat</span><span class="p">(</span><span class="n">greeting</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w">                </span><span class="c1">// may overflow the 20 bytes</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">greeting</span><span class="p">;</span><span class="w">                       </span><span class="c1">// BUG: caller never frees this</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="p">}</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_greeting</span><span class="p">(</span><span class="s">"Alexandria Constantinople"</span><span class="p">);</span><span class="w">   </span><span class="c1">// long enough to overflow</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">msg</span><span class="p">;</span><span class="w">                             </span><span class="c1">// pretend we used it</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-g<span class="w"> </span>-O0<span class="w"> </span>-o<span class="w"> </span>leaky<span class="w"> </span>leaky.c
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>valgrind<span class="w"> </span>--leak-check<span class="o">=</span>full<span class="w"> </span>./leaky
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>==12345== Invalid write of size 1
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>==12345==    at 0x4849C29: strcat (vg_replace_strmem.c:...)
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>==12345==    by 0x1091A5: make_greeting (leaky.c:8)
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>==12345==    by 0x1091E2: main (leaky.c:13)
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>==12345==  Address 0x4a4d054 is 0 bytes after a block of size 20 alloc'd
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>==12345==    at 0x484D9C4: malloc (vg_replace_malloc.c:...)
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>==12345==    by 0x109188: make_greeting (leaky.c:6)
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>...
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>==12345== HEAP SUMMARY:
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>==12345==     in use at exit: 21 bytes in 1 blocks
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>==12345==   total heap usage: 1 allocs, 0 frees, 21 bytes allocated
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>==12345==
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>==12345== 21 bytes in 1 blocks are definitely lost in loss record 1 of 1
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>==12345==    at 0x484D9C4: malloc (vg_replace_malloc.c:...)
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>==12345==    by 0x109188: make_greeting (leaky.c:6)
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>==12345==    by 0x1091E2: main (leaky.c:13)
+</code></pre></div>
+<p>Two separate defects, both caught precisely: the <code>Invalid write</code> pins the
+overflow to <code>leaky.c:8</code>, and <code>definitely lost</code> pins the missing <code>free</code> to
+<code>leaky.c:6</code> — the exact <code>malloc</code> call whose return value was never released.</p>
+<table>
+<thead>
+<tr>
+<th>Valgrind verdict</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Invalid read/write of size N</code></td>
+<td>Accessed memory outside an allocated block</td>
+</tr>
+<tr>
+<td><code>Use of uninitialised value</code></td>
+<td>Read a variable before writing to it</td>
+</tr>
+<tr>
+<td><code>Invalid free() / delete</code></td>
+<td>Freed a pointer twice, or one never returned by <code>malloc</code></td>
+</tr>
+<tr>
+<td><code>definitely lost</code></td>
+<td>Leaked memory with no remaining pointer to it — a real leak</td>
+</tr>
+<tr>
+<td><code>still reachable</code></td>
+<td>Never freed, but a pointer to it still exists at exit — often OS-cleaned buffers, lower priority</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reading-leak-checkfull-output">Reading <code>--leak-check=full</code> output<a class="headerlink" href="#reading-leak-checkfull-output" title="Permanent link">&para;</a></h3>
+<p>Run it with <code>-s</code> for a summary even on success:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>valgrind<span class="w"> </span>--leak-check<span class="o">=</span>full<span class="w"> </span>--show-leak-kinds<span class="o">=</span>all<span class="w"> </span>-s<span class="w"> </span>./app
+</code></pre></div>
+<p>A clean run ends with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>==12345== HEAP SUMMARY:
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>==12345==     in use at exit: 0 bytes in 0 blocks
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>==12345==   total heap usage: 4 allocs, 4 frees, 1,024 bytes allocated
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>==12345==
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>==12345== All heap blocks were freed -- no leaks are possible
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>==12345==
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>==12345== ERROR SUMMARY: 0 errors from 0 contexts
+</code></pre></div>
+<p>That <code>0 errors from 0 contexts</code> line is what you want to see before shipping
+anything that touches <code>malloc</code>.</p>
+<h2 id="sanitizers-catching-the-same-bugs-faster">Sanitizers: catching the same bugs faster<a class="headerlink" href="#sanitizers-catching-the-same-bugs-faster" title="Permanent link">&para;</a></h2>
+<p>Valgrind is thorough but slow (10-50× slowdown). For day-to-day development,
+compiling with sanitizers built into gcc/clang catches most of the same bugs
+at nearly full speed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-g<span class="w"> </span>-O0<span class="w"> </span>-fsanitize<span class="o">=</span>address,undefined<span class="w"> </span>-o<span class="w"> </span>app<span class="w"> </span>main.c
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>./app
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>==12345==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x...
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>WRITE of size 1 at 0x... thread T0
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    #0 0x... in strcat
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    #1 0x... in make_greeting leaky.c:8
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    #2 0x... in main leaky.c:13
+</code></pre></div>
+<p>Same bug, same line number, and it fires the moment the overflow happens —
+no separate tool invocation needed. A reasonable workflow: build with
+sanitizers by default during development (they're what
+<a href="../08-makefiles-build-systems/">Module 8</a>'s <code>BUILD=debug</code> branch already
+enables), and run the full <code>valgrind</code> sweep before a release or when a
+sanitizer report is confusing.</p>
+<h2 id="which-tool-for-which-bug">Which tool for which bug<a class="headerlink" href="#which-tool-for-which-bug" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Reach for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"It crashes, where?"</td>
+<td><code>gdb</code> + <code>backtrace</code> (with a core dump if it already crashed)</td>
+</tr>
+<tr>
+<td>"What value does this variable have right here?"</td>
+<td><code>gdb</code> with a breakpoint and <code>print</code></td>
+</tr>
+<tr>
+<td>"Is this leaking memory?"</td>
+<td><code>valgrind --leak-check=full</code></td>
+</tr>
+<tr>
+<td>"Am I reading/writing out of bounds?"</td>
+<td><code>-fsanitize=address</code> (fast) or <code>valgrind</code> (thorough)</td>
+</tr>
+<tr>
+<td>"Did I read a variable before initializing it?"</td>
+<td><code>valgrind</code> (<code>Use of uninitialised value</code>) or <code>-fsanitize=undefined</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>gdb's breakpoints and single-stepping work by taking over the operating
+system's own process-control interface — on Linux, the <code>ptrace()</code> system
+call, which lets one process (the debugger) attach to another (the
+debuggee), read and write its memory and registers directly, and be
+notified whenever it stops. Setting <code>break main</code> doesn't add any code to
+your program; gdb overwrites the very first byte of <code>main</code>'s compiled
+instructions with a special trap instruction (<code>int3</code> / <code>0xCC</code> on x86),
+runs the program, and when the CPU executes that byte it raises a signal
+(<code>SIGTRAP</code>) that the kernel routes to gdb instead of your program — at
+which point gdb restores the original byte, so your code is completely
+unmodified from your program's own point of view. <code>print &lt;expr&gt;</code> works
+because the <code>-g</code> debug info gives gdb a table mapping variable names to
+exact stack offsets or registers, so gdb can read those bytes directly out
+of the <em>stopped</em> process's memory via <code>ptrace(PEEKDATA, ...)</code> and format
+them according to their compile-time type — the same offset arithmetic the
+compiler itself uses, just performed by gdb after the fact instead of
+baked into instructions.</p>
+<p>Valgrind's <code>memcheck</code> takes a completely different approach: rather than
+running your compiled binary directly on the CPU, it runs your program
+inside a software CPU emulator, translating each of your program's machine
+instructions into instrumented equivalents that additionally update a
+parallel shadow memory tracking, byte for byte, whether each memory
+location is allocated, and whether each individual bit has actually been
+written to yet. This is precisely why it's 10-50x slower (every real
+instruction becomes several emulated ones) and precisely why it can catch
+<code>Use of uninitialised value</code> — a bug class a normal CPU has no way to
+detect at all, since uninitialized memory contains perfectly ordinary bits
+that any real hardware will happily use. AddressSanitizer takes a faster
+middle path: instead of full emulation, the compiler inserts extra
+"redzone" bytes around every allocation at compile time and generates
+inline checks before each memory access that consult a lightweight shadow
+memory table — cheaper than Valgrind's full instruction-level emulation
+because the checks are compiled directly into your program's own machine
+code rather than interpreted, which is why it runs close to full speed
+while still catching the same heap-buffer-overflow the moment the
+out-of-bounds write actually executes.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Take the <code>leaky.c</code> example above.</p>
+<ol>
+<li>Compile it with <code>-g -O0</code> and run it under <code>valgrind --leak-check=full</code>.
+   Confirm you see both the invalid write and the "definitely lost" block, and
+   note the exact line numbers valgrind reports.</li>
+<li>Fix the size bug (allocate enough for <code>"Hello, "</code> + the name + the null
+   terminator — <code>strlen(name) + 8</code> is the right shape) and the leak (free the
+   result in <code>main</code>, or better, decide who owns the returned pointer and
+   document it in a comment).</li>
+<li>Re-run valgrind and confirm <code>0 errors from 0 contexts</code> and
+   <code>All heap blocks were freed</code>.</li>
+<li>Recompile with <code>-fsanitize=address,undefined</code> instead and confirm it
+   reports the same overflow (before your fix) and is silent (after).</li>
+<li>Deliberately introduce a <strong>double free</strong> (<code>free(msg); free(msg);</code>) and run
+   both valgrind and the sanitizer build against it. Compare how clearly each
+   one identifies the problem.</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../08-makefiles-build-systems/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 08 · Makefiles &amp; Build Systems">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                08 · Makefiles & Build Systems
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../10-project-inventory-system/" class="md-footer__link md-footer__link--next" aria-label="Next: 10 · Project — Linked-list Inventory System">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                10 · Project — Linked-list Inventory System
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../javascripts/progress-tracker.js"></script>
+      
+    
+  </body>
+</html>
