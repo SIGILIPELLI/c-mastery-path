@@ -259,6 +259,6 @@ Completing this project means you're ready for **Level 2 · Intermediate**.
 
 ## 🔀 See this in another language
 
-- [C++ — Project — Bank Account CLI](https://sigilipelli.github.io/cpp-mastery-path/level-1/10-project-bank-account-cli/)
-- [Swift — Project — CLI To-Do App](https://sigilipelli.github.io/swift-mastery-path/level-1/10-project-todo-cli/)
-- [SQL — Project — Library/Bookstore Database](https://sigilipelli.github.io/sql-mastery-path/level-1/10-project-library-database/)
+- [C++ — Project — Bank Account CLI](https://learnmasterypath.com/cpp-mastery-path/level-1/10-project-bank-account-cli/)
+- [Swift — Project — CLI To-Do App](https://learnmasterypath.com/swift-mastery-path/level-1/10-project-todo-cli/)
+- [SQL — Project — Library/Bookstore Database](https://learnmasterypath.com/sql-mastery-path/level-1/10-project-library-database/)

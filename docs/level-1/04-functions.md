@@ -261,9 +261,9 @@ duration* is the whole program's lifetime.
 
 ## 🔀 See this in another language
 
-- [C++ — Functions & Overloading](https://sigilipelli.github.io/cpp-mastery-path/level-1/04-functions-overloading/)
-- [Swift — Functions](https://sigilipelli.github.io/swift-mastery-path/level-1/04-functions/)
-- [SQL — Sorting & Limiting Results](https://sigilipelli.github.io/sql-mastery-path/level-1/04-sorting-limiting/)
+- [C++ — Functions & Overloading](https://learnmasterypath.com/cpp-mastery-path/level-1/04-functions-overloading/)
+- [Swift — Functions](https://learnmasterypath.com/swift-mastery-path/level-1/04-functions/)
+- [SQL — Sorting & Limiting Results](https://learnmasterypath.com/sql-mastery-path/level-1/04-sorting-limiting/)
 
 ## Exercise
 

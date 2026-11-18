@@ -441,4 +441,4 @@ count.
 
 ## 🔀 See this in another language
 
-- [C++ — 10 · Project — Multi-threaded Task Processor](https://sigilipelli.github.io/cpp-mastery-path/level-3/10-project-task-processor/)
+- [C++ — 10 · Project — Multi-threaded Task Processor](https://learnmasterypath.com/cpp-mastery-path/level-3/10-project-task-processor/)

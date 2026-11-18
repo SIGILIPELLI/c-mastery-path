@@ -258,9 +258,9 @@ exhausted.
 
 ## 🔀 See this in another language
 
-- [C++ — References & Pointers](https://sigilipelli.github.io/cpp-mastery-path/level-1/08-references-pointers/)
-- [Swift — Enums](https://sigilipelli.github.io/swift-mastery-path/level-1/08-enums/)
-- [SQL — Creating Tables](https://sigilipelli.github.io/sql-mastery-path/level-1/08-creating-tables/)
+- [C++ — References & Pointers](https://learnmasterypath.com/cpp-mastery-path/level-1/08-references-pointers/)
+- [Swift — Enums](https://learnmasterypath.com/swift-mastery-path/level-1/08-enums/)
+- [SQL — Creating Tables](https://learnmasterypath.com/sql-mastery-path/level-1/08-creating-tables/)
 
 ## Exercise
 

@@ -347,7 +347,7 @@ not just by convention.
 
 ## 🔀 See this in another language
 
-- [Shell/Bash — 02 · String Manipulation](https://sigilipelli.github.io/shell-mastery-path/level-2/02-string-manipulation/)
+- [Shell/Bash — 02 · String Manipulation](https://learnmasterypath.com/shell-mastery-path/level-2/02-string-manipulation/)
 
 ## Exercise
 

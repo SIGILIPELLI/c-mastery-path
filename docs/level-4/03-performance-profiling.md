@@ -322,9 +322,9 @@ accurate in aggregate, and cheap enough to run in production.
 
 ## 🔀 See this in another language
 
-- [C# — 05 · Performance Profiling & Optimization](https://sigilipelli.github.io/csharp-mastery-path/level-4/05-performance-profiling/)
-- [MATLAB — 04 · Performance Profiling & Optimization](https://sigilipelli.github.io/matlab-mastery-path/level-4/04-performance-profiling/)
-- [TypeScript — 07 · Performance Optimization](https://sigilipelli.github.io/typescript-mastery-path/level-4/07-performance-optimization/)
+- [C# — 05 · Performance Profiling & Optimization](https://learnmasterypath.com/csharp-mastery-path/level-4/05-performance-profiling/)
+- [MATLAB — 04 · Performance Profiling & Optimization](https://learnmasterypath.com/matlab-mastery-path/level-4/04-performance-profiling/)
+- [TypeScript — 07 · Performance Optimization](https://learnmasterypath.com/typescript-mastery-path/level-4/07-performance-optimization/)
 
 ## Exercise
 

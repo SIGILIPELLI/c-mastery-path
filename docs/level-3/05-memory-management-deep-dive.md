@@ -305,7 +305,7 @@ again.
 
 ## 🔀 See this in another language
 
-- [Swift — 07 · Memory Management](https://sigilipelli.github.io/swift-mastery-path/level-3/07-memory-management/)
+- [Swift — 07 · Memory Management](https://learnmasterypath.com/swift-mastery-path/level-3/07-memory-management/)
 
 ## Exercise
 

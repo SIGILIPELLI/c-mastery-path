@@ -148,9 +148,9 @@ system call family, which is exactly what lets `&&` in
 
 ## 🔀 See this in another language
 
-- [C++ — Setup & First Program](https://sigilipelli.github.io/cpp-mastery-path/level-1/01-setup/)
-- [Swift — Setup & First Program](https://sigilipelli.github.io/swift-mastery-path/level-1/01-setup/)
-- [SQL — Setup & First Queries](https://sigilipelli.github.io/sql-mastery-path/level-1/01-setup-first-queries/)
+- [C++ — Setup & First Program](https://learnmasterypath.com/cpp-mastery-path/level-1/01-setup/)
+- [Swift — Setup & First Program](https://learnmasterypath.com/swift-mastery-path/level-1/01-setup/)
+- [SQL — Setup & First Queries](https://learnmasterypath.com/sql-mastery-path/level-1/01-setup-first-queries/)
 
 ## Exercise
 

@@ -272,9 +272,9 @@ produce for a named struct with the same members.
 
 ## 🔀 See this in another language
 
-- [C++ — Classes & Objects Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/07-classes-objects/)
-- [Swift — Structs & Classes Basics](https://sigilipelli.github.io/swift-mastery-path/level-1/07-structs-classes/)
-- [SQL — Working with NULL](https://sigilipelli.github.io/sql-mastery-path/level-1/07-working-with-null/)
+- [C++ — Classes & Objects Basics](https://learnmasterypath.com/cpp-mastery-path/level-1/07-classes-objects/)
+- [Swift — Structs & Classes Basics](https://learnmasterypath.com/swift-mastery-path/level-1/07-structs-classes/)
+- [SQL — Working with NULL](https://learnmasterypath.com/sql-mastery-path/level-1/07-working-with-null/)
 
 ## Exercise
 

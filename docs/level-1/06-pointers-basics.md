@@ -261,9 +261,9 @@ on `value`'s actual storage.
 
 ## 🔀 See this in another language
 
-- [C++ — Strings (std::string)](https://sigilipelli.github.io/cpp-mastery-path/level-1/06-strings/)
-- [Swift — Collections](https://sigilipelli.github.io/swift-mastery-path/level-1/06-collections/)
-- [SQL — Joins Basics](https://sigilipelli.github.io/sql-mastery-path/level-1/06-joins-basics/)
+- [C++ — Strings (std::string)](https://learnmasterypath.com/cpp-mastery-path/level-1/06-strings/)
+- [Swift — Collections](https://learnmasterypath.com/swift-mastery-path/level-1/06-collections/)
+- [SQL — Joins Basics](https://learnmasterypath.com/sql-mastery-path/level-1/06-joins-basics/)
 
 ## Exercise
 

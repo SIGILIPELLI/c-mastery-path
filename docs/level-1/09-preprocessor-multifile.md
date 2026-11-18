@@ -245,9 +245,9 @@ just because `main.c` did.
 
 ## 🔀 See this in another language
 
-- [C++ — Exception Handling Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/09-exception-handling/)
-- [Swift — Closures Intro](https://sigilipelli.github.io/swift-mastery-path/level-1/09-closures-intro/)
-- [SQL — Inserting, Updating, Deleting Data](https://sigilipelli.github.io/sql-mastery-path/level-1/09-insert-update-delete/)
+- [C++ — Exception Handling Basics](https://learnmasterypath.com/cpp-mastery-path/level-1/09-exception-handling/)
+- [Swift — Closures Intro](https://learnmasterypath.com/swift-mastery-path/level-1/09-closures-intro/)
+- [SQL — Inserting, Updating, Deleting Data](https://learnmasterypath.com/sql-mastery-path/level-1/09-insert-update-delete/)
 
 ## Exercise
 

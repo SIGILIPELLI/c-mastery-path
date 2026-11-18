@@ -341,9 +341,9 @@ blocks.
 
 ## 🔀 See this in another language
 
-- [JavaScript — 07 · Error Handling Advanced](https://sigilipelli.github.io/javascript-mastery-path/level-2/07-error-handling-advanced/)
-- [C++ — 08 · Error Handling with Exceptions](https://sigilipelli.github.io/cpp-mastery-path/level-2/08-error-handling-exceptions/)
-- [Rust — 05 · Error Handling Advanced](https://sigilipelli.github.io/rust-mastery-path/level-2/05-error-handling-advanced/)
+- [JavaScript — 07 · Error Handling Advanced](https://learnmasterypath.com/javascript-mastery-path/level-2/07-error-handling-advanced/)
+- [C++ — 08 · Error Handling with Exceptions](https://learnmasterypath.com/cpp-mastery-path/level-2/08-error-handling-exceptions/)
+- [Rust — 05 · Error Handling Advanced](https://learnmasterypath.com/rust-mastery-path/level-2/05-error-handling-advanced/)
 
 ## Exercise
 

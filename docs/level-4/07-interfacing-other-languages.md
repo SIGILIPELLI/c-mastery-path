@@ -324,7 +324,7 @@ longer any handle in either language capable of passing it back to
 
 ## 🔀 See this in another language
 
-- [MATLAB — 06 · Integration with Other Languages](https://sigilipelli.github.io/matlab-mastery-path/level-4/06-integration-other-languages/)
+- [MATLAB — 06 · Integration with Other Languages](https://learnmasterypath.com/matlab-mastery-path/level-4/06-integration-other-languages/)
 
 ## Exercise
 

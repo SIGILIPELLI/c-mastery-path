@@ -251,9 +251,9 @@ straight line of instructions.
 
 ## 🔀 See this in another language
 
-- [C++ — Control Flow](https://sigilipelli.github.io/cpp-mastery-path/level-1/03-control-flow/)
-- [Swift — Control Flow](https://sigilipelli.github.io/swift-mastery-path/level-1/03-control-flow/)
-- [SQL — Filtering with WHERE](https://sigilipelli.github.io/sql-mastery-path/level-1/03-filtering-where/)
+- [C++ — Control Flow](https://learnmasterypath.com/cpp-mastery-path/level-1/03-control-flow/)
+- [Swift — Control Flow](https://learnmasterypath.com/swift-mastery-path/level-1/03-control-flow/)
+- [SQL — Filtering with WHERE](https://learnmasterypath.com/sql-mastery-path/level-1/03-filtering-where/)
 
 ## Exercise
 

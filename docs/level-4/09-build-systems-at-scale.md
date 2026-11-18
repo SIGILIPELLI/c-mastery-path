@@ -335,7 +335,7 @@ saw — no separate approximation of your build to keep in sync.
 
 ## 🔀 See this in another language
 
-- [C++ — 06 · Large-Scale Build Systems](https://sigilipelli.github.io/cpp-mastery-path/level-4/06-large-scale-build-systems/)
+- [C++ — 06 · Large-Scale Build Systems](https://learnmasterypath.com/cpp-mastery-path/level-4/06-large-scale-build-systems/)
 
 ## Exercise
 

@@ -202,9 +202,9 @@ arrays to functions.
 
 ## 🔀 See this in another language
 
-- [C++ — Arrays & std::vector Basics](https://sigilipelli.github.io/cpp-mastery-path/level-1/05-arrays-vector-basics/)
-- [Swift — Optionals Basics](https://sigilipelli.github.io/swift-mastery-path/level-1/05-optionals-basics/)
-- [SQL — Aggregate Functions & GROUP BY](https://sigilipelli.github.io/sql-mastery-path/level-1/05-aggregates-group-by/)
+- [C++ — Arrays & std::vector Basics](https://learnmasterypath.com/cpp-mastery-path/level-1/05-arrays-vector-basics/)
+- [Swift — Optionals Basics](https://learnmasterypath.com/swift-mastery-path/level-1/05-optionals-basics/)
+- [SQL — Aggregate Functions & GROUP BY](https://learnmasterypath.com/sql-mastery-path/level-1/05-aggregates-group-by/)
 
 ## Exercise
 
