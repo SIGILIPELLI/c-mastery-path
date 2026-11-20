@@ -1,3 +1,7 @@
+---
+description: "Level 4 (Master) of the free C Mastery Path: Advanced Memory Management, Concurrency & Synchronization, Performance Optimization & Profiling, Writing…"
+---
+
 # Level 4 · Master
 
 ## Modules

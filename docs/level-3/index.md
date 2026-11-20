@@ -1,3 +1,7 @@
+---
+description: "Level 3 (Advanced) of the free C Mastery Path: Data Structures in C, Trees & Basic Graph Representations, Sorting & Searching Algorithms, Bit Manipulation…"
+---
+
 # Level 3 · Advanced
 
 ## Modules

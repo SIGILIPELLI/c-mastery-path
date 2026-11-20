@@ -1,3 +1,7 @@
+---
+description: "Level 2 (Intermediate) of the free C Mastery Path: Pointers Deep Dive, Dynamic Memory, Multi-dimensional Arrays & String Manipulation, Structs & Unions…"
+---
+
 # Level 2 · Intermediate
 
 ## Modules
