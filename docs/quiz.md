@@ -245,7 +245,7 @@ Implement reverse(): re-point each node's next pointer so the list is reversed w
 
 **Starter code**
 
-```python
+```c
 #include <stdio.h>
 #include <stdlib.h>
 typedef struct Node { int v; struct Node *next; } Node;
@@ -320,7 +320,7 @@ Implement safe_copy(dst, cap, src): copy src into dst without overflowing, alway
 
 **Starter code**
 
-```python
+```c
 #include <stdio.h>
 #include <string.h>
 
