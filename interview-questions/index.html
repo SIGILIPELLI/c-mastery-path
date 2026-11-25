@@ -1,0 +1,3424 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="180 C interview questions with answers and explanations, from beginner to advanced, organised by level. Free, from the C Mastery Path.">
+      
+      
+      
+        <link rel="canonical" href="https://learnmasterypath.com/c-mastery-path/interview-questions/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../cheat-sheet/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+  
+  <title>C Interview Questions and Answers (180 Questions) – C Course</title>
+
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/progress-tracker.css">
+    
+      <link rel="stylesheet" href="../stylesheets/final-quiz.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-05VBGCXN12"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-05VBGCXN12');
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mastery Path">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="C Interview Questions and Answers (180 Questions) – C Course">
+  <meta property="og:description" content="180 C interview questions with answers and explanations, from beginner to advanced, organised by level. Free, from the C Mastery Path.">
+  <meta property="og:url" content="https://learnmasterypath.com/c-mastery-path/interview-questions/">
+  <meta property="og:image" content="https://learnmasterypath.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mastery Path: free structured courses, beginner to master">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="C Interview Questions and Answers (180 Questions) – C Course">
+  <meta name="twitter:description" content="180 C interview questions with answers and explanations, from beginner to advanced, organised by level. Free, from the C Mastery Path.">
+  <meta name="twitter:image" content="https://learnmasterypath.com/og-image.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script><script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Mastery Path", "item": "https://learnmasterypath.com/"},
+      {"@type": "ListItem", "position": 2, "name": "C Mastery Path", "item": "https://learnmasterypath.com/c-mastery-path/"},
+      {"@type": "ListItem", "position": 3, "name": "Interview Questions", "item": "https://learnmasterypath.com/c-mastery-path/interview-questions/"}
+    ]
+  }
+  </script>
+  <style>
+    .md-banner a:hover { text-decoration: underline !important; }
+    .mp-related { margin-top: 2.4rem; padding-top: 1rem; border-top: 1px solid var(--md-default-fg-color--lightest); font-size: .78rem; }
+    .mp-related h2 { font-size: .9rem; margin: 0 0 .5rem; }
+    .mp-related ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem .9rem; }
+    .mp-related li { margin: 0 !important; }
+  </style>
+  <script type="application/json" id="mp-course-meta">{"home": false, "id": "c-mastery-path", "name": "C Mastery Path", "repo": "https://github.com/SIGILIPELLI/c-mastery-path", "src": "interview-questions.md", "url": "https://learnmasterypath.com/c-mastery-path/"}</script>
+  <link rel="stylesheet" href="https://learnmasterypath.com/assets/learn.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://learnmasterypath.com/assets/course.css?v=1">
+  <script src="https://learnmasterypath.com/assets/learn.js" defer></script>
+  <script src="https://learnmasterypath.com/assets/signup.js" defer></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#c-interview-questions-and-answers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+  <a href="https://learnmasterypath.com/" style="color: inherit; text-decoration: none;">
+    &larr; Mastery Path &middot; all 100+ free courses
+  </a>
+  <span style="opacity: .6; margin: 0 .6em;">|</span>
+  <a href="https://learnmasterypath.com/search/" style="color: inherit; text-decoration: none;">Search all courses</a>
+  <span style="opacity: .6; margin: 0 .6em;">|</span>
+  <a href="https://learnmasterypath.com/resume/" style="color: inherit; font-weight: 700; text-decoration: none;">
+    Got the skills? Free resume ATS check &rarr;
+  </a>
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="C Mastery Path" class="md-header__button md-logo" aria-label="C Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            C Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              C Interview Questions and Answers (180 Questions)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SIGILIPELLI/c-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    c-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Interview Questions
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cheat-sheet/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cheat Sheet
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-1/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · Entry
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Intermediate
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Master
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quiz/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Final Quiz
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="C Mastery Path" class="md-nav__button md-logo" aria-label="C Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    C Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SIGILIPELLI/c-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    c-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interview Questions
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interview Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#level-1-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 1 · Entry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 1 · Entry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-setup-first-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Setup &amp; First Program
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-variables-data-types-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Variables, Data Types &amp; Operators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-control-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Control Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-arrays-strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Arrays &amp; Strings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-pointers-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Pointers Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-structs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Structs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-file-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · File I/O
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-preprocessor-multi-file-compilation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Preprocessor &amp; Multi-file Compilation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cheat-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheat Sheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · Entry
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · Entry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/01-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Setup & First Program
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/02-variables-data-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Variables, Data Types & Operators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/03-control-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Control Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/04-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/05-arrays-strings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Arrays & Strings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/06-pointers-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Pointers Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/07-structs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Structs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/08-file-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · File I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/09-preprocessor-multifile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Preprocessor & Multi-file Compilation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/10-project-contact-book/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Contact Book
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Intermediate
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Intermediate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/01-pointers-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Pointers Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/02-dynamic-memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Dynamic Memory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/03-multidim-arrays-strings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Multi-dimensional Arrays & Strings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/04-structs-unions-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Structs & Unions Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/05-binary-file-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Binary File I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/06-error-handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Error Handling Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/07-modular-programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Modular Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/08-makefiles-build-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Makefiles & Build Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/09-debugging-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Debugging Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/10-project-inventory-system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Linked-list Inventory System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Advanced
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/01-data-structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Data Structures in C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/02-trees-graphs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Trees & Basic Graph Representations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/03-sorting-searching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Sorting & Searching Algorithms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/04-bit-manipulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Bit Manipulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/05-memory-management-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Memory Management Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/06-static-dynamic-libraries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Static & Dynamic Libraries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/07-concurrency-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Concurrency Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/08-networking-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Networking Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/09-unix-system-calls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Working with Unix System Calls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/10-project-kv-store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Multi-threaded Key-Value Store / Tiny HTTP Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Master
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Master
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/01-advanced-memory-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Advanced Memory Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/02-concurrency-synchronization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Concurrency & Synchronization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/03-performance-profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Performance Optimization & Profiling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/04-writing-portable-c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Writing Portable C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/05-security-in-c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Security in C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/06-advanced-data-structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Advanced Data Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/07-interfacing-other-languages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Interfacing with Other Languages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/08-testing-in-c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Testing in C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/09-build-systems-at-scale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Build Systems at Scale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/10-capstone-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Final Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#level-1-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 1 · Entry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 1 · Entry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-setup-first-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Setup &amp; First Program
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-variables-data-types-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Variables, Data Types &amp; Operators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-control-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Control Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-arrays-strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Arrays &amp; Strings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-pointers-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Pointers Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-structs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Structs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-file-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · File I/O
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-preprocessor-multi-file-compilation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Preprocessor &amp; Multi-file Compilation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+  
+  
+
+
+<h1 id="c-interview-questions-and-answers">C Interview Questions and Answers<a class="headerlink" href="#c-interview-questions-and-answers" title="Permanent link">&para;</a></h1>
+<p><strong>180 questions</strong> with the correct answer and a short explanation, organised from beginner (Level 1) to advanced (Level 4). Every question comes from a lesson in the free C Mastery Path, so you can open the lesson to go deeper.</p>
+<div class="admonition tip">
+<p class="admonition-title">Practise, don't just read</p>
+<p>Each lesson also ends with an interactive quiz, and the <a href="../quiz/">final quiz</a> tests all four levels. Try to answer each question below before reading the answer.</p>
+</div>
+<h2 id="level-1-entry">Level 1 · Entry<a class="headerlink" href="#level-1-entry" title="Permanent link">&para;</a></h2>
+<h3 id="01-setup-first-program"><a href="../level-1/01-setup/">01 · Setup &amp; First Program</a><a class="headerlink" href="#01-setup-first-program" title="Permanent link">&para;</a></h3>
+<p><strong>Q1.</strong> What does <code>gcc hello.c -o hello</code> do?</p>
+<p><strong>Answer:</strong> Compiles hello.c and names the resulting binary hello</p>
+<p>-o names the output; without it gcc produces a.out.</p>
+<p><strong>Q2.</strong> In <code>int main(void)</code>, what do <code>int</code> and <code>void</code> mean?</p>
+<p><strong>Answer:</strong> int is the exit status returned to the OS; void means main takes no arguments</p>
+<p>A return of 0 signals success.</p>
+<p><strong>Q3.</strong> What does <code>#include &lt;stdio.h&gt;</code> do?</p>
+<p><strong>Answer:</strong> The preprocessor pastes in declarations for standard I/O functions like printf before compilation</p>
+<p>It's a preprocessor directive, handled before the compiler proper.</p>
+<p><strong>Q4.</strong> On macOS, <code>gcc --version</code> prints 'Apple clang'. Is something broken?</p>
+<p><strong>Answer:</strong> No: gcc is usually an alias for clang there; both accept the options used in the course</p>
+<p>Homebrew installs a real gcc if you want GNU extensions.</p>
+<h3 id="02-variables-data-types-operators"><a href="../level-1/02-variables-data-types/">02 · Variables, Data Types &amp; Operators</a><a class="headerlink" href="#02-variables-data-types-operators" title="Permanent link">&para;</a></h3>
+<p><strong>Q5.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="o">=</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %.1f"</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 3 3.0</p>
+<p>Integer division truncates before the result is stored in a double. Verified by compiling and running.</p>
+<p><strong>Q6.</strong> Why use <code>sizeof(int)</code> rather than assuming 4 bytes?</p>
+<p><strong>Answer:</strong> The C standard doesn't fix type sizes; they depend on platform and compiler</p>
+<p>sizeof is evaluated at compile time.</p>
+<p><strong>Q7.</strong> What happens if you read an uninitialized local <code>int score;</code>?</p>
+<p><strong>Answer:</strong> Undefined behavior: it holds garbage and the compiler doesn't zero it</p>
+<p>Always initialize before use.</p>
+<p><strong>Q8.</strong> Which format specifier prints a <code>size_t</code> such as the result of sizeof?</p>
+<p><strong>Answer:</strong> %zu</p>
+<p>size_t is unsigned and platform-sized.</p>
+<h3 id="03-control-flow"><a href="../level-1/03-control-flow/">03 · Control Flow</a><a class="headerlink" href="#03-control-flow" title="Permanent link">&para;</a></h3>
+<p><strong>Q9.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">switch</span><span class="p">(</span><span class="n">n</span><span class="p">){</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"one "</span><span class="p">);</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"two "</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"three"</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> one two</p>
+<p>Without break, execution falls through into the next case. Verified by compiling and running.</p>
+<p><strong>Q10.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">max</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">)</span><span class="o">?</span><span class="n">a</span><span class="o">:</span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 10</p>
+<p>The ternary operator produces a value. Verified by compiling and running.</p>
+<p><strong>Q11.</strong> In C before C99, how is truth represented?</p>
+<p><strong>Answer:</strong> Any non-zero value is true and 0 is false; C99 added _Bool via &lt;stdbool.h&gt;</p>
+<p>Conditions test for non-zero.</p>
+<p><strong>Q12.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"yes"</span><span class="p">);</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"no"</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> yes</p>
+<p>= assigns 5, and the value 5 is non-zero so the branch runs. Use == to compare. Verified by compiling and running.</p>
+<h3 id="04-functions"><a href="../level-1/04-functions/">04 · Functions</a><a class="headerlink" href="#04-functions" title="Permanent link">&para;</a></h3>
+<p><strong>Q13.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">inc</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="n">inc</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 5</p>
+<p>C passes by value, so the function changes only its own copy. Verified by compiling and running.</p>
+<p><strong>Q14.</strong> What is a function prototype for?</p>
+<p><strong>Answer:</strong> It tells the compiler the name, return type and parameter types so calls can be checked before the definition</p>
+<p>Headers hold prototypes for sharing across files.</p>
+<p><strong>Q15.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kt">double</span><span class="w"> </span><span class="nf">avg</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="p">){</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="n">c</span><span class="p">)</span><span class="o">/</span><span class="mf">3.0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%.2f"</span><span class="p">,</span><span class="w"> </span><span class="n">avg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 6.67</p>
+<p>Dividing by 3.0 forces floating-point division. Verified by compiling and running.</p>
+<p><strong>Q16.</strong> How can a function modify the caller's variable?</p>
+<p><strong>Answer:</strong> Pass its address and dereference the pointer inside the function</p>
+<p>Pass-by-value copies the pointer, but it still points at the original.</p>
+<h3 id="05-arrays-strings"><a href="../level-1/05-arrays-strings/">05 · Arrays &amp; Strings</a><a class="headerlink" href="#05-arrays-strings" title="Permanent link">&para;</a></h3>
+<p><strong>Q17.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">name</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="o">=</span><span class="s">"Ada"</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%zu %zu"</span><span class="p">,</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">name</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 3 20</p>
+<p>strlen counts characters before '\0'; sizeof is the buffer capacity. Verified by compiling and running.</p>
+<p><strong>Q18.</strong> What does C do when you read <code>scores[5]</code> of a 5-element array?</p>
+<p><strong>Answer:</strong> Nothing is checked: it compiles and invokes undefined behavior, possibly corrupting memory</p>
+<p>Track sizes yourself.</p>
+<p><strong>Q19.</strong> Why are <code>strcpy</code> and <code>strcat</code> risky?</p>
+<p><strong>Answer:</strong> They don't check that the destination buffer is large enough, so they can overflow it</p>
+<p>Prefer bounded versions and generous buffers.</p>
+<p><strong>Q20.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %d"</span><span class="p">,</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="s">"abc"</span><span class="p">,</span><span class="s">"abc"</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">"abc"</span><span class="o">==</span><span class="s">"abc"</span><span class="o">?</span><span class="mi">7</span><span class="o">:</span><span class="mi">7</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 1 7</p>
+<p>strcmp returns 0 when the strings are equal; never compare strings with ==. Verified by compiling and running.</p>
+<h3 id="06-pointers-basics"><a href="../level-1/06-pointers-basics/">06 · Pointers Basics</a><a class="headerlink" href="#06-pointers-basics" title="Permanent link">&para;</a></h3>
+<p><strong>Q21.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">=&amp;</span><span class="n">age</span><span class="p">;</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="mi">31</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 31</p>
+<p>*p = 31 writes through the pointer to age itself. Verified by compiling and running.</p>
+<p><strong>Q22.</strong> What do <code>&amp;x</code> and <code>*p</code> mean in expressions?</p>
+<p><strong>Answer:</strong> &amp;x is the address of x; *p dereferences p to reach the value it points at</p>
+<p>In a declaration, <code>int *p</code> means p is a pointer to int.</p>
+<p><strong>Q23.</strong> Why initialize a pointer to NULL when it has nothing to point at?</p>
+<p><strong>Answer:</strong> An uninitialized pointer holds a garbage address, and dereferencing it is undefined behavior</p>
+<p>You can test <code>if (p != NULL)</code> before using it.</p>
+<p><strong>Q24.</strong> How do you print a pointer's address with printf?</p>
+<p><strong>Answer:</strong> %p with a (void *) cast</p>
+<p>The cast is the portable convention.</p>
+<h3 id="07-structs"><a href="../level-1/07-structs/">07 · Structs</a><a class="headerlink" href="#07-structs" title="Permanent link">&para;</a></h3>
+<p><strong>Q25.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">struct</span><span class="w"> </span><span class="nc">P</span><span class="p">{</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">;};</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">P</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">};</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">P</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="o">=</span><span class="mi">99</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %d"</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 10 99</p>
+<p>Assigning a struct copies all members, so changing b leaves a untouched. Verified by compiling and running.</p>
+<p><strong>Q26.</strong> Why doesn't <code>s.name = "Maria";</code> compile when name is a char array?</p>
+<p><strong>Answer:</strong> Arrays can't be assigned; use strcpy (or strncpy) to copy the characters in</p>
+<p>Initialization at declaration is allowed; later assignment is not.</p>
+<p><strong>Q27.</strong> Does the declaration <code>struct Point { int x; int y; };</code> allocate memory?</p>
+<p><strong>Answer:</strong> No: it only describes the shape; <code>struct Point p;</code> creates a variable</p>
+<p>It's like defining a type.</p>
+<p><strong>Q28.</strong> Can you compare two structs with <code>==</code>?</p>
+<p><strong>Answer:</strong> No: compare member by member</p>
+<p>C has no built-in whole-struct equality.</p>
+<h3 id="08-file-io"><a href="../level-1/08-file-io/">08 · File I/O</a><a class="headerlink" href="#08-file-io" title="Permanent link">&para;</a></h3>
+<p><strong>Q29.</strong> Which fopen mode erases an existing file's content as soon as it opens?</p>
+<p><strong>Answer:</strong> "w" (and "w+")</p>
+<p>Use "a" to append instead.</p>
+<p><strong>Q30.</strong> What should you always do right after calling fopen?</p>
+<p><strong>Answer:</strong> Check whether it returned NULL before using the FILE pointer</p>
+<p>A missing file, bad path or permissions all give NULL.</p>
+<p><strong>Q31.</strong> What does fopen("data.txt", "r") return if the file doesn't exist?</p>
+<p><strong>Answer:</strong> NULL</p>
+<p>"r" never creates files; "w" and "a" do.</p>
+<p><strong>Q32.</strong> What does fprintf do differently from printf?</p>
+<p><strong>Answer:</strong> Its first argument is a FILE * saying where the formatted output goes</p>
+<p>Otherwise it formats the same way.</p>
+<h3 id="09-preprocessor-multi-file-compilation"><a href="../level-1/09-preprocessor-multifile/">09 · Preprocessor &amp; Multi-file Compilation</a><a class="headerlink" href="#09-preprocessor-multi-file-compilation" title="Permanent link">&para;</a></h3>
+<p><strong>Q33.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="cp">#define SQ(x) x*x</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="w"> </span><span class="n">SQ</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 5</p>
+<p>SQ(1+2) expands to 1+2*1+2 = 5: macros are pure text substitution, so wrap parameters in parentheses. Verified by compiling and running.</p>
+<p><strong>Q34.</strong> What is a header guard for?</p>
+<p><strong>Answer:</strong> Making a second #include of the same header a no-op, avoiding redefinition errors</p>
+<h1 id="ifndef-name-define-name-endif">ifndef NAME / #define NAME / #endif.<a class="headerlink" href="#ifndef-name-define-name-endif" title="Permanent link">&para;</a></h1>
+<p><strong>Q35.</strong> What's the difference between #include &lt;x.h&gt; and #include "x.h"?</p>
+<p><strong>Answer:</strong> Angle brackets search system paths; quotes search the including file's directory first</p>
+<p>Use quotes for your own project headers.</p>
+<p><strong>Q36.</strong> What happens during preprocessing?</p>
+<p><strong>Answer:</strong> Lines starting with # are handled: includes pasted, macros expanded, before the compiler sees real C</p>
+<p>It's pure text processing.</p>
+<h3 id="10-project-cli-contact-book"><a href="../level-1/10-project-contact-book/">10 · Project — CLI Contact Book</a><a class="headerlink" href="#10-project-cli-contact-book" title="Permanent link">&para;</a></h3>
+<p><strong>Q37.</strong> Why does add_contact copy with strncpy and then set the last byte to '\0'?</p>
+<p><strong>Answer:</strong> strncpy may not null-terminate when the source fills the buffer, so the terminator is forced</p>
+<p>It also prevents overflowing name[NAME_LEN].</p>
+<p><strong>Q38.</strong> Why does add_contact take <code>int *count</code>?</p>
+<p><strong>Answer:</strong> So it can increment the caller's count through the pointer after adding</p>
+<p>Pass-by-value would only change a copy.</p>
+<p><strong>Q39.</strong> What does load_contacts return when contacts.txt does not exist yet?</p>
+<p><strong>Answer:</strong> 0: the book simply starts empty</p>
+<p>It treats a missing file as no contacts.</p>
+<p><strong>Q40.</strong> What does save_contacts' "w" mode mean for the file?</p>
+<p><strong>Answer:</strong> It rewrites the whole file from the in-memory array each time</p>
+<p>The array is the source of truth.</p>
+<h2 id="level-2-intermediate">Level 2 · Intermediate<a class="headerlink" href="#level-2-intermediate" title="Permanent link">&para;</a></h2>
+<h3 id="01-pointers-deep-dive"><a href="../level-2/01-pointers-deep-dive/">01 · Pointers Deep Dive</a><a class="headerlink" href="#01-pointers-deep-dive" title="Permanent link">&para;</a></h3>
+<p><strong>Q41.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">};</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %d %d"</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)((</span><span class="n">a</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="n">p</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 30 20 3</p>
+<p>p+n advances n elements, and subtracting pointers counts elements, not bytes. Verified by compiling and running.</p>
+<p><strong>Q42.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=*</span><span class="n">p</span><span class="o">++</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %d"</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 1 2</p>
+<p>Postfix ++ binds tighter than *: read *p, then advance p. Verified by compiling and running.</p>
+<p><strong>Q43.</strong> What does <code>ip + 1</code> do when ip is an <code>int *</code>?</p>
+<p><strong>Answer:</strong> Advances the pointer by sizeof(int) bytes, one whole element</p>
+<p>Pointer arithmetic is scaled by the pointed-to type.</p>
+<p><strong>Q44.</strong> Why can qsort sort any element type?</p>
+<p><strong>Answer:</strong> It takes a void * array, an element size and a comparison function pointer</p>
+<p>Function pointers plus void * give C its generic algorithms.</p>
+<h3 id="02-dynamic-memory"><a href="../level-2/02-dynamic-memory/">02 · Dynamic Memory</a><a class="headerlink" href="#02-dynamic-memory" title="Permanent link">&para;</a></h3>
+<p><strong>Q45.</strong> Why write <code>malloc(n * sizeof *nums)</code> instead of <code>sizeof(int)</code>?</p>
+<p><strong>Answer:</strong> It stays correct if nums' type changes, since the size is derived from the pointer</p>
+<p>malloc takes a size in bytes.</p>
+<p><strong>Q46.</strong> What must you do after calling malloc?</p>
+<p><strong>Answer:</strong> Check for NULL, since the allocation can fail</p>
+<p>Also free the block when finished.</p>
+<p><strong>Q47.</strong> What are the two most expensive bug classes in this module?</p>
+<p><strong>Answer:</strong> Memory leaks and use-after-free</p>
+<p>There's no garbage collector.</p>
+<p><strong>Q48.</strong> After free(p), what is good practice?</p>
+<p><strong>Answer:</strong> Set p = NULL so the dangling pointer is harmless</p>
+<p>Double free and use-after-free are undefined behavior.</p>
+<h3 id="03-multi-dimensional-arrays-string-manipulation"><a href="../level-2/03-multidim-arrays-strings/">03 · Multi-dimensional Arrays &amp; String Manipulation</a><a class="headerlink" href="#03-multi-dimensional-arrays-string-manipulation" title="Permanent link">&para;</a></h3>
+<p><strong>Q49.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="p">{{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">},{</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">},{</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">}};</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">f</span><span class="o">=&amp;</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %zu %zu"</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 7 48 16</p>
+<p>A 2-D array is one flat row-major block; sizes assume 4-byte int. Verified by compiling and running.</p>
+<p><strong>Q50.</strong> Why must the column count appear in a parameter like <code>int grid[][COLS]</code>?</p>
+<p><strong>Answer:</strong> The compiler needs it to compute row offsets (r * COLS + c)</p>
+<p>A 2-D array decays to a pointer to its first row: int (*)[COLS].</p>
+<p><strong>Q51.</strong> Which loop order is cache-friendly for a row-major 2-D array?</p>
+<p><strong>Answer:</strong> Rows in the outer loop, columns in the inner loop</p>
+<p>It walks memory sequentially.</p>
+<p><strong>Q52.</strong> Which function is dangerous because it cannot limit how much it writes?</p>
+<p><strong>Answer:</strong> strcpy (and gets, strcat): no destination size is given</p>
+<p>Use bounded alternatives such as snprintf.</p>
+<h3 id="04-structs-unions-advanced"><a href="../level-2/04-structs-unions-advanced/">04 · Structs &amp; Unions Advanced</a><a class="headerlink" href="#04-structs-unions-advanced" title="Permanent link">&para;</a></h3>
+<p><strong>Q53.</strong> What does this print (typical 64-bit)?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Bad</span><span class="p">{</span><span class="kt">char</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">;};</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Good</span><span class="p">{</span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="kt">char</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">;};</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%zu %zu"</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">Bad</span><span class="p">),</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">Good</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 12 8</p>
+<p>Padding aligns each field; ordering large members first wastes less. Verified by compiling and running.</p>
+<p><strong>Q54.</strong> What does <code>p-&gt;quantity</code> mean?</p>
+<p><strong>Answer:</strong> The same as (*p).quantity: the member of the struct p points to</p>
+<p>Passing a pointer copies 8 bytes instead of the whole struct and lets the function modify the original.</p>
+<p><strong>Q55.</strong> What is a union?</p>
+<p><strong>Answer:</strong> A type whose members share the same memory, so only one is meaningful at a time</p>
+<p>Its size is that of its largest member.</p>
+<p><strong>Q56.</strong> Why mark a parameter <code>const Item *</code>?</p>
+<p><strong>Answer:</strong> It promises the function won't modify the caller's struct, and the compiler enforces it</p>
+<p>A non-const pointer is for functions that modify.</p>
+<h3 id="05-binary-file-io"><a href="../level-2/05-binary-file-io/">05 · Binary File I/O</a><a class="headerlink" href="#05-binary-file-io" title="Permanent link">&para;</a></h3>
+<p><strong>Q57.</strong> What do fread and fwrite return?</p>
+<p><strong>Answer:</strong> The number of items (not bytes) transferred; a short count means EOF or error</p>
+<p>size * count bytes are moved.</p>
+<p><strong>Q58.</strong> Why include <code>b</code> in the mode ("rb", "wb")?</p>
+<p><strong>Answer:</strong> On Windows it stops \n translation to \r\n that would corrupt binary data; it costs nothing elsewhere</p>
+<p>Always include it for portability.</p>
+<p><strong>Q59.</strong> Why is binary I/O good for random access?</p>
+<p><strong>Answer:</strong> Fixed-size records let you jump straight to record N with fseek</p>
+<p>Text lines are variable-width.</p>
+<p><strong>Q60.</strong> Why is a binary file not automatically portable across machines?</p>
+<p><strong>Answer:</strong> The bytes mirror the in-memory representation (endianness, type sizes, padding)</p>
+<p>Define the format carefully if sharing.</p>
+<h3 id="06-error-handling-conventions"><a href="../level-2/06-error-handling/">06 · Error Handling Conventions</a><a class="headerlink" href="#06-error-handling-conventions" title="Permanent link">&para;</a></h3>
+<p><strong>Q61.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %ld"</span><span class="p">,</span><span class="w"> </span><span class="n">atoi</span><span class="p">(</span><span class="s">"abc"</span><span class="p">),</span><span class="w"> </span><span class="n">strtol</span><span class="p">(</span><span class="s">"12x"</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 0 12</p>
+<p>atoi can't tell 'abc' from '0'; strtol with an end pointer lets you detect trailing junk. Verified by compiling and running.</p>
+<p><strong>Q62.</strong> Why return a status and pass the value through an out-parameter?</p>
+<p><strong>Answer:</strong> Any return value could be a valid result, so a sentinel like -1 is ambiguous</p>
+<p>This is the most common design in real C APIs.</p>
+<p><strong>Q63.</strong> What does fopen return on failure besides NULL?</p>
+<p><strong>Answer:</strong> It also sets errno, which perror or strerror can describe</p>
+<p>Read errno immediately; other calls can overwrite it.</p>
+<p><strong>Q64.</strong> Why is atoi unsafe for input you don't control?</p>
+<p><strong>Answer:</strong> It returns 0 for invalid input, indistinguishable from a real 0, and has no error reporting</p>
+<p>Use strtol.</p>
+<h3 id="07-modular-programming"><a href="../level-2/07-modular-programming/">07 · Modular Programming</a><a class="headerlink" href="#07-modular-programming" title="Permanent link">&para;</a></h3>
+<p><strong>Q65.</strong> What does file-scope <code>static</code> do to a function?</p>
+<p><strong>Answer:</strong> Makes it private to that translation unit, invisible to the linker and other files</p>
+<p>It's the module's privacy keyword.</p>
+<p><strong>Q66.</strong> Why shouldn't you define a variable in a header?</p>
+<p><strong>Answer:</strong> Every .c that includes it gets its own copy and the linker reports duplicate symbols; use extern in the header and define once in a .c</p>
+<p>Include only what callers need to compile against.</p>
+<p><strong>Q67.</strong> What belongs in a header?</p>
+<p><strong>Answer:</strong> Public prototypes, typedefs/enums callers need and the include guard</p>
+<p>Implementation stays in the .c.</p>
+<p><strong>Q68.</strong> What is an opaque type?</p>
+<p><strong>Answer:</strong> A struct declared in the header but defined only in the .c, so users hold pointers and can't touch fields</p>
+<p>It hides internals behind accessor functions.</p>
+<h3 id="08-makefiles-build-systems"><a href="../level-2/08-makefiles-build-systems/">08 · Makefiles &amp; Build Systems</a><a class="headerlink" href="#08-makefiles-build-systems" title="Permanent link">&para;</a></h3>
+<p><strong>Q69.</strong> What is the most common Makefile error and its message?</p>
+<p><strong>Answer:</strong> Indenting a recipe with spaces instead of a TAB: 'missing separator'</p>
+<p>The message doesn't mention tabs.</p>
+<p><strong>Q70.</strong> How does make decide to rebuild a target?</p>
+<p><strong>Answer:</strong> If any prerequisite is newer than the target (timestamps)</p>
+<p>Hence 'app is up to date' when nothing changed.</p>
+<p><strong>Q71.</strong> Which assignment operator lets users override with <code>make CC=clang</code>?</p>
+<p><strong>Answer:</strong> ?= (set only if not already defined)</p>
+<p>:= is evaluated once immediately and is the default choice.</p>
+<p><strong>Q72.</strong> Why add <code>-MMD -MP</code> to a Makefile?</p>
+<p><strong>Answer:</strong> To auto-generate header dependency files so changing a .h rebuilds the files that include it</p>
+<p>It keeps dependency tracking correct as the project grows.</p>
+<h3 id="09-debugging-tools"><a href="../level-2/09-debugging-tools/">09 · Debugging Tools</a><a class="headerlink" href="#09-debugging-tools" title="Permanent link">&para;</a></h3>
+<p><strong>Q73.</strong> Why build with <code>-g -O0</code> for debugging?</p>
+<p><strong>Answer:</strong> -g embeds symbols; -O0 stops the optimizer from reordering or removing variables</p>
+<p>Optimize only for release.</p>
+<p><strong>Q74.</strong> In gdb, what's the difference between <code>next</code> and <code>step</code>?</p>
+<p><strong>Answer:</strong> next steps over function calls; step steps into them</p>
+<p>Use continue to run to the next breakpoint.</p>
+<p><strong>Q75.</strong> What does valgrind catch that a normal run may not?</p>
+<p><strong>Answer:</strong> Memory bugs like leaks, invalid reads/writes and uninitialized use, even if they don't crash today</p>
+<p>Undefined behavior can look fine until production.</p>
+<p><strong>Q76.</strong> The sum_range(0, 5) bug reads values[5]. Why might it appear to work?</p>
+<p><strong>Answer:</strong> Out-of-bounds read is undefined behavior, not a guaranteed crash</p>
+<p>This is exactly the bug a debugger or valgrind is for.</p>
+<h3 id="10-project-linked-list-inventory-system"><a href="../level-2/10-project-inventory-system/">10 · Project — Linked-list Inventory System</a><a class="headerlink" href="#10-project-linked-list-inventory-system" title="Permanent link">&para;</a></h3>
+<p><strong>Q77.</strong> Why use a linked list for the inventory instead of an array?</p>
+<p><strong>Answer:</strong> Adding an item never needs to resize or copy existing data</p>
+<p>Trade-off: pointer chasing and per-node allocation.</p>
+<p><strong>Q78.</strong> How does the project persist the list to a binary file?</p>
+<p><strong>Answer:</strong> It flattens the list to an array of Items on save and rebuilds nodes on load</p>
+<p>Pointers aren't meaningful after the process exits.</p>
+<p><strong>Q79.</strong> What must callers never do with the pointer returned by inventory_find?</p>
+<p><strong>Answer:</strong> Free it: the inventory owns the nodes</p>
+<p>It points into the list.</p>
+<p><strong>Q80.</strong> What does adjusting stock refuse to do?</p>
+<p><strong>Answer:</strong> Take a quantity below zero, returning 0 and leaving the item unchanged</p>
+<p>It validates before mutating.</p>
+<h2 id="level-3-advanced">Level 3 · Advanced<a class="headerlink" href="#level-3-advanced" title="Permanent link">&para;</a></h2>
+<h3 id="01-data-structures-in-c"><a href="../level-3/01-data-structures/">01 · Data Structures in C</a><a class="headerlink" href="#01-data-structures-in-c" title="Permanent link">&para;</a></h3>
+<p><strong>Q81.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">N</span><span class="p">{</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="k">struct</span><span class="w"> </span><span class="nc">N</span><span class="o">*</span><span class="n">next</span><span class="p">;}</span><span class="n">N</span><span class="p">;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">N</span><span class="o">*</span><span class="n">h</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="mi">3</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="n">N</span><span class="o">*</span><span class="n">n</span><span class="o">=</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="o">*</span><span class="n">n</span><span class="p">);</span><span class="n">n</span><span class="o">-&gt;</span><span class="n">v</span><span class="o">=</span><span class="n">i</span><span class="p">;</span><span class="n">n</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">h</span><span class="p">;</span><span class="n">h</span><span class="o">=</span><span class="n">n</span><span class="p">;}</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="n">h</span><span class="p">;</span><span class="n">p</span><span class="p">;</span><span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span><span class="n">printf</span><span class="p">(</span><span class="s">"%d "</span><span class="p">,</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 3 2 1</p>
+<p>Each new node is inserted at the head, so the list reads in reverse insertion order. Verified by compiling and running.</p>
+<p><strong>Q82.</strong> What is the time to insert at the head of a singly linked list?</p>
+<p><strong>Answer:</strong> O(1): allocate a node and relink the head</p>
+<p>Appending at the tail needs a tail pointer or O(n) walk.</p>
+<p><strong>Q83.</strong> Why free a list with a loop that saves <code>next</code> first?</p>
+<p><strong>Answer:</strong> Reading n-&gt;next after free(n) is use-after-free</p>
+<p>Save the successor before freeing the node.</p>
+<p><strong>Q84.</strong> What does a stack built on an array need to guard against?</p>
+<p><strong>Answer:</strong> Overflow when pushing to a full array and underflow when popping an empty one</p>
+<p>Return a status instead of corrupting memory.</p>
+<h3 id="02-trees-basic-graph-representations"><a href="../level-3/02-trees-graphs/">02 · Trees &amp; Basic Graph Representations</a><a class="headerlink" href="#02-trees-basic-graph-representations" title="Permanent link">&para;</a></h3>
+<p><strong>Q85.</strong> What does an in-order walk of this BST print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">T</span><span class="p">{</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="k">struct</span><span class="w"> </span><span class="nc">T</span><span class="o">*</span><span class="n">l</span><span class="p">,</span><span class="o">*</span><span class="n">r</span><span class="p">;}</span><span class="n">T</span><span class="p">;</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">T</span><span class="o">*</span><span class="nf">ins</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="n">t</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">){</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">){</span><span class="n">t</span><span class="o">=</span><span class="n">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="k">sizeof</span><span class="o">*</span><span class="n">t</span><span class="p">);</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">;</span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="p">;}</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">k</span><span class="o">&lt;</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">k</span><span class="p">)</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">l</span><span class="o">=</span><span class="n">ins</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">);</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">r</span><span class="o">=</span><span class="n">ins</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="p">;}</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">in</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="n">t</span><span class="p">){</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">)</span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="n">in</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">l</span><span class="p">);</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d "</span><span class="p">,</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">k</span><span class="p">);</span><span class="w"> </span><span class="n">in</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">);}</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">T</span><span class="o">*</span><span class="n">r</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="n">r</span><span class="o">=</span><span class="n">ins</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"> </span><span class="n">in</span><span class="p">(</span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 1 2 3 5 8 9</p>
+<p>In-order traversal of a BST yields keys in sorted order. Verified by compiling and running.</p>
+<p><strong>Q86.</strong> What is the BST invariant?</p>
+<p><strong>Answer:</strong> Every left descendant is smaller and every right descendant larger than the node</p>
+<p>It enables O(log n) search when balanced.</p>
+<p><strong>Q87.</strong> When does a plain BST degrade to O(n) lookups?</p>
+<p><strong>Answer:</strong> When keys are inserted in sorted order, producing a chain</p>
+<p>Self-balancing trees fix this.</p>
+<p><strong>Q88.</strong> Which traversal uses a queue?</p>
+<p><strong>Answer:</strong> Breadth-first search (level by level)</p>
+<p>DFS uses the call stack or an explicit stack.</p>
+<h3 id="03-sorting-searching-algorithms"><a href="../level-3/03-sorting-searching/">03 · Sorting &amp; Searching Algorithms</a><a class="headerlink" href="#03-sorting-searching-algorithms" title="Permanent link">&para;</a></h3>
+<p><strong>Q89.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">cmp</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="n">b</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=*</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">a</span><span class="p">,</span><span class="n">y</span><span class="o">=*</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">y</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">y</span><span class="p">);}</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span><span class="w"> </span><span class="n">qsort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="k">sizeof</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">cmp</span><span class="p">);</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="n">f</span><span class="o">=</span><span class="n">bsearch</span><span class="p">(</span><span class="o">&amp;</span><span class="n">k</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="k">sizeof</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">cmp</span><span class="p">);</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %d %d %d %d"</span><span class="p">,</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],(</span><span class="kt">int</span><span class="p">)(</span><span class="n">f</span><span class="o">-</span><span class="n">a</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 1 2 5 9 1</p>
+<p>qsort sorts in place; bsearch needs sorted data and returns a pointer to the match. Verified by compiling and running.</p>
+<p><strong>Q90.</strong> What is quicksort's worst-case time?</p>
+<p><strong>Answer:</strong> O(n²), e.g. always picking a bad pivot on already-sorted data without safeguards</p>
+<p>A good pivot choice gives O(n log n) on average.</p>
+<p><strong>Q91.</strong> What precondition does binary search need?</p>
+<p><strong>Answer:</strong> The array must be sorted</p>
+<p>Each step halves the range: O(log n).</p>
+<p><strong>Q92.</strong> Why subtract with comparisons like <code>(x&gt;y)-(x&lt;y)</code> rather than <code>x-y</code> in a comparator?</p>
+<p><strong>Answer:</strong> x-y can overflow for large ints, giving a wrong sign</p>
+<p>Overflow is undefined behavior for signed ints.</p>
+<h3 id="04-bit-manipulation"><a href="../level-3/04-bit-manipulation/">04 · Bit Manipulation</a><a class="headerlink" href="#04-bit-manipulation" title="Permanent link">&para;</a></h3>
+<p><strong>Q93.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">f</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">f</span><span class="o">|=</span><span class="mi">1u</span><span class="o">&lt;&lt;</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">f</span><span class="o">|=</span><span class="mi">1u</span><span class="o">&lt;&lt;</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">f</span><span class="o">&amp;=~</span><span class="p">(</span><span class="mi">1u</span><span class="o">&lt;&lt;</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="o">^=</span><span class="mi">1u</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%u %d"</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 12 1</p>
+<p>Set bit2, set bit0, clear bit0, toggle bit3: 4+8 = 12, and bit 2 is set. Verified by compiling and running.</p>
+<p><strong>Q94.</strong> How do you clear bit n of x?</p>
+<p><strong>Answer:</strong> x &amp;= ~(1u &lt;&lt; n)</p>
+<p>| sets, ^ toggles, &amp; with the inverted mask clears.</p>
+<p><strong>Q95.</strong> Why prefer unsigned types for bit manipulation?</p>
+<p><strong>Answer:</strong> Shifting and right-shifting signed negative values has implementation-defined or undefined behavior</p>
+<p>Unsigned semantics are fully defined.</p>
+<p><strong>Q96.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mh">0xB5</span><span class="p">;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="k">while</span><span class="p">(</span><span class="n">n</span><span class="p">){</span><span class="w"> </span><span class="n">n</span><span class="o">&amp;=</span><span class="n">n</span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="o">++</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 5</p>
+<p>n &amp; (n-1) clears the lowest set bit; 0xB5 = 10110101 has five bits set. Verified by compiling and running.</p>
+<h3 id="05-memory-management-deep-dive"><a href="../level-3/05-memory-management-deep-dive/">05 · Memory Management Deep Dive</a><a class="headerlink" href="#05-memory-management-deep-dive" title="Permanent link">&para;</a></h3>
+<p><strong>Q97.</strong> Where do local variables, malloc'd blocks, globals and code live?</p>
+<p><strong>Answer:</strong> Stack, heap, data/BSS, and text segments respectively</p>
+<p>Four regions in one address space.</p>
+<p><strong>Q98.</strong> Which bug does this describe: freeing a block and then reading it?</p>
+<p><strong>Answer:</strong> Use-after-free (a dangling pointer)</p>
+<p>Set pointers to NULL after free.</p>
+<p><strong>Q99.</strong> What does valgrind/ASan report for malloc without free before exit?</p>
+<p><strong>Answer:</strong> A memory leak: the block was still reachable or lost at exit</p>
+<p>Leaks matter most in long-running programs.</p>
+<p><strong>Q100.</strong> What does realloc return when it can't grow a block?</p>
+<p><strong>Answer:</strong> NULL, leaving the original block valid; assign to a temp pointer first</p>
+<p><code>p = realloc(p, n)</code> leaks the original on failure.</p>
+<h3 id="06-static-dynamic-libraries"><a href="../level-3/06-static-dynamic-libraries/">06 · Static &amp; Dynamic Libraries</a><a class="headerlink" href="#06-static-dynamic-libraries" title="Permanent link">&para;</a></h3>
+<p><strong>Q101.</strong> What is a static library (.a)?</p>
+<p><strong>Answer:</strong> An archive of object files copied into the executable at link time</p>
+<p>The binary is self-contained but bigger.</p>
+<p><strong>Q102.</strong> What is a shared library (.so/.dylib)?</p>
+<p><strong>Answer:</strong> Code loaded at run time and shared between processes; the executable records the dependency</p>
+<p>Updating the library updates all users, but it must be findable at run time.</p>
+<p><strong>Q103.</strong> Which tool creates a static library from .o files?</p>
+<p><strong>Answer:</strong> ar (e.g. ar rcs libx.a a.o b.o)</p>
+<p>Link with -L. -lx.</p>
+<p><strong>Q104.</strong> Why compile shared-library objects with <code>-fPIC</code>?</p>
+<p><strong>Answer:</strong> Position-independent code can be loaded at any address</p>
+<p>Needed for .so building.</p>
+<h3 id="07-concurrency-basics"><a href="../level-3/07-concurrency-basics/">07 · Concurrency Basics</a><a class="headerlink" href="#07-concurrency-basics" title="Permanent link">&para;</a></h3>
+<p><strong>Q105.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;pthread.h&gt;</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="kt">void</span><span class="o">*</span><span class="nf">w</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="n">a</span><span class="p">){</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">a</span><span class="o">*=</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">21</span><span class="p">;</span><span class="w"> </span><span class="n">pthread_t</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="o">&amp;</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="n">pthread_join</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 42</p>
+<p>join waits for the thread to finish, so the write is visible afterwards. Verified by compiling and running.</p>
+<p><strong>Q106.</strong> What is a data race?</p>
+<p><strong>Answer:</strong> Two threads accessing the same memory concurrently with at least one write and no synchronization</p>
+<p>The result is undefined behavior.</p>
+<p><strong>Q107.</strong> What does pthread_join do?</p>
+<p><strong>Answer:</strong> Blocks until the thread finishes and optionally collects its return value</p>
+<p>Always join or detach threads.</p>
+<p><strong>Q108.</strong> What does a mutex protect?</p>
+<p><strong>Answer:</strong> A critical section so only one thread at a time executes it</p>
+<p>Lock before, unlock after, on every path.</p>
+<h3 id="08-networking-basics"><a href="../level-3/08-networking-basics/">08 · Networking Basics</a><a class="headerlink" href="#08-networking-basics" title="Permanent link">&para;</a></h3>
+<p><strong>Q109.</strong> What is the order of calls that make a TCP server?</p>
+<p><strong>Answer:</strong> socket, bind, listen, accept</p>
+<p>Then read/write on the accepted socket.</p>
+<p><strong>Q110.</strong> What does accept() return?</p>
+<p><strong>Answer:</strong> A new socket descriptor for that client connection</p>
+<p>The listening socket keeps accepting.</p>
+<p><strong>Q111.</strong> Why must you check the return of read/recv?</p>
+<p><strong>Answer:</strong> It may return fewer bytes than requested, 0 on close, or -1 on error</p>
+<p>TCP is a byte stream, not messages.</p>
+<p><strong>Q112.</strong> Why use htons() for the port?</p>
+<p><strong>Answer:</strong> Network byte order is big-endian, so host values must be converted</p>
+<p>Use ntohs on receive.</p>
+<h3 id="09-working-with-unix-system-calls"><a href="../level-3/09-unix-system-calls/">09 · Working with Unix System Calls</a><a class="headerlink" href="#09-working-with-unix-system-calls" title="Permanent link">&para;</a></h3>
+<p><strong>Q113.</strong> What are file descriptors 0, 1 and 2?</p>
+<p><strong>Answer:</strong> stdin, stdout and stderr</p>
+<p>open() returns the lowest unused descriptor.</p>
+<p><strong>Q114.</strong> What does fork() return in the child?</p>
+<p><strong>Answer:</strong> 0 (the parent gets the child's PID)</p>
+<p>-1 means failure.</p>
+<p><strong>Q115.</strong> Why must a parent call wait/waitpid?</p>
+<p><strong>Answer:</strong> To collect the child's exit status and avoid leaving zombie processes</p>
+<p>A zombie is an exited process whose status was never collected.</p>
+<p><strong>Q116.</strong> How do read/write differ from fread/fwrite?</p>
+<p><strong>Answer:</strong> They are unbuffered system calls on file descriptors; stdio adds user-space buffering</p>
+<p>Buffered I/O can need fflush.</p>
+<h3 id="10-project-multi-threaded-key-value-store-tiny-http-server"><a href="../level-3/10-project-kv-store/">10 · Project — Multi-threaded Key-Value Store / Tiny HTTP Server</a><a class="headerlink" href="#10-project-multi-threaded-key-value-store-tiny-http-server" title="Permanent link">&para;</a></h3>
+<p><strong>Q117.</strong> What does a key-value store's get(key) typically use for speed?</p>
+<p><strong>Answer:</strong> A hash table giving average O(1) lookup</p>
+<p>A hash function maps keys to buckets.</p>
+<p><strong>Q118.</strong> How are hash collisions handled with chaining?</p>
+<p><strong>Answer:</strong> Each bucket holds a linked list of entries with the same hash</p>
+<p>Open addressing is the alternative.</p>
+<p><strong>Q119.</strong> Why persist the store with a write-then-rename pattern?</p>
+<p><strong>Answer:</strong> So a crash mid-write can't leave a half-written data file</p>
+<p>Rename is atomic on POSIX.</p>
+<p><strong>Q120.</strong> Why validate key and value lengths before copying?</p>
+<p><strong>Answer:</strong> To prevent buffer overflows in fixed-size fields</p>
+<p>Never trust sizes from a file or the network.</p>
+<h2 id="level-4-master">Level 4 · Master<a class="headerlink" href="#level-4-master" title="Permanent link">&para;</a></h2>
+<h3 id="01-advanced-memory-management"><a href="../level-4/01-advanced-memory-management/">01 · Advanced Memory Management</a><a class="headerlink" href="#01-advanced-memory-management" title="Permanent link">&para;</a></h3>
+<p><strong>Q121.</strong> Why is an arena (bump) allocator fast?</p>
+<p><strong>Answer:</strong> Allocation is a pointer add, and everything is freed at once by resetting the pointer</p>
+<p>No per-object free means no fragmentation bookkeeping.</p>
+<p><strong>Q122.</strong> What's the main restriction of an arena?</p>
+<p><strong>Answer:</strong> You can't free individual objects; lifetimes must be grouped</p>
+<p>Great for request-scoped or parse-tree data.</p>
+<p><strong>Q123.</strong> What must a custom allocator respect for each returned pointer?</p>
+<p><strong>Answer:</strong> Alignment suitable for the object type</p>
+<p>Misaligned access is slow or faulting on some CPUs.</p>
+<p><strong>Q124.</strong> What does a free list in a pool allocator store?</p>
+<p><strong>Answer:</strong> Fixed-size free slots linked together inside the free memory itself</p>
+<p>Alloc pops, free pushes: O(1).</p>
+<h3 id="02-concurrency-synchronization"><a href="../level-4/02-concurrency-synchronization/">02 · Concurrency &amp; Synchronization</a><a class="headerlink" href="#02-concurrency-synchronization" title="Permanent link">&para;</a></h3>
+<p><strong>Q125.</strong> Between a mutex, an atomic and no sync, which gives a correct shared counter with the least overhead?</p>
+<p><strong>Answer:</strong> An atomic increment (e.g. atomic_fetch_add) for a simple counter</p>
+<p>The lesson measures all three; no-sync is fast but wrong.</p>
+<p><strong>Q126.</strong> What is a deadlock?</p>
+<p><strong>Answer:</strong> Threads wait forever for locks held by each other</p>
+<p>Acquire locks in a consistent global order to avoid it.</p>
+<p><strong>Q127.</strong> What does a condition variable let a thread do?</p>
+<p><strong>Answer:</strong> Sleep until another thread signals that a condition may have changed</p>
+<p>Always wait in a loop to recheck the predicate.</p>
+<p><strong>Q128.</strong> Why does an unsynchronized counter lose updates?</p>
+<p><strong>Answer:</strong> Increment is read-modify-write, so two threads can read the same old value</p>
+<p>Lost updates give totals below the expected count.</p>
+<h3 id="03-performance-optimization-profiling"><a href="../level-4/03-performance-profiling/">03 · Performance Optimization &amp; Profiling</a><a class="headerlink" href="#03-performance-optimization-profiling" title="Permanent link">&para;</a></h3>
+<p><strong>Q129.</strong> What is the first rule of optimization?</p>
+<p><strong>Answer:</strong> Measure first (honest timing/profiling) and optimize the hot spot, not guesses</p>
+<p>Compile benchmarks with optimization enabled.</p>
+<p><strong>Q130.</strong> Why does row-major iteration of a 2-D array beat column-major?</p>
+<p><strong>Answer:</strong> It walks memory sequentially and uses CPU cache lines efficiently</p>
+<p>Cache locality dominates for large matrices.</p>
+<p><strong>Q131.</strong> What does a profiler like gprof/perf show?</p>
+<p><strong>Answer:</strong> Where time is spent per function so you target the hottest code</p>
+<p>Instrumented tools add overhead; sampling is cheaper.</p>
+<p><strong>Q132.</strong> What does llvm-cov report?</p>
+<p><strong>Answer:</strong> Which lines/branches executed, i.e. code coverage from instrumented runs</p>
+<p>Useful for finding untested code.</p>
+<h3 id="04-writing-portable-c"><a href="../level-4/04-writing-portable-c/">04 · Writing Portable C</a><a class="headerlink" href="#04-writing-portable-c" title="Permanent link">&para;</a></h3>
+<p><strong>Q133.</strong> What does the C standard guarantee about <code>int</code> size?</p>
+<p><strong>Answer:</strong> Only a minimum range (at least 16 bits); the exact size is implementation-defined</p>
+<p>Use &lt;stdint.h&gt; for exact widths.</p>
+<p><strong>Q134.</strong> Which header gives int32_t and uint64_t?</p>
+<p><strong>Answer:</strong> &lt;stdint.h&gt;</p>
+<p>Fixed-width types make sizes explicit.</p>
+<p><strong>Q135.</strong> Why is it a portability bug to write a struct to disk with fwrite and read it elsewhere?</p>
+<p><strong>Answer:</strong> Padding, type sizes and endianness differ across platforms</p>
+<p>Serialize field by field in a defined byte order.</p>
+<p><strong>Q136.</strong> What does compiling with -std=c11 -Wall -Wextra -pedantic help find?</p>
+<p><strong>Answer:</strong> Non-standard extensions and suspicious constructs that break on other compilers</p>
+<p>It keeps code portable.</p>
+<h3 id="05-security-in-c"><a href="../level-4/05-security-in-c/">05 · Security in C</a><a class="headerlink" href="#05-security-in-c" title="Permanent link">&para;</a></h3>
+<p><strong>Q137.</strong> Why is a buffer overflow dangerous even when the program doesn't crash?</p>
+<p><strong>Answer:</strong> It silently overwrites adjacent memory, which an attacker can use to corrupt data or hijack control flow</p>
+<p>The lesson's title point: the one that does not crash.</p>
+<p><strong>Q138.</strong> Which is the safer way to copy into a fixed buffer?</p>
+<p><strong>Answer:</strong> snprintf(buf, sizeof buf, "%s", src) (or another size-bounded call)</p>
+<p>Always pass the destination size.</p>
+<p><strong>Q139.</strong> What's the format-string bug in <code>printf(user_input)</code>?</p>
+<p><strong>Answer:</strong> The user controls the format, so %s/%n can read or write memory</p>
+<p>Use printf("%s", user_input).</p>
+<p><strong>Q140.</strong> Which compiler/runtime options help catch memory errors?</p>
+<p><strong>Answer:</strong> -fsanitize=address,undefined (AddressSanitizer/UBSan) in testing</p>
+<p>Combine with stack protectors and FORTIFY_SOURCE.</p>
+<h3 id="06-advanced-data-structures"><a href="../level-4/06-advanced-data-structures/">06 · Advanced Data Structures</a><a class="headerlink" href="#06-advanced-data-structures" title="Permanent link">&para;</a></h3>
+<p><strong>Q141.</strong> What invariant does an AVL tree keep?</p>
+<p><strong>Answer:</strong> The heights of every node's two subtrees differ by at most 1</p>
+<p>Rotations restore balance after insert/delete.</p>
+<p><strong>Q142.</strong> Why is an AVL tree guaranteed O(log n)?</p>
+<p><strong>Answer:</strong> Balance limits its height to O(log n)</p>
+<p>A plain BST can degrade to a chain.</p>
+<p><strong>Q143.</strong> How many distinct rotation cases does AVL insert have?</p>
+<p><strong>Answer:</strong> Four: LL, RR, LR and RL</p>
+<p>Double rotations handle the zig-zag cases.</p>
+<p><strong>Q144.</strong> What problem does a skip list or hash table solve relative to a sorted array?</p>
+<p><strong>Answer:</strong> Fast insertion/lookup without O(n) shifting</p>
+<p>The lesson quantifies the cost of the naive approach.</p>
+<h3 id="07-interfacing-with-other-languages"><a href="../level-4/07-interfacing-other-languages/">07 · Interfacing with Other Languages</a><a class="headerlink" href="#07-interfacing-with-other-languages" title="Permanent link">&para;</a></h3>
+<p><strong>Q145.</strong> What does <code>extern "C"</code> do in a C++ header for a C library?</p>
+<p><strong>Answer:</strong> Prevents C++ name mangling so the C symbols link correctly</p>
+<p>Needed to call C from C++.</p>
+<p><strong>Q146.</strong> Why do FFI-friendly C libraries use opaque handles and plain types?</p>
+<p><strong>Answer:</strong> Other languages can call them without knowing struct layouts or C++ features</p>
+<p>A library designed to be called.</p>
+<p><strong>Q147.</strong> Who must free memory a C library allocated and returned to Python/Rust?</p>
+<p><strong>Answer:</strong> Whoever the API documents, normally via the library's own free function</p>
+<p>Mixing allocators is undefined behavior.</p>
+<p><strong>Q148.</strong> What does an ABI define?</p>
+<p><strong>Answer:</strong> Binary-level conventions: calling convention, struct layout and symbol names</p>
+<p>C has a stable de-facto ABI per platform.</p>
+<h3 id="08-testing-in-c"><a href="../level-4/08-testing-in-c/">08 · Testing in C</a><a class="headerlink" href="#08-testing-in-c" title="Permanent link">&para;</a></h3>
+<p><strong>Q149.</strong> What is the core of a tiny C test framework?</p>
+<p><strong>Answer:</strong> A macro that checks a condition, reports file:line on failure and tracks a pass/fail count</p>
+<p>Forty lines can be enough.</p>
+<p><strong>Q150.</strong> Why run tests under ASan/valgrind too?</p>
+<p><strong>Answer:</strong> Passing assertions can still hide memory errors</p>
+<p>Sanitizers find leaks and overflows.</p>
+<p><strong>Q151.</strong> How should a test program signal failure to CI?</p>
+<p><strong>Answer:</strong> Return a non-zero exit status from main</p>
+<p>CI treats non-zero as failed.</p>
+<p><strong>Q152.</strong> What makes a function easy to unit test?</p>
+<p><strong>Answer:</strong> Few hidden dependencies: pass inputs in, return outputs, avoid global state</p>
+<p>Dependency injection via function pointers helps.</p>
+<h3 id="09-build-systems-at-scale"><a href="../level-4/09-build-systems-at-scale/">09 · Build Systems at Scale</a><a class="headerlink" href="#09-build-systems-at-scale" title="Permanent link">&para;</a></h3>
+<p><strong>Q153.</strong> What does <code>make -j8</code> do?</p>
+<p><strong>Answer:</strong> Runs up to 8 recipes in parallel, which is safe only when dependencies are correct</p>
+<p>Missing dependencies cause flaky parallel builds.</p>
+<p><strong>Q154.</strong> What is an out-of-source build?</p>
+<p><strong>Answer:</strong> Object files and binaries go in a separate build directory, keeping the source tree clean</p>
+<p>It allows several configurations side by side.</p>
+<p><strong>Q155.</strong> Why generate dependency files (-MMD -MP)?</p>
+<p><strong>Answer:</strong> So make knows which headers each object depends on</p>
+<p>Otherwise edited headers don't trigger rebuilds.</p>
+<p><strong>Q156.</strong> What do CMake and Meson do?</p>
+<p><strong>Answer:</strong> Generate build files (Makefiles/Ninja) from a higher-level description</p>
+<p>They are meta-build systems.</p>
+<h3 id="10-capstone-project"><a href="../level-4/10-capstone-project/">10 · Capstone Project</a><a class="headerlink" href="#10-capstone-project" title="Permanent link">&para;</a></h3>
+<p><strong>Q157.</strong> What is the point of the capstone's public API header?</p>
+<p><strong>Answer:</strong> A small stable contract so callers depend on function prototypes, not internals</p>
+<p>It ties together modules, error handling and tests.</p>
+<p><strong>Q158.</strong> What should every function that can fail do?</p>
+<p><strong>Answer:</strong> Report the failure through a documented status or errno, and callers must check it</p>
+<p>C has no exceptions.</p>
+<p><strong>Q159.</strong> Which tools would you combine to verify the capstone?</p>
+<p><strong>Answer:</strong> -Wall -Wextra, unit tests, ASan/UBSan and valgrind/gdb</p>
+<p>Layered checks catch different bug classes.</p>
+<p><strong>Q160.</strong> What ties together ownership in the capstone's API?</p>
+<p><strong>Answer:</strong> Documented ownership rules: who allocates and who frees every pointer crossing the API</p>
+<p>Unclear ownership is the root of leaks and double frees.</p>
+<h2 id="mixed-questions-across-all-levels">Mixed questions across all levels<a class="headerlink" href="#mixed-questions-across-all-levels" title="Permanent link">&para;</a></h2>
+<p><strong>Q161.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %.1f %d"</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">%</span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 3 3.5 1</p>
+<p>Integer division truncates; cast one operand to double for a fractional result. Verified by compiling and running.</p>
+<p><strong>Q162.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="k">switch</span><span class="p">(</span><span class="n">n</span><span class="p">){</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"a"</span><span class="p">);</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"b"</span><span class="p">);</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"c"</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"d"</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> bc</p>
+<p>Missing break falls through case 3 and stops at break. Verified by compiling and running.</p>
+<p><strong>Q163.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">){</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">99</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %d"</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 2 2</p>
+<p>The pointer lets f change x; v is a copy, so y is untouched. Verified by compiling and running.</p>
+<p><strong>Q164.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="cp">#define DOUBLE(x) x*2</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span><span class="w"> </span><span class="n">DOUBLE</span><span class="p">(</span><span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 11</p>
+<p>The macro expands to 3+4*2, which is 11, not 14: wrap macro parameters in parentheses. Verified by compiling and running.</p>
+<p><strong>Q165.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">};</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%d %d %d"</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="n">p</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 8 16 2</p>
+<p>p points at a[1]; p[2] is a[3]; pointer difference counts elements. Verified by compiling and running.</p>
+<p><strong>Q166.</strong> What does this print (typical 64-bit)?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">S</span><span class="p">;</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%zu"</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">S</span><span class="p">));</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 24</p>
+<p>Padding aligns the double to 8 bytes: 1+7 pad, 8, 1+7 pad. Verified by compiling and running.</p>
+<p><strong>Q167.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="o">=</span><span class="s">"hello"</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%zu %zu %c"</span><span class="p">,</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">)]</span><span class="o">==</span><span class="sc">'\0'</span><span class="o">?</span><span class="sc">'Y'</span><span class="o">:</span><span class="sc">'N'</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 5 16 Y</p>
+<p>strlen stops at the terminator; sizeof is the whole buffer; the byte after the last char is '\0'. Verified by compiling and running.</p>
+<p><strong>Q168.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mh">0x2C</span><span class="p">;</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">"%u %u %u"</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">&amp;</span><span class="mh">0x0F</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">|</span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 12 45 11</p>
+<p>0x2C = 44: &amp; 0x0F gives 12, | 1 gives 45, &gt;&gt; 2 gives 11. Verified by compiling and running.</p>
+<p><strong>Q169.</strong> Why does <code>p = realloc(p, newsize)</code> risk a leak?</p>
+<p><strong>Answer:</strong> On failure realloc returns NULL, overwriting p and losing the original block; assign to a temporary first</p>
+<p>Check the temp for NULL, then assign it to p.</p>
+<p><strong>Q170.</strong> A function returns a pointer to a local array. What's wrong?</p>
+<p><strong>Answer:</strong> The array lives on the stack and is gone when the function returns: a dangling pointer</p>
+<p>Return heap memory, a static buffer, or write into a caller-provided buffer.</p>
+<p><strong>Q171.</strong> You free a node then read its <code>next</code>. What happened?</p>
+<p><strong>Answer:</strong> Use-after-free: save next before freeing</p>
+<p>Undefined behavior; ASan reports it.</p>
+<p><strong>Q172.</strong> <code>make</code> rebuilds everything after you edit only a header. Which fix is correct?</p>
+<p><strong>Answer:</strong> Generate dependency files with -MMD -MP and include them so objects depend on the headers they use (and the opposite problem, stale builds, is also avoided)</p>
+<p>Edited headers must invalidate dependent objects.</p>
+<p><strong>Q173.</strong> A server reads a request with a single recv() into a 64-byte buffer. What can go wrong?</p>
+<p><strong>Answer:</strong> TCP is a byte stream: the read may return a partial message, and unbounded copying could overflow the buffer; loop and bound it</p>
+<p>Check the return value and size every copy.</p>
+<p><strong>Q174.</strong> Two threads increment a shared counter 1,000,000 times each with no synchronization. What do you expect?</p>
+<p><strong>Answer:</strong> A total below 2,000,000 because increments are read-modify-write and updates are lost; use an atomic or mutex</p>
+<p>A data race is undefined behavior.</p>
+<p><strong>Q175.</strong> Which is the safest way to build a path from user input into a 64-byte buffer?</p>
+<p><strong>Answer:</strong> snprintf(buf, sizeof buf, "%s/%s", dir, name) and check that the result is less than sizeof buf</p>
+<p>snprintf never writes past the size and reports truncation.</p>
+<p><strong>Q176.</strong> Why compile and test with -fsanitize=address,undefined?</p>
+<p><strong>Answer:</strong> They turn silent memory errors and undefined behavior into immediate, located reports</p>
+<p>Use them in CI along with warnings -Wall -Wextra.</p>
+<p><strong>Q177.</strong> Which structure gives guaranteed O(log n) search with inserts and deletes?</p>
+<p><strong>Answer:</strong> A self-balancing tree such as an AVL tree</p>
+<p>Rotations keep the height logarithmic.</p>
+<p><strong>Q178.</strong> You need many small short-lived allocations freed all at once (e.g. per request). Which allocator fits?</p>
+<p><strong>Answer:</strong> An arena: allocation is a pointer bump and reset frees everything</p>
+<p>Lifetimes are grouped.</p>
+<p><strong>Q179.</strong> What should an exit code of a test runner convey to CI?</p>
+<p><strong>Answer:</strong> Non-zero means at least one test failed</p>
+<p>CI gates on the exit status.</p>
+<p><strong>Q180.</strong> What is the safest design for a C function that can fail and returns a value?</p>
+<p><strong>Answer:</strong> Return a status code and deliver the value through an out-parameter, documenting ownership of any allocation</p>
+<p>Sentinels can collide with valid values.</p>
+<h2 id="practical-coding-questions">Practical coding questions<a class="headerlink" href="#practical-coding-questions" title="Permanent link">&para;</a></h2>
+<h3 id="reverse-a-linked-list-in-place">Reverse a linked list in place<a class="headerlink" href="#reverse-a-linked-list-in-place" title="Permanent link">&para;</a></h3>
+<p>Implement reverse(): re-point each node's next pointer so the list is reversed without allocating new nodes, and return the new head. The program pushes 1..4 at the head (so it prints 4 3 2 1) and then prints the reversed list.</p>
+<p>Starter code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>#include &lt;stdio.h&gt;
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>#include &lt;stdlib.h&gt;
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>typedef struct Node { int v; struct Node *next; } Node;
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>Node *push(Node *head, int v) {
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>    Node *n = malloc(sizeof *n);
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>    n-&gt;v = v; n-&gt;next = head;
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>    return n;
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>}
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>Node *reverse(Node *head) {
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>    // reverse the list in place by re-pointing each next; return the new head
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>    return head;
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>}
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>void print(Node *h) { for (; h; h = h-&gt;next) printf("%d%c", h-&gt;v, h-&gt;next ? ' ' : '\n'); }
+<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>int main(void) {
+<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>    Node *h = NULL;
+<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a>    for (int i = 1; i &lt;= 4; i++) h = push(h, i);
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>    print(h);
+<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>    h = reverse(h);
+<a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>    print(h);
+<a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a>    while (h) { Node *n = h-&gt;next; free(h); h = n; }
+<a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a>    return 0;
+<a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a>}
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>4 3 2 1
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>1 2 3 4
+</code></pre></div>
+<p>??? success "Show a solution"</p>
+<div class="highlight"><pre><span></span><code>```
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+typedef struct Node { int v; struct Node *next; } Node;
+
+Node *push(Node *head, int v) {
+    Node *n = malloc(sizeof *n);
+    n-&gt;v = v; n-&gt;next = head;
+    return n;
+}
+Node *reverse(Node *head) {
+    Node *prev = NULL;
+    while (head) {
+        Node *next = head-&gt;next;
+        head-&gt;next = prev;
+        prev = head;
+        head = next;
+    }
+    return prev;
+}
+void print(Node *h) { for (; h; h = h-&gt;next) printf("%d%c", h-&gt;v, h-&gt;next ? ' ' : '\n'); }
+int main(void) {
+    Node *h = NULL;
+    for (int i = 1; i &lt;= 4; i++) h = push(h, i);
+    print(h);
+    h = reverse(h);
+    print(h);
+    while (h) { Node *n = h-&gt;next; free(h); h = n; }
+    return 0;
+}
+```
+
+Walk the list keeping prev, save next before overwriting, and return prev as the new head. It's O(n) time and O(1) extra space. Verified by compiling and running the solution with gcc.
+</code></pre></div>
+<h3 id="a-bounded-string-copy">A bounded string copy<a class="headerlink" href="#a-bounded-string-copy" title="Permanent link">&para;</a></h3>
+<p>Implement safe_copy(dst, cap, src): copy src into dst without overflowing, always null-terminate when cap &gt; 0, and return 1 if everything fit or 0 if it was truncated. Print the result for a 6-byte and a 32-byte destination.</p>
+<p>Starter code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>#include &lt;stdio.h&gt;
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>#include &lt;string.h&gt;
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>/* copy src into dst (capacity cap); return 1 if it all fit, 0 if truncated.
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>   dst is always null-terminated when cap &gt; 0. */
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>int safe_copy(char *dst, size_t cap, const char *src) {
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>    // copy without overflowing; always terminate; return 1 if it fit, else 0
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>    return 0;
+<a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>}
+<a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>int main(void) {
+<a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>    char small[6], big[32];
+<a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a>    int a = safe_copy(small, sizeof small, "Mastery");
+<a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a>    int b = safe_copy(big, sizeof big, "Mastery");
+<a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a>    printf("%d [%s]\n%d [%s]\n", a, small, b, big);
+<a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a>    return 0;
+<a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a>}
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>0 [Maste]
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>1 [Mastery]
+</code></pre></div>
+<p>??? success "Show a solution"</p>
+<div class="highlight"><pre><span></span><code>```
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+/* copy src into dst (capacity cap); return 1 if it all fit, 0 if truncated.
+   dst is always null-terminated when cap &gt; 0. */
+int safe_copy(char *dst, size_t cap, const char *src) {
+    if (cap == 0) return 0;
+    size_t n = strlen(src);
+    if (n &gt;= cap) {
+        memcpy(dst, src, cap - 1);
+        dst[cap - 1] = '\0';
+        return 0;
+    }
+    memcpy(dst, src, n + 1);
+    return 1;
+}
+int main(void) {
+    char small[6], big[32];
+    int a = safe_copy(small, sizeof small, "Mastery");
+    int b = safe_copy(big, sizeof big, "Mastery");
+    printf("%d [%s]\n%d [%s]\n", a, small, b, big);
+    return 0;
+}
+```
+
+Compare strlen(src) with cap: if it doesn't fit, copy cap-1 bytes and terminate. This is what snprintf and strlcpy do and it removes the classic strcpy overflow. Verified by compiling and running the solution with gcc.
+</code></pre></div>
+<hr />
+<p>More free practice: the <a href="../">C Mastery Path</a> curriculum, the <a href="https://learnmasterypath.com/interview-pack/">Interview Prep Pack</a> and the <a href="https://learnmasterypath.com/resume/">free resume ATS check</a>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+  
+  <nav class="mp-related" aria-label="Related free courses">
+    <h2>Related free courses</h2>
+    <ul>
+      <li><a href="https://learnmasterypath.com/python-mastery-path/">Python</a></li><li><a href="https://learnmasterypath.com/java-mastery-path/">Java</a></li><li><a href="https://learnmasterypath.com/javascript-mastery-path/">JavaScript</a></li><li><a href="https://learnmasterypath.com/typescript-mastery-path/">TypeScript</a></li><li><a href="https://learnmasterypath.com/csharp-mastery-path/">C#</a></li>
+      <li><a href="https://learnmasterypath.com/">All 100+ courses &rarr;</a></li>
+    </ul>
+  </nav>
+  
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../cheat-sheet/" class="md-footer__link md-footer__link--next" aria-label="Next: Cheat Sheet">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Cheat Sheet
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+  <div class="mp-foot">
+    <div class="mp-foot-inner">
+      <a class="mp-foot-brand" href="https://learnmasterypath.com/"><svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg><span>Mastery Path</span></a>
+      <nav class="mp-sitelinks" aria-label="Site and legal links">
+        <a href="https://learnmasterypath.com/">All courses</a>
+        <a href="https://learnmasterypath.com/about.html">About</a>
+        <a href="https://learnmasterypath.com/contact.html">Contact</a>
+        <a href="https://learnmasterypath.com/c-mastery-path/privacy/">Privacy Policy</a>
+        <a href="https://learnmasterypath.com/terms.html">Terms</a>
+        <a href="https://learnmasterypath.com/c-mastery-path/license/">License</a>
+        <a href="https://learnmasterypath.com/verify/">Verify a certificate</a>
+      </nav>
+    </div>
+    <p class="mp-license-note">
+      © 2026 Vinod Kumar Sigilipelli · Except where otherwise noted, lesson content is licensed under
+      <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> and code examples under the
+      <a href="https://opensource.org/license/mit">MIT License</a>.
+    </p>
+  </div>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.path", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/progress-tracker.js"></script>
+      
+        <script src="../javascripts/final-quiz.js"></script>
+      
+    
+  </body>
+</html>
