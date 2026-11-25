@@ -7,8 +7,7 @@ description: "Free C programming course from beginner to advanced -- hands-on le
 
 A structured, module-wise C training program that takes you from your first
 `int main(void)` to production-grade, master-level systems programming — with
-runnable code snippets in every module and a hands-on project at the end of
-each level.
+runnable code snippets in every module and a hands-on project at the end of Levels 1–3 and a capstone at the end of Level 4.
 
 ## How the program is organized
 
@@ -24,7 +23,7 @@ each level.
 - Work through each level in order — later modules assume earlier ones.
 - Every topic page has runnable code snippets — copy them into a local `.c`
   file and compile with `gcc` or `clang`, then run the resulting binary.
-- Each level ends with a project that combines everything learned in that level.
+- Levels 1–3 each end with a project that combines everything learned in that level, and Level 4 ends with the course capstone.
 - Use the search bar (top of the page) to jump straight to a topic.
 
 Start here → [Level 1 · Entry](level-1/index.md)
